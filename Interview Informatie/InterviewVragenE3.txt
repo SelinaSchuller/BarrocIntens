@@ -1,0 +1,77 @@
+meerdere afdelingen. onderhoud, sales, inkoop, management.
+
+informatie doorgeven.
+
+communicatie tussen klant en medewerkers verbeteren ( nu in excel met mails gestuurd )
+^ ZELF oplossing voor verzinnen
+
+belangrijke gegevens van klanten opslaan (probleem, naam, mail enz.
+
+Klanten gegevens kunnen wijzigen
+
+Notificatie/bericht naar klant om gegevens up to date te behouden
+
+niet elke afdeling moet gegevens kunnen aanpassen.
+Maar wel elke afdeling moet gegevens kunnen zien.
+
+Elke afdeling kan ze eigen gegevens aanpassen zoals klanten service/management kan klant gegevens wijzigen
+
+
+alle afdelingen in het systeem kunnen, en ook bij hun spullen kunnen komen dus inkoop moet inventaris kunnen zien enz.
+
+als er een storing is wordt er gebeld en daarna wordt hij in het systeem gezet en dan door de planning wordt het in geplant.
+
+Klant wordt herrinneert over de storing dat het wordt geregeld
+
+Klant hoeft niet bij gegevens te kunnen ze bellen alleen.
+
+Klanten service valt onder sales.
+
+als een product op is wordt er een melding naar inkoop gestuurd zodat het zo snel mogelijk weer bestelt is
+
+Sales personen krijgen melding als er een product niet is en kan met klant nieuwe afspraak in plannen
+
+Klanten gegevens moet onder andere betaald column hebben.
+
+Als product bijna op is moet er melding gestuurd voor worden dat het moet ingekocht worden inkoop kan ook automatisch.
+
+Onderscheid tussen afdelingen alleen wat hun gebruiken te kunnen zien.
+
+Systeem is alleen voor medewerkers niet voor klanten dus intern
+
+Gegevens op een makkelijker manier opslaan.
+
+Via mail met klant communicatie en dan die gegevens worden opgeslagen in systeem.
+
+Geen klanten portaal nog om storingen te melden klanten bellen om een storingen te melden.
+
+Sales afdeling moet kunnen zien met wie ze moet communiceren over de sales.
+
+(kan: met een tablet op een makkelijke manier een sale kan aanmaken met wat en wanneer ze willen hebben enz.
+
+Algemene gegevens van de klant-bedrijf moeten er in.
+
+Planning moet verbeterd / meer overzichtelijk in het systeem met meer details er bij.
+
+Onderhoud team kan een lijst zien met wat er allemaal moet gedaan worden.
+
+systeem kan op tablet maar is niet verplicht
+
+Contracten worden in het systeem gezet maar ook in physiek
+
+Kleuren: zoals in logo, zwarte kleur met wat geel
+
+Klant krijgt herinnering van niet betaalde vacatures
+
+Automatisch melding als een klant een contract ondertekent en dan ruim van te voren melding krijgen als het contract bij verloopt.
+
+Intake gesprekken worden geregeld wanneer medewerker bij klant is geweest.
+
+begint bij intake die gegevens worden opgestuurd en opgeslagen in systeem, Contract wordt ondertekent door klant en dan krijgt medewerker bevestingen binnen,
+
+Vacatures worden automatisch gestuurd.
+
+
+
+
+
