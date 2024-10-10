@@ -16,7 +16,6 @@ Maar wel elke afdeling moet gegevens kunnen zien.
 
 Elke afdeling kan ze eigen gegevens aanpassen zoals klanten service/management kan klant gegevens wijzigen
 
-
 alle afdelingen in het systeem kunnen, en ook bij hun spullen kunnen komen dus inkoop moet inventaris kunnen zien enz.
 
 als er een storing is wordt er gebeld en daarna wordt hij in het systeem gezet en dan door de planning wordt het in geplant.
