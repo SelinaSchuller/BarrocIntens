@@ -28,9 +28,10 @@ namespace BarrocIntens
 			this.InitializeComponent();
 		}
 
-		private void myButton_Click(object sender, RoutedEventArgs e)
-		{
-			myButton.Content = "Clicked";
-		}
-	}
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+			string username = NameTextBox.Text;
+			string password = PasswordTextBox.Password;
+        }
+    }
 }
