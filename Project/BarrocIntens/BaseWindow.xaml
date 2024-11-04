@@ -8,10 +8,17 @@
     mc:Ignorable="d">
 
     <Grid Background="#3e3e3e">
-        <Image Margin="10" Width="200" Height="200" 
-               Source="assets/Logo6_groot.png" 
-               Stretch="Uniform"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top" />
+        <!-- Frame vult het volledige scherm -->
+        <Frame x:Name="MainFrame" />
+
+        <!-- Overlay voor het logo altijd op de voorgrond -->
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Transparent">
+            <StackPanel Width="200" Height="200">
+                <Image Width="200"
+        Source="assets/Logo6_groot.png" 
+        Stretch="Uniform"/>
+            </StackPanel>
+           
+        </Border>
     </Grid>
 </Window>
