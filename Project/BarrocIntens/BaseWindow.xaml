@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Window
     x:Class="BarrocIntens.BaseWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,8 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="#3e3e3e">
-        <Image Width="200" Height="200" Source="ms-appx:///Images/Logo6_groot.png" Stretch="Uniform" />
-
-    </StackPanel>
+    <Grid Background="#3e3e3e">
+        <Image Margin="10" Width="200" Height="200" 
+               Source="assets/Logo6_groot.png" 
+               Stretch="Uniform"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top" />
+    </Grid>
 </Window>
