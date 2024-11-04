@@ -27,10 +27,20 @@ namespace BarrocIntens
         public MainWindow()
         {
             this.InitializeComponent();
+
+            //Als login werkt:
             //var baseWindow = new LoginWindow();
             //baseWindow.Activate();
+
+            //Tijdelijk om gelijk naar je pagina te kijken:
             var baseWindow = new BaseWindow();
             baseWindow.Activate();
+
+			//Sluit de Mainwindow automatisch:
+			DispatcherQueue.TryEnqueue(() =>
+			{
+				this.Close();
+			});
 		}
 
 	}

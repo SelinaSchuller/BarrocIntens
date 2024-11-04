@@ -23,9 +23,54 @@ namespace BarrocIntens.Onderhoud
 	/// </summary>
 	public sealed partial class OnderhoudMainPage : Page
 	{
+		public List<OnderhoudItem> LaatsteOnderhoudLijst { get; set; }
+		public List<StoringItem> StoringenLijst { get; set; }
+
 		public OnderhoudMainPage()
 		{
 			this.InitializeComponent();
+
+			// Hardcoded data voor "Laatste onderhoud"
+			LaatsteOnderhoudLijst = new List<OnderhoudItem>
+			{
+				new OnderhoudItem { KlantNaam = "Jan van Dijk", Date = new DateTime(2024, 6, 1) },
+				new OnderhoudItem { KlantNaam = "Pieter de Jong", Date = new DateTime(2024, 3, 25) },
+				new OnderhoudItem { KlantNaam = "Klaas Bakker", Date = new DateTime(2024, 3, 12) },
+				new OnderhoudItem { KlantNaam = "Maria Jansen", Date = new DateTime(2024, 1, 1) }
+			};
+
+			// Hardcoded data voor "Storingen"
+			StoringenLijst = new List<StoringItem>
+			{
+				new StoringItem { KlantNaam = "Jan van Dijk", Date = new DateTime(2024, 10, 8) },
+				new StoringItem { KlantNaam = "Pieter de Jong", Date = DateTime.Today.AddDays(-1) }, // Gisteren
+                new StoringItem { KlantNaam = "Klaas Bakker", Date = DateTime.Today } // Vandaag
+            };
+
+			// Zet de DataContext voor databinding
+			this.DataContext = this;
 		}
+
+
+		//Deze classes zijn temp tot dat de database klaar is:
+		public class OnderhoudItem
+		{
+			public string KlantNaam { get; set; }
+			public DateTime Date { get; set; }
+
+			// Geformatteerde datum als string
+			public string DateFormatted => Date.ToString("dd/MM/yyyy");
+		}
+
+		public class StoringItem
+		{
+			public string KlantNaam { get; set; }
+			public DateTime Date { get; set; }
+
+			// Geformatteerde datum als string
+			public string DateFormatted => Date.ToString("dd/MM/yyyy");
+		}
+
+
 	}
 }
