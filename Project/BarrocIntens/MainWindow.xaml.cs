@@ -31,6 +31,8 @@ namespace BarrocIntens
 		private void myButton_Click(object sender, RoutedEventArgs e)
 		{
 			myButton.Content = "Clicked";
+			var baseWindow = new BaseWindow();
+			baseWindow.Activate();
 		}
 	}
 }
