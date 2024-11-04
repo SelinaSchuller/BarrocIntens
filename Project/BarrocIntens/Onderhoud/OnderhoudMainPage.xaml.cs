@@ -58,7 +58,6 @@ namespace BarrocIntens.Onderhoud
 			public string KlantNaam { get; set; }
 			public DateTime Date { get; set; }
 
-			// Geformatteerde datum als string
 			public string DateFormatted => Date.ToString("dd/MM/yyyy");
 		}
 
@@ -67,7 +66,6 @@ namespace BarrocIntens.Onderhoud
 			public string KlantNaam { get; set; }
 			public DateTime Date { get; set; }
 
-			// Geformatteerde datum als string
 			public string DateFormatted => Date.ToString("dd/MM/yyyy");
 		}
 
