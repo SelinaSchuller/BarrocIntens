@@ -13,6 +13,12 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+    <Page Remove="Images\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="BaseWindow.xaml" />
   </ItemGroup>
 
@@ -45,9 +51,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -58,4 +61,7 @@
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
 	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Onderhoud\" />
+  </ItemGroup>
 </Project>
