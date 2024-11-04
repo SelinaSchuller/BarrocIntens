@@ -12,14 +12,10 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Images\**" />
-    <EmbeddedResource Remove="Images\**" />
-    <None Remove="Images\**" />
-    <Page Remove="Images\**" />
-  </ItemGroup>
+
   <ItemGroup>
     <None Remove="BaseWindow.xaml" />
+    <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,7 +57,10 @@
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
 	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
   </PropertyGroup>
+
   <ItemGroup>
-    <PRIResource Remove="Images\**" />
+    <Page Update="Onderhoud\OnderhoudMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

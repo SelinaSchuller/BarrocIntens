@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="BarrocIntens.Onderhoud.OnderhoudMainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,44 +8,130 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="#3e3e3e">
-        <!-- Linker zijpaneel met logo en knoppen -->
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20">
-            <!-- Logo -->
-            <Image Source="assets/Logo6_groot.png" Width="100" Height="100" Margin="0,0,0,20"/>
+    <Page.Resources>
+        <!-- Stijl voor de knop die alleen de achtergrondkleur verandert bij hover -->
+        <Style TargetType="Button" x:Key="HoverButtonStyle">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="BorderBrush" Value="Yellow"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Margin" Value="0,15"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="ButtonBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <!-- Langzame overgang voor de achtergrondkleur bij hover -->
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" 
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="Gray" Duration="0:0:0.3"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" 
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="DarkGray" Duration="0:0:0.3"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBorder" 
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="LightGray" Duration="0:0:0.3"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gray"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-            <!-- Knoppen -->
-            <Button Content="Klant Gegevens" Width="150" Height="50" Background="Black" Foreground="Yellow" BorderBrush="Yellow" FontWeight="Bold" Margin="0,10"/>
-            <Button Content="Planning" Width="150" Height="50" Background="Black" Foreground="Yellow" BorderBrush="Yellow" FontWeight="Bold" Margin="0,10"/>
+    <Grid Background="#3e3e3e">
+        <!-- Linker zijpaneel met knoppen -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
+            <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
+            <Button Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
         </StackPanel>
 
-        <!-- Hoofd content in het midden -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="30">
+        <!-- Hoofdcontent -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="50">
             <!-- Kolom "Laatste onderhoud" -->
-            <Border Width="200" Background="Black" CornerRadius="20,20,20,20" Padding="10" BorderBrush="Yellow" BorderThickness="2">
+            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="15" BorderBrush="Yellow" BorderThickness="3">
                 <StackPanel>
-                    <TextBlock Text="Laatste onderhoud" Foreground="Yellow" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <Rectangle Fill="Yellow" Height="2" Margin="0,5"/>
-                    <TextBlock Text="01/06/2024" Foreground="Yellow" FontSize="16" Margin="0,5"/>
-                    <TextBlock Text=" 25/03/2024" Foreground="Yellow" FontSize="16" Margin="0,5"/>
-                    <TextBlock Text=" 12/03/2024" Foreground="Yellow" FontSize="16" Margin="0,5"/>
-                    <TextBlock Text=" 01/01/2024" Foreground="Yellow" FontSize="16" Margin="0,5"/>
+                    <Border Background="Yellow" CornerRadius="20,20,0,0">
+                        <TextBlock Text="Laatste onderhoud" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center" Padding="10"/>
+                    </Border>
+                    <Rectangle Fill="Black" Height="3" Margin="0,5"/>
+
+                    <!-- Dynamische lijstweergave voor Laatste Onderhoud -->
+                    <ItemsControl ItemsSource="{Binding LaatsteOnderhoudLijst}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,10">
+                                    <TextBlock Text="{Binding KlantNaam}" Foreground="Yellow" FontSize="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding DateFormatted}" Foreground="Yellow" FontSize="20"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Border>
 
             <!-- Kolom "Storingen" -->
-            <Border Width="200" Background="Black" CornerRadius="20,20,20,20" Padding="10" BorderBrush="Yellow" BorderThickness="2">
+            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="15" BorderBrush="Yellow" BorderThickness="3">
                 <StackPanel>
-                    <TextBlock Text="Storingen" Foreground="Yellow" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <Rectangle Fill="Yellow" Height="2" Margin="0,5"/>
-                    <TextBlock Text=" 08/10/2024" Foreground="Yellow" FontSize="16" Margin="0,5"/>
-                    <TextBlock Text=" Yesterday" Foreground="Yellow" FontSize="16" Margin="0,5"/>
-                    <TextBlock Text=" Today" Foreground="Yellow" FontSize="16" Margin="0,5"/>
+                    <Border Background="Yellow" CornerRadius="20,20,0,0">
+                        <TextBlock Text="Storingen" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center" Padding="10"/>
+                    </Border>
+                    <Rectangle Fill="Black" Height="3" Margin="0,5"/>
+
+                    <!-- Dynamische lijstweergave voor Storingen -->
+                    <ItemsControl ItemsSource="{Binding StoringenLijst}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,10">
+                                    <TextBlock Text="{Binding KlantNaam}" Foreground="Yellow" FontSize="20" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding DateFormatted}" Foreground="Yellow" FontSize="20"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Border>
         </StackPanel>
 
         <!-- Titel bovenaan -->
-        <TextBlock Text="Onderhoud" Foreground="Yellow" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
+        <TextBlock Text="Onderhoud" Foreground="Yellow" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
     </Grid>
 </Page>
