@@ -11,7 +11,11 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="SalesDashboard.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="BaseWindow.xaml" />
@@ -47,6 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="BaseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="SalesDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
