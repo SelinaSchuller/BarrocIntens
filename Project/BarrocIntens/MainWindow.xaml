@@ -17,6 +17,7 @@
             <SelectorBarItem x:Name="SalesDashboardSelector" Text="Sales" />
         </SelectorBar>
 
-        <Frame x:Name="ContentFrame" Grid.Row="1" />
-    </Grid>
+    <StackPanel>
+        <Frame x:Name="MainFrame" />
+    </StackPanel>
 </Window>

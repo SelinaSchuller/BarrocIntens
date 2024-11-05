@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using BarrocIntens.Onderhoud;
+using BarrocIntens.Financiën;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -22,35 +24,18 @@ namespace BarrocIntens
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class BaseWindow : Window
     {
-        public MainWindow()
+        public BaseWindow()
         {
             this.InitializeComponent();
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
 
-            //Als login werkt:
-            //var baseWindow = new LoginWindow();
-            //baseWindow.Activate();
+		}
 
-            //Tijdelijk om gelijk naar je pagina te kijken:
-            var baseWindow = new BaseWindow();
-            baseWindow.Activate();
-
-        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            SelectorBarItem selectedItem = sender.SelectedItem;
-            if (selectedItem == SalesDashboardSelector)
-            {
-                ContentFrame.Navigate(typeof(SalesDashboard));
-            }
-        }
-
-    }
-			//Sluit de Mainwindow automatisch:
-			DispatcherQueue.TryEnqueue(() =>
-			{
-				this.Close();
-			});
+		private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+		{
+            System.Diagnostics.Debug.WriteLine("image does not show");
 		}
 
 	}

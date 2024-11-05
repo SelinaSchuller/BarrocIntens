@@ -13,15 +13,13 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="SalesDashboard.xaml" />
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+    <Page Remove="Images\**" />
   </ItemGroup>
-
   <ItemGroup>
     <None Remove="BaseWindow.xaml" />
-    <None Remove="Inkoop\InkoopDashboardWIndow.xaml" />
-    <None Remove="Financiën\FinanciënMainPage.xaml" />
-    <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
-    <None Remove="MainWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,26 +51,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="SalesDashboard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Inkoop\InkoopDashboardWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -83,16 +61,7 @@
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
 	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
   </PropertyGroup>
-
   <ItemGroup>
-    <Page Update="Onderhoud\OnderhoudMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Financiën\FinanciënMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Folder Include="Onderhoud\" />
   </ItemGroup>
 </Project>
