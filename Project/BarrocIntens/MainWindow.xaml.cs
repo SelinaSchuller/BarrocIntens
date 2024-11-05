@@ -35,23 +35,20 @@ namespace BarrocIntens
             //Tijdelijk om gelijk naar je pagina te kijken:
             var baseWindow = new BaseWindow();
             baseWindow.Activate();
-
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                this.Close();
+            });
+    }
         private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
             SelectorBarItem selectedItem = sender.SelectedItem;
             if (selectedItem == SalesDashboardSelector)
             {
-                ContentFrame.Navigate(typeof(SalesDashboard));
+                MainFrame.Navigate(typeof(SalesDashboard));
             }
         }
 
-    }
-			//Sluit de Mainwindow automatisch:
-			DispatcherQueue.TryEnqueue(() =>
-			{
-				this.Close();
-			});
-		}
 
-	}
+    }
 }
