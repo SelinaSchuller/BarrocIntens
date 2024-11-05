@@ -28,9 +28,14 @@ namespace BarrocIntens
 			this.InitializeComponent();
 		}
 
-		private void myButton_Click(object sender, RoutedEventArgs e)
-		{
-			myButton.Content = "Clicked";
-		}
-	}
+        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        {
+            SelectorBarItem selectedItem = sender.SelectedItem;
+            if (selectedItem == SalesDashboardSelector)
+            {
+                ContentFrame.Navigate(typeof(SalesDashboard));
+            }
+        }
+
+    }
 }

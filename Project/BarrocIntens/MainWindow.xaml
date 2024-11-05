@@ -7,8 +7,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Grid>
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <SelectorBar x:Name="SelectorBar" Grid.Row="0" SelectionChanged="SelectorBar_SelectionChanged">
+            <SelectorBarItem x:Name="SalesDashboardSelector" Text="Sales" />
+        </SelectorBar>
+
+        <Frame x:Name="ContentFrame" Grid.Row="1" />
+    </Grid>
 </Window>
