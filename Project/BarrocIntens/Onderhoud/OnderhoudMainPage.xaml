@@ -12,8 +12,8 @@
         <!-- Stijl voor de knop die alleen de achtergrondkleur verandert bij hover -->
         <Style TargetType="Button" x:Key="HoverButtonStyle">
             <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="Yellow"/>
-            <Setter Property="BorderBrush" Value="Yellow"/>
+            <Setter Property="Foreground" Value="#FDD716"/>
+            <Setter Property="BorderBrush" Value="#FDD716"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -41,7 +41,7 @@
                                                             Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                             To="Gray" Duration="0:0:0.1"/>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FDD716"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -51,7 +51,7 @@
                                                             Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                             To="DarkGray" Duration="0:0:0.3"/>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FDD716"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -61,7 +61,7 @@
                                                             Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                             To="LightGray" Duration="0:0:0.3"/>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Yellow"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#FDD716"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="Foreground">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="Gray"/>
@@ -79,7 +79,7 @@
 
     <Grid Background="#3e3e3e">
         <!-- Titel bovenaan -->
-        <TextBlock Text="Onderhoud" Foreground="Yellow" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
+        <TextBlock Text="Onderhoud" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
 
         <!-- Linker zijpaneel met knoppen -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
@@ -90,9 +90,9 @@
         <!-- Hoofdcontent -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="50">
             <!-- Kolom Laatste onderhoud -->
-            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="Yellow" BorderThickness="3">
+            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
-                    <Border Background="Yellow" CornerRadius="10,10,0,0" Padding="10">
+                    <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock Text="Laatste onderhoud" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
                     <Rectangle Fill="Black" Height="3" Margin="0,5"/>
@@ -101,8 +101,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="Yellow" FontSize="20" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding DateFormatted}" Foreground="Yellow" FontSize="20" Width="200" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding DateFormatted}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -111,9 +111,9 @@
             </Border>
 
             <!-- Kolom Storingen -->
-            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="Yellow" BorderThickness="3">
+            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
-                    <Border Background="Yellow" CornerRadius="10,10,0,0" Padding="10">
+                    <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock Text="Storingen" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
                     <Rectangle Fill="Black" Height="2" Margin="0,5"/>
@@ -122,8 +122,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="Yellow" FontSize="20" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding DateFormatted}" Foreground="Yellow" FontSize="20" Width="200" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding DateFormatted}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

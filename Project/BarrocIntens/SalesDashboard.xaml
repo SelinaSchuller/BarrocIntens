@@ -11,7 +11,7 @@
 
     <Page.Resources>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="Yellow"/>
+            <Setter Property="Background" Value="#FDD716"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -35,7 +35,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Column="0">
             <Image Source="Assets/StoreLogo.png" Width="100" Height="100"/>
-            <TextBlock Text="Verkoop" FontSize="36" Margin="10" Foreground="Yellow" FontWeight="Bold"/>
+            <TextBlock Text="Verkoop" FontSize="36" Margin="10" Foreground="#FDD716" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -62,7 +62,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Background="Yellow" Grid.ColumnSpan="2">
+            <Grid Grid.Row="0" Background="#FDD716" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -77,11 +77,11 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="Yellow" BorderThickness="4">
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
                     <TextBox 
                          x:Name="searchTextBox" 
                          TextChanged="searchTextBox_TextChanged"
-                         BorderBrush="Yellow"
+                         BorderBrush="#FDD716"
                          BorderThickness="2"
                          Background="White"
                          PlaceholderText="Search..."
@@ -99,7 +99,7 @@
                     </ListView>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" BorderBrush="Yellow" BorderThickness="4">
+                <StackPanel Grid.Column="2" BorderBrush="#FDD716" BorderThickness="4">
                     <ListView>
                         <ListView.ItemTemplate>
                             <DataTemplate>
