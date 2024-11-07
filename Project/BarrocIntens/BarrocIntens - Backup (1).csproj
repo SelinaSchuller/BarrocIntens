@@ -11,7 +11,6 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Images\**" />
@@ -20,15 +19,7 @@
     <Page Remove="Images\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="SalesDashboard.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="BaseWindow.xaml" />
-    <None Remove="Inkoop\InkoopDashboardWIndow.xaml" />
-    <None Remove="Financiën\FinanciënMainPage.xaml" />
-    <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
-    <None Remove="MainWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,11 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
-    <PackageReference Include="Soenneker.AutoFaker.Overrides.IdNamePair" Version="2.1.329" />
-    <PackageReference Include="System.Json" Version="4.7.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -63,22 +51,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="SalesDashboard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Inkoop\InkoopDashboardWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -89,20 +61,7 @@
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
 	  <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
   </PropertyGroup>
-
   <ItemGroup>
-    <Page Update="Onderhoud\OnderhoudMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Financiën\FinanciënMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PRIResource Remove="Images\**" />
+    <Folder Include="Onderhoud\" />
   </ItemGroup>
 </Project>
