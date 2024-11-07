@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using BarrocIntens.Onderhoud;
+using BarrocIntens.Inkoop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,7 +34,7 @@ namespace BarrocIntens
             //baseWindow.Activate();
 
             //Tijdelijk om gelijk naar je pagina te kijken:
-            var baseWindow = new BaseWindow();
+            var baseWindow = new InkoopDashboardWindow();
             baseWindow.Activate();
             DispatcherQueue.TryEnqueue(() =>
             {
