@@ -34,7 +34,7 @@ namespace BarrocIntens
             //baseWindow.Activate();
 
             //Tijdelijk om gelijk naar je pagina te kijken:
-            var baseWindow = new InkoopDashboardWindow();
+            var baseWindow = new OnderhoudBaseWindow();
             baseWindow.Activate();
             DispatcherQueue.TryEnqueue(() =>
             {
