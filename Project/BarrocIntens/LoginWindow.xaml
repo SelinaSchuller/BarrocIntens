@@ -19,7 +19,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" CornerRadius="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Background="#ffd700" BorderBrush="#f0cc05" BorderThickness="5" Padding="200 75 200 50" Spacing="20">
+            <StackPanel Background="#FDD716" BorderBrush="#f0cc05" BorderThickness="5" Padding="200 75 200 50" Spacing="20">
                 <StackPanel>
                     <TextBlock Text="Naam:" Foreground="#212121" FontSize="30" FontWeight="Medium"/>
                     <TextBox x:Name="NameTextBox" Background="#b39812" Foreground="Black" Width="500" BorderBrush="#f0cc05" FontSize="20" BorderThickness="2"/>
