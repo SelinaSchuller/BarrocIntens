@@ -1,7 +1,7 @@
 Code Conventies voor Barroc Intens
 
 ## Inhoudsopgave:
-
+```
 Algemene Richtlijnen
 Naamgeving
 Mappenstructuur
@@ -11,7 +11,7 @@ Notificaties en Meldingen
 UI/UX Ontwerp
 Rechten en Rollen
 Codeerstandaarden
-
+```
 ## 1. Algemene Richtlijnen
 Gebruik duidelijke, logische namen voor alle functies, klassen en variabelen. Dit maakt de code makkelijker te begrijpen.
 Schrijf je code in aparte stukken (modules) per afdeling, zoals Onderhoud, Sales, Inkoop, en Management.
