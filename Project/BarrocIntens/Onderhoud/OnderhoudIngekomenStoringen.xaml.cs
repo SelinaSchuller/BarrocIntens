@@ -16,6 +16,7 @@ using Windows.Foundation.Collections;
 using Windows.Graphics;
 using Microsoft.UI.Windowing;
 using static BarrocIntens.Onderhoud.OnderhoudMainPage;
+using BarrocIntens.Data;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -28,7 +29,7 @@ namespace BarrocIntens.Onderhoud
 	/// </summary>
 	public sealed partial class OnderhoudIngekomenStoringen : Window
 	{
-		public List<OnderhoudMainPage.StoringItem> StoringenLijst { get; set; }
+		private List<ServiceRequests> StoringenLijst { get; set; }
 
 		public OnderhoudIngekomenStoringen()
 		{
@@ -42,19 +43,15 @@ namespace BarrocIntens.Onderhoud
 
 			appWindow.Resize(new SizeInt32(500, 800));
 
-			CreateHardcodeList();
-		}
-
-		public void CreateHardcodeList()
-		{
-
-			// Hardcoded data voor "Storingen"
-			StoringenLijst = new List<StoringItem>
+			using(var db = new AppDbContext())
 			{
-				new StoringItem { KlantNaam = "Jan van Dijk", Status = 0, Date = new DateTime(2024, 10, 8) },
-				new StoringItem { KlantNaam = "Pieter de Jong", Status = 0, Date = DateTime.Today.AddDays(-1) },
-				new StoringItem { KlantNaam = "Klaas Bakker", Status = 0, Date = DateTime.Today }
-			};
+				//explicit loading:
+				StoringenLijst = db.ServiceRequests
+					.ToList();
+
+				storingenListView.ItemsSource = StoringenLijst;
+
+			}
 		}
 	}
 }
