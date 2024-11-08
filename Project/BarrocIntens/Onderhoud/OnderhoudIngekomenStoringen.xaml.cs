@@ -15,8 +15,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics;
 using Microsoft.UI.Windowing;
-using static BarrocIntens.Onderhoud.OnderhoudMainPage;
 using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -47,6 +47,9 @@ namespace BarrocIntens.Onderhoud
 			{
 				//explicit loading:
 				StoringenLijst = db.ServiceRequests
+					.Where(s => s.Status == 1)
+					.Include(s => s.Customer)
+					.OrderBy(s => s.Date_Reported)
 					.ToList();
 
 				storingenListView.ItemsSource = StoringenLijst;

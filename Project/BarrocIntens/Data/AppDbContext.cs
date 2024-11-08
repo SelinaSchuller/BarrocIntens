@@ -9,6 +9,7 @@ using Bogus;
 
 namespace BarrocIntens.Data
 {
+
     internal class AppDbContext : DbContext
     {
         public DbSet<Department> Departments { get; set; }
@@ -122,19 +123,83 @@ namespace BarrocIntens.Data
                 .Generate(150);
 
             modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
+            
+            //ServiceRequests(storingen)
+
+			//Ik heb dit ff temp gezet omdat ik aan het testen ben:
+			//var serviceRequests = new Faker<ServiceRequest>()
+			//	.RuleFor(w => w.Id, f => f.IndexFaker + 1)
+			//	.RuleFor(w => w.Description, f => f.Lorem.Sentence())
+			//	.RuleFor(w => w.Status, f => f.Random.Int(1, 3))
+			//	.RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
+			//	.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
+			//	.Generate(75);
+
+			var serviceRequests = new Faker<ServiceRequest>()
+				.RuleFor(w => w.Id, f => f.IndexFaker + 7)
+				.RuleFor(w => w.Description, f => f.Lorem.Sentence())
+				.RuleFor(w => w.Status, f => f.Random.Int(3, 3))
+				.RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
+				.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
+				.Generate(75);
+
+			modelBuilder.Entity<ServiceRequest>().HasData(serviceRequests);
+
+			modelBuilder.Entity<ServiceRequest>().HasData(
+				new ServiceRequest
+				{
+					Id = 1,
+					Description = "Er lekt water uit de achterkant van de machine",
+					Date_Reported = DateTime.Today,
+					Status = 1,
+					CustomerId = 1,
+					ProductId = 1,
+				},
+				new ServiceRequest
+				{
+					Id = 2,
+					Description = "Is ineens gestopt en gaat niet meer aan. Is ineens gestopt en gaat niet meer aan. Is ineens gestopt en gaat niet meer aan. Is ineens gestopt en gaat niet meer aan.",
+					Date_Reported = DateTime.Today.AddDays(-1),
+					Status = 1,
+					CustomerId = 2,
+					ProductId = 2,
+				},
+				new ServiceRequest
+				{
+					Id = 3,
+					Description = "Koffie komt er uit maar is niet goed gemengd.",
+					Status = 2,
+					CustomerId = 3,
+					ProductId = 3,
+				},
+				new ServiceRequest
+				{
+					Id = 4,
+					Description = "Storingscode 404 op display",
+					Status = 2,
+					CustomerId = 4,
+					ProductId = 1,
+				},
+				new ServiceRequest
+				{
+					Id = 5,
+					Description = "Hoge temperatuuralarm",
+					Status = 3,
+					CustomerId = 5,
+					ProductId = 2,
+				},
+				new ServiceRequest
+				{
+					Id = 6,
+					Description = "Water is op error, maar water is niet op.",
+					Status = 3,
+					CustomerId = 6,
+					ProductId = 3,
+				}
+
+			);
 
             // Work Orders
-            var serviceRequests = new Faker<ServiceRequest>()
-                .RuleFor(w => w.Id, f => f.IndexFaker + 1)
-                .RuleFor(w => w.Description, f => f.Lorem.Sentence())
-                .RuleFor(w => w.Status, f => f.Random.Int(1, 3))
-                .RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
-                .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
-                .Generate(75);
-
-            modelBuilder.Entity<ServiceRequest>().HasData(serviceRequests);
-
-
             var workOrders = new Faker<WorkOrder>()
                 .RuleFor(w => w.Id, f => f.IndexFaker + 1)
                 .RuleFor(w => w.RequestId, f => f.Random.Int(1, 75))
