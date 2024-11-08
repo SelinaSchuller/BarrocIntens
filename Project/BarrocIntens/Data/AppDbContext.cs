@@ -9,123 +9,122 @@ using Bogus;
 
 namespace BarrocIntens.Data
 {
-	internal class AppDbContext : DbContext
-	{
-		public DbSet<Department> Departments { get; set; }
-		public DbSet<User> Users { get; set; }
-		public DbSet<Customer> Customers { get; set; }
-		public DbSet<Appointment> Appointments { get; set; }
-		public DbSet<Company> Company { get; set; }
-		public DbSet<Product> Products { get; set; }
-		public DbSet<Order> Orders { get; set; }
-		public DbSet<LeaseContract> LeaseContracts { get; set; }
-		public DbSet<Invoice> Invoices { get; set; }
-		public DbSet<InvoiceItem> InvoicesItems { get; set; }
-		public DbSet<ServiceRequest> ServiceRequests { get; set; }
-		public DbSet<ProductInventory> ProductInventories { get; set; }
-		public DbSet<WorkOrder> WorkOrders { get; set; }
-		public DbSet<Sales> Sales { get; set; }
-		public DbSet<ProductCategory> ProductCategories { get; set; }
+
+    internal class AppDbContext : DbContext
+    {
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<LeaseContract> LeaseContracts { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoicesItems { get; set; }
+        public DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public DbSet<ProductInventory> ProductInventories { get; set; }
+        public DbSet<WorkOrder> WorkOrders { get; set; }
+        public DbSet<Sales> Sales { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
 
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			optionsBuilder.UseMySql(
-				"server=localhost;user=root;password=;database=BarrocIntens",
-				ServerVersion.Parse("8.0.30")
-				);
-		}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySql(
+                "server=localhost;user=root;password=;database=BarrocIntens",
+                ServerVersion.Parse("8.0.30")
+                );
+        }
 
 
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			var faker = new Faker();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var faker = new Faker();
 
-			modelBuilder.Entity<ProductCategory>().HasData(
-				new ProductCategory { Id = 1, Name = "Part" },
-				new ProductCategory { Id = 2, Name = "Accessory" },
-				new ProductCategory { Id = 3, Name = "Service" },
-				new ProductCategory { Id = 4, Name = "Software" },
-				new ProductCategory { Id = 5, Name = "Hardware" }
-			);
+            modelBuilder.Entity<ProductCategory>().HasData(
+                new ProductCategory { Id = 1, Name = "Part" },
+                new ProductCategory { Id = 2, Name = "Accessory" },
+                new ProductCategory { Id = 3, Name = "Service" },
+                new ProductCategory { Id = 4, Name = "Software" },
+                new ProductCategory { Id = 5, Name = "Hardware" }
+            );
 
-			// Departments
-			modelBuilder.Entity<Department>().HasData(
-				new Department { Id = 1, Name = "Management" },
-				new Department { Id = 2, Name = "Sales" },
-				new Department { Id = 3, Name = "Onderhoud" },
-				new Department { Id = 4, Name = "Finance" },
-				new Department { Id = 5, Name = "Inkoop" }
-			);
+            // Departments
+            modelBuilder.Entity<Department>().HasData(
+                new Department { Id = 1, Name = "Sales" },
+                new Department { Id = 2, Name = "Onderhoud" },
+                new Department { Id = 3, Name = "Finance" },
+                new Department { Id = 4, Name = "Inkoop" }
+            );
 
-			// Users
-			modelBuilder.Entity<User>().HasData(
-				new User { Id = 1, Name = "Admin", Email = "admin@barrocintens.nl", Password = "admin", Active = true, DepartmentId = 1 },
-				new User { Id = 2, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 2 },
-				new User { Id = 3, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 3 },
-				new User { Id = 4, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 4 },
-				new User { Id = 5, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 5 }
-			);
+            // Users
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
+                new User { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
+                new User { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
+                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 }
+            );
 
-			// Companies
-			var companies = new Faker<Company>()
-				.RuleFor(c => c.Id, f => f.IndexFaker + 1)
-				.RuleFor(c => c.Name, f => f.Name.FullName())
-				.RuleFor(c => c.Bkr, f => f.IndexFaker < 50) // 10 with BKR registration
-				.Generate(150); // Inactive Customers
-			modelBuilder.Entity<Company>().HasData(companies);
-			// Customers
-			var customers = new Faker<Customer>()
-				.RuleFor(c => c.Id, f => f.IndexFaker + 1)
-				.RuleFor(c => c.Name, f => f.Name.FullName())
-				.RuleFor(c => c.Address, f => f.Address.StreetAddress())
-				.RuleFor(c => c.Email, f => f.Internet.Email())
-				.RuleFor(c => c.PhoneNumber, f => f.Phone.PhoneNumber())
-				.RuleFor(c => c.CompanyId, f => f.Random.Int(1, 150))
-				.Generate(150); // Active Customers
+            // Companies
+            var companies = new Faker<Company>()
+                .RuleFor(c => c.Id, f => f.IndexFaker + 1)
+                .RuleFor(c => c.Name, f => f.Name.FullName())
+                .RuleFor(c => c.Bkr, f => f.IndexFaker < 50) // 10 with BKR registration
+                .Generate(150); // Inactive Customers
+            modelBuilder.Entity<Company>().HasData(companies);
+            // Customers
+            var customers = new Faker<Customer>()
+                .RuleFor(c => c.Id, f => f.IndexFaker + 1)
+                .RuleFor(c => c.Name, f => f.Name.FullName())
+                .RuleFor(c => c.Address, f => f.Address.StreetAddress())
+                .RuleFor(c => c.Email, f => f.Internet.Email())
+                .RuleFor(c => c.PhoneNumber, f => f.Phone.PhoneNumber())
+                .RuleFor(c => c.CompanyId, f => f.Random.Int(1, 150))
+                .Generate(150); // Active Customers
 
 
-			modelBuilder.Entity<Customer>().HasData(customers);
+            modelBuilder.Entity<Customer>().HasData(customers);
 
 
-			// Products
-			var products = new Faker<Product>()
-				.RuleFor(p => p.Id, f => f.IndexFaker + 1)
-				.RuleFor(p => p.Name, f => f.Commerce.ProductName())
-				.RuleFor(p => p.Price, f => f.Finance.Amount(100, 1000))
-				.RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5))
-				.RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
-				.RuleFor(p => p.IsStock, f => f.Random.Bool())
-				.RuleFor(p => p.VisibleForCustomers, f => true)
-				.Generate(500);
+            // Products
+            var products = new Faker<Product>()
+                .RuleFor(p => p.Id, f => f.IndexFaker + 1)
+                .RuleFor(p => p.Name, f => f.Commerce.ProductName())
+                .RuleFor(p => p.Price, f => f.Finance.Amount(100, 1000))
+                .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5))
+                .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
+                .RuleFor(p => p.IsStock, f => f.Random.Bool())
+                .RuleFor(p => p.VisibleForCustomers, f => true)
+                .Generate(500);
 
-			modelBuilder.Entity<Product>().HasData(products);
+            modelBuilder.Entity<Product>().HasData(products);
 
-			// Invoices
-			Func<Faker, double> value = f => (double)f.Finance.Amount(100, 5000);
-			var invoices = new Faker<Invoice>()
-				.RuleFor(i => i.Id, f => f.IndexFaker + 1)
-				.RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
-				.RuleFor(i => i.DateCreated, f => f.Date.Recent())
-				.RuleFor(i => i.TotalPrice, value)
-				.RuleFor(i => i.Paid, f => f.IndexFaker < 120) // 120 invoices with payment delay
-				.Generate(500);
+            // Invoices
+            Func<Faker, double> value = f => (double)f.Finance.Amount(100, 5000);
+            var invoices = new Faker<Invoice>()
+                .RuleFor(i => i.Id, f => f.IndexFaker + 1)
+                .RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
+                .RuleFor(i => i.DateCreated, f => f.Date.Recent())
+                .RuleFor(i => i.TotalPrice, value)
+                .RuleFor(i => i.Paid, f => f.IndexFaker < 120) // 120 invoices with payment delay
+                .Generate(500);
 
-			modelBuilder.Entity<Invoice>().HasData(invoices);
+            modelBuilder.Entity<Invoice>().HasData(invoices);
 
-			// Lease Contracts
-			var leaseContracts = new Faker<LeaseContract>()
-				.RuleFor(l => l.Id, f => f.IndexFaker + 1)
-				.RuleFor(l => l.CompanyId, f => f.Random.Int(1, 3))
-				.RuleFor(l => l.Start_Date, f => f.Date.Past(1))
-				.RuleFor(l => l.End_Date, f => f.Date.Future(1))
-				.RuleFor(l => l.Contract_Type, f => f.PickRandom(new[] { "Repeat", "One-time" }))
-				.Generate(150);
+            // Lease Contracts
+            var leaseContracts = new Faker<LeaseContract>()
+                .RuleFor(l => l.Id, f => f.IndexFaker + 1)
+                .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 3))
+                .RuleFor(l => l.Start_Date, f => f.Date.Past(1))
+                .RuleFor(l => l.End_Date, f => f.Date.Future(1))
+                .RuleFor(l => l.Contract_Type, f => f.PickRandom(new[] { "Repeat", "One-time" }))
+                .Generate(150);
 
-			modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
-
-			//ServiceRequests(storingen)
+            modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
+            
+            //ServiceRequests(storingen)
 
 			//Ik heb dit ff temp gezet omdat ik aan het testen ben:
 			//var serviceRequests = new Faker<ServiceRequest>()
@@ -200,42 +199,41 @@ namespace BarrocIntens.Data
 
 			);
 
+            // Work Orders
+            var workOrders = new Faker<WorkOrder>()
+                .RuleFor(w => w.Id, f => f.IndexFaker + 1)
+                .RuleFor(w => w.RequestId, f => f.Random.Int(1, 75))
+                .RuleFor(w => w.Description, f => f.Lorem.Sentence())
+                .RuleFor(w => w.AppointmentId, f => f.Random.Int(1, 75))
+                .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
+                .RuleFor(w => w.UserId, f => f.Random.Int(1, 4))
+                .Generate(75);
 
-			// Work Orders
-			var workOrders = new Faker<WorkOrder>()
-				.RuleFor(w => w.Id, f => f.IndexFaker + 1)
-				.RuleFor(w => w.RequestId, f => f.Random.Int(1, 75))
-				.RuleFor(w => w.Description, f => f.Lorem.Sentence())
-				.RuleFor(w => w.AppointmentId, f => f.Random.Int(1, 75))
-				.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
-				.RuleFor(w => w.UserId, f => f.Random.Int(1, 5))
-				.Generate(75);
+            // Adding routine and maintenance work orders
+            var routineWorkOrders = workOrders.Take(35).Select(w =>
+            {
+                w.Description = "Routine Maintenance: " + w.Description;
+                return w;
+            }).ToList();
 
-			// Adding routine and maintenance work orders
-			var routineWorkOrders = workOrders.Take(35).Select(w =>
-			{
-				w.Description = "Routine Maintenance: " + w.Description;
-				return w;
-			}).ToList();
+            var emergencyWorkOrders = workOrders.Skip(35).ToList();
 
-			var emergencyWorkOrders = workOrders.Skip(35).ToList();
+            modelBuilder.Entity<WorkOrder>().HasData(routineWorkOrders);
+            modelBuilder.Entity<WorkOrder>().HasData(emergencyWorkOrders);
 
-			modelBuilder.Entity<WorkOrder>().HasData(routineWorkOrders);
-			modelBuilder.Entity<WorkOrder>().HasData(emergencyWorkOrders);
+            // Appointments
+            var appointments = new Faker<Appointment>()
+                .RuleFor(a => a.Id, f => f.IndexFaker + 1)
+                .RuleFor(a => a.Date, f => f.Date.Future(1))
+                .RuleFor(a => a.UserId, f => f.Random.Int(1, 4))
+                .RuleFor(a => a.CustomerId, f => f.Random.Int(1, 150))
+                .RuleFor(a => a.Description, f => f.Lorem.Sentence())
+                .Generate(75);
 
-			// Appointments
-			var appointments = new Faker<Appointment>()
-				.RuleFor(a => a.Id, f => f.IndexFaker + 1)
-				.RuleFor(a => a.Date, f => f.Date.Future(1))
-				.RuleFor(a => a.UserId, f => f.Random.Int(1, 5))
-				.RuleFor(a => a.CustomerId, f => f.Random.Int(1, 150))
-				.RuleFor(a => a.Description, f => f.Lorem.Sentence())
-				.Generate(75);
+            modelBuilder.Entity<Appointment>().HasData(appointments);
 
-			modelBuilder.Entity<Appointment>().HasData(appointments);
+            // Product Categories
 
-			// Product Categories
-
-		}
-	}
+        }
+    }
 }

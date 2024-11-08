@@ -34,6 +34,7 @@
     <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
+    <None Remove="Sales\SalesDashboard.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -124,6 +125,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Sales\SalesDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Onderhoud\OnderhoudIngekomenStoringen.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

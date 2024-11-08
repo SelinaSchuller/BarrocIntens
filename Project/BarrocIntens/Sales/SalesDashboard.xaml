@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Page
-    x:Class="BarrocIntens.SalesDashboard"
+<Window
+    x:Class="BarrocIntens.Sales.SalesDashboard"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BarrocIntens"
+    xmlns:local="using:BarrocIntens.Sales"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="#3b3b3b">
+    mc:Ignorable="d">
 
-    <Page.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#FDD716"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="4"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="40"/>
-        </Style>
-    </Page.Resources>
-
-    <Grid>
+    <Grid Background="#3b3b3b">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -39,17 +25,24 @@
         </StackPanel>
 
         <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant"/>
+            <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant" 
+                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Spacing="10">
-            <Button x:Name="CustomerPageButton" Click="CustomerPage_Click" Content="Klanten"/>
-            
-            <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact"/>
-            
-            <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte"/>
-            
-            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notitie"/>
+            <Button x:Name="CustomerPageButton" Click="CustomerPage_Click" Content="Klanten" 
+                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
+                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
+                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notitie" 
+                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
         </StackPanel>
 
         <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerKlantenInfo" BorderBrush="black" BorderThickness="4">
@@ -71,7 +64,7 @@
                 <TextBlock Text="Info" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="1" TextAlignment="Center"/>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.ColumnSpan="2" >
+            <Grid Grid.Row="1" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -79,13 +72,13 @@
 
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
                     <TextBox 
-                         x:Name="searchTextBox" 
-                         TextChanged="searchTextBox_TextChanged"
-                         BorderBrush="#FDD716"
-                         BorderThickness="2"
-                         Background="White"
-                         PlaceholderText="Search..."
-                         Margin="10"  />
+                     x:Name="searchTextBox" 
+                     TextChanged="searchTextBox_TextChanged"
+                     BorderBrush="#FDD716"
+                     BorderThickness="2"
+                     Background="White"
+                     PlaceholderText="Search..."
+                     Margin="10"  />
                     <ListView>
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -99,7 +92,7 @@
                     </ListView>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" BorderBrush="#FDD716" BorderThickness="4">
+                <StackPanel Grid.Column="1" BorderBrush="#FDD716" BorderThickness="4">
                     <ListView>
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -115,4 +108,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Page>
+</Window>
