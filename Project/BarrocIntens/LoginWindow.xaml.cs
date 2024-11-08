@@ -33,11 +33,11 @@ namespace BarrocIntens
 		{
 			using (var db = new AppDbContext())
 			{
-				string username = NameTextBox.Text;
-				string password = PasswordTextBox.Password;
-				if (db.Users.Any(u => u.Name == username && u.Password == password))
-				{
-					int departmentId = db.Users.Where(u => u.Name == username && u.Password == password).Select(u => u.DepartmentId).FirstOrDefault();
+				string email = mailTextBox.Text;
+                string password = PasswordTextBox.Password;
+				if (db.Users.Any(u => u.Email == email && u.Password == password))
+                {
+					int departmentId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.DepartmentId).FirstOrDefault();
 					if (departmentId == 1)
 					{
 						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
@@ -72,7 +72,7 @@ namespace BarrocIntens
                 }
 				else
 				{
-                    ErrorTextBlock.Text = "Gebruikersnaam of wachtwoord is onjuist";	
+                    ErrorTextBlock.Text = "E-mail of wachtwoord is onjuist";	
                 }
 
             }

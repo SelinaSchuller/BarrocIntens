@@ -51,19 +51,19 @@ namespace BarrocIntens.Data
             );
 
             // Departments
-            modelBuilder.Entity<Departments>().HasData(
-                new Departments { Id = 1, Name = "Sales" },
-                new Departments { Id = 2, Name = "Onderhoud" },
-                new Departments { Id = 3, Name = "Finance" },
-                new Departments { Id = 4, Name = "Inkoop" }
+            modelBuilder.Entity<Department>().HasData(
+                new Department { Id = 1, Name = "Sales" },
+                new Department { Id = 2, Name = "Onderhoud" },
+                new Department { Id = 3, Name = "Finance" },
+                new Department { Id = 4, Name = "Inkoop" }
             );
 
             // Users
-            modelBuilder.Entity<Users>().HasData(
-                new Users { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
-                new Users { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
-                new Users { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
-                new Users { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 }
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
+                new User { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
+                new User { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
+                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 }
             );
 
             // Companies
