@@ -4,31 +4,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Onderhoud"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:localData="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
     <Grid Background="#3e3e3e" Padding="20">
         <StackPanel>
             <TextBlock Text="Ingekomen Storingen" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" />
 
-            <Border Width="500" Background="Black" CornerRadius="20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
+            <Border Width="450" Background="Black" CornerRadius="20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
                     <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock Text="Storingen" Foreground="Black" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
                     <Rectangle Fill="Black" Height="2" Margin="0,5"/>
 
-                    <ListView x:Name="storingenListView" ItemsSource="{Binding ServiceRequest}">
-
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="16" Width="150" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding DateFormatted}" Foreground="#FDD716" FontSize="16" Width="150" TextAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="400">
+                        <ListView x:Name="storingenListView" ItemsSource="{x:Bind StoringenLijst}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="localData:ServiceRequest">
+                                    <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="5" Margin="5">
+                                        <StackPanel Orientation="Vertical" Margin="0">
+                                            <!-- Format Date_Reported to only show date -->
+                                            <TextBlock Foreground="White" Text="{x:Bind Date_Reported, StringFormat='{}{0:dd/MM/yyyy}'}" FontWeight="Light" FontSize="14" TextAlignment="Left"/>
+                                            <TextBlock Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextAlignment="Left"/>
+                                            <TextBlock Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
                 </StackPanel>
             </Border>
         </StackPanel>
