@@ -90,17 +90,25 @@ namespace BarrocIntens.Data
 
 
             // Products
+            modelBuilder.Entity<Products>()
+                        .HasOne(p => p.Category)
+                        .WithMany(c => c.Products)
+                        .HasForeignKey(p => p.CategoryId);
+
+            base.OnModelCreating(modelBuilder);
+
             var products = new Faker<Products>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
                 .RuleFor(p => p.Name, f => f.Commerce.ProductName())
                 .RuleFor(p => p.Price, f => f.Finance.Amount(100, 1000))
-                .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5))
+                .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5)) // Random CategoryId from 1 to 5
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.IsStock, f => f.Random.Bool())
                 .RuleFor(p => p.VisibleForCustomers, f => true)
                 .Generate(500);
 
             modelBuilder.Entity<Products>().HasData(products);
+
 
             // Invoices
             Func<Faker, double> value = f => (double)f.Finance.Amount(100, 5000);

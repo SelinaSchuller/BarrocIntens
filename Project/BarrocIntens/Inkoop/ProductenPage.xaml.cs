@@ -1,3 +1,5 @@
+using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +28,12 @@ namespace BarrocIntens.Inkoop
         public ProductenPage()
         {
             this.InitializeComponent();
+
+            using (var db = new AppDbContext())
+            {
+                ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+            };
+           
         }
 
         private void ZoekButton_Click(object sender, RoutedEventArgs e)
@@ -41,6 +49,16 @@ namespace BarrocIntens.Inkoop
         private void NieuwProductButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ProductAanmaakPage));
+        }
+
+        private void BewerkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void VerwijderButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
