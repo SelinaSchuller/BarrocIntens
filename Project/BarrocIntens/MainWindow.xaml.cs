@@ -35,7 +35,13 @@ namespace BarrocIntens
                 db.Database.EnsureCreated();
             }
 
-            var baseWindow = new InkoopDashboardWindow();
+
+            //Als login werkt:
+            //var baseWindow = new LoginWindow();
+            //baseWindow.Activate();
+
+            //Tijdelijk om gelijk naar je pagina te kijken:
+            var baseWindow = new OnderhoudBaseWindow();
             baseWindow.Activate();
             DispatcherQueue.TryEnqueue(() =>
             {

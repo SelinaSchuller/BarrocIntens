@@ -20,6 +20,9 @@
     <Page Remove="Images\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\meldingIcon.png" />
+    <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
+    <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="SalesDashboard.xaml" />
   </ItemGroup>
 
@@ -118,5 +121,17 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudIngekomenStoringen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudBaseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
