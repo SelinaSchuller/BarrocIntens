@@ -51,21 +51,19 @@ namespace BarrocIntens.Data
             );
 
             // Departments
-            modelBuilder.Entity<Department>().HasData(
-                new Department { Id = 1, Name = "Management" },
-                new Department { Id = 2, Name = "Sales" },
-                new Department { Id = 3, Name = "Onderhoud" },
-                new Department { Id = 4, Name = "Finance" },
-                new Department { Id = 5, Name = "Inkoop" }
+            modelBuilder.Entity<Departments>().HasData(
+                new Departments { Id = 1, Name = "Sales" },
+                new Departments { Id = 2, Name = "Onderhoud" },
+                new Departments { Id = 3, Name = "Finance" },
+                new Departments { Id = 4, Name = "Inkoop" }
             );
 
             // Users
-            modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Admin", Email = "admin@barrocintens.nl", Password = "admin", Active = true, DepartmentId = 1 },
-                new User { Id = 2, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 2 },
-                new User { Id = 3, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 3 },
-                new User { Id = 4, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 4 },
-                new User { Id = 5, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 5 }
+            modelBuilder.Entity<Users>().HasData(
+                new Users { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
+                new Users { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
+                new Users { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
+                new Users { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 }
             );
 
             // Companies
@@ -143,7 +141,7 @@ namespace BarrocIntens.Data
                 .RuleFor(w => w.Description, f => f.Lorem.Sentence())
                 .RuleFor(w => w.AppointmentId, f => f.Random.Int(1, 75))
                 .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
-                .RuleFor(w => w.UserId, f => f.Random.Int(1, 5))
+                .RuleFor(w => w.UserId, f => f.Random.Int(1, 4))
                 .Generate(75);
 
             // Adding routine and maintenance work orders
@@ -162,7 +160,7 @@ namespace BarrocIntens.Data
             var appointments = new Faker<Appointment>()
                 .RuleFor(a => a.Id, f => f.IndexFaker + 1)
                 .RuleFor(a => a.Date, f => f.Date.Future(1))
-                .RuleFor(a => a.UserId, f => f.Random.Int(1, 5))
+                .RuleFor(a => a.UserId, f => f.Random.Int(1, 4))
                 .RuleFor(a => a.CustomerId, f => f.Random.Int(1, 150))
                 .RuleFor(a => a.Description, f => f.Lorem.Sentence())
                 .Generate(75);

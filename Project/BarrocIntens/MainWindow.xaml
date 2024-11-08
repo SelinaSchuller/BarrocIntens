@@ -8,14 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <SelectorBar x:Name="SelectorBar" Grid.Row="0" SelectionChanged="SelectorBar_SelectionChanged">
-            <SelectorBarItem x:Name="SalesDashboardSelector" Text="Sales" />
-        </SelectorBar>
 
         <StackPanel>
             <Frame x:Name="MainFrame" />
