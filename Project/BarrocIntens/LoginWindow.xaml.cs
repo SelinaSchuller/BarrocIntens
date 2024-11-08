@@ -47,10 +47,9 @@ namespace BarrocIntens
 					}
 					else if (departmentId == 2)
 					{
-						// Verander dit naar de juiste window wanneer deze is aangemaakt
-						var onderhoudDashboard = new Onderhoud.OnderhoudMainPage();
+						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow();
 						this.Close();
-						//onderhoudDashboard.Activate();
+						onderhoudDashboard.Activate();
 					}
 					else if (departmentId == 3)
 					{
