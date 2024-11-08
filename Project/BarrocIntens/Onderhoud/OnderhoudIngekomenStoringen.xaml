@@ -18,7 +18,8 @@
                     </Border>
                     <Rectangle Fill="Black" Height="2" Margin="0,5"/>
 
-                    <ListView x:Name="storingenListView" ItemsSource="{Binding StoringenLijst}">
+                    <ListView x:Name="storingenListView" ItemsSource="{Binding ServiceRequest}">
+
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,10">
