@@ -27,6 +27,8 @@
     <None Remove="BaseWindow.xaml" />
     <None Remove="Inkoop\InkoopDashboardWIndow.xaml" />
     <None Remove="Financiën\FinanciënMainPage.xaml" />
+    <None Remove="Inkoop\ProductAanmaakPage.xaml" />
+    <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
   </ItemGroup>
@@ -65,6 +67,18 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="SalesDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Inkoop\ProductAanmaakPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Inkoop\ProductenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
