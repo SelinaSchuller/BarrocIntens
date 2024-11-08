@@ -16,12 +16,11 @@
 
         <StackPanel>
             <Image Width="200" Source="../Assets/Logo6_groot.png" Margin="20"/>
-            <Button Background="Black" Foreground="#ffd700" Width="150" FontSize="20" HorizontalAlignment="Center" Margin="0 20 0 10" BorderBrush="#ffd700" BorderThickness="2" Click="ProductButton_Click">Producten</Button>
-            <Button Background="Black" Foreground="#ffd700" Width="150" FontSize="20" HorizontalAlignment="Center" Margin="0 10 0 20" BorderBrush="#ffd700" BorderThickness="2" Click="BestelButton_Click">Bestellen</Button>
+            <Button Background="Black" Foreground="#FDD716" Width="150" FontSize="20" HorizontalAlignment="Center" Margin="0 20 0 10" BorderBrush="#FDD716" BorderThickness="2" Click="ProductButton_Click">Producten</Button>
+            <Button Background="Black" Foreground="#FDD716" Width="150" FontSize="20" HorizontalAlignment="Center" Margin="0 10 0 20" BorderBrush="#FDD716" BorderThickness="2" Click="BestelButton_Click">Bestellen</Button>
         </StackPanel>
 
         <Frame x:Name="contentFrame" Grid.Column="1"/>
 
-       
     </Grid>
 </Window>

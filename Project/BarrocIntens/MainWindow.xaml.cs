@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using BarrocIntens.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -28,21 +29,22 @@ namespace BarrocIntens
         public MainWindow()
         {
             this.InitializeComponent();
+            using (var db = new AppDbContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+            }
 
-            //Als login werkt:
-            //var baseWindow = new LoginWindow();
-            //baseWindow.Activate();
-
-            //Tijdelijk om gelijk naar je pagina te kijken:
-            var baseWindow = new BaseWindow();
+            var baseWindow = new InkoopDashboardWindow();
             baseWindow.Activate();
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                this.Close();
+            });
+        }
+        /// <summary>
+        /// An empty window that can be used on its own or navigated to within a Frame.
+        /// </summary>
 
-			//Sluit de Mainwindow automatisch:
-			DispatcherQueue.TryEnqueue(() =>
-			{
-				this.Close();
-			});
-		}
-
-	}
+    }
 }
