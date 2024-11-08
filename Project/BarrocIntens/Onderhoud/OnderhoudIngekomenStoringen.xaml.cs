@@ -29,7 +29,7 @@ namespace BarrocIntens.Onderhoud
 	/// </summary>
 	public sealed partial class OnderhoudIngekomenStoringen : Window
 	{
-		private List<ServiceRequests> StoringenLijst { get; set; }
+		private List<ServiceRequest> StoringenLijst { get; set; }
 
 		public OnderhoudIngekomenStoringen()
 		{
