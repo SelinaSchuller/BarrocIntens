@@ -13,7 +13,7 @@ namespace BarrocIntens.Data
         public int CustomerId { get; set; }
         public double TotalPrice { get; set; }
         public DateTime Date { get; set; }
-        public Products Product { get; set; }
-        public Customers Customer { get; set; }
+        public Product Product { get; set; }
+        public Customer Customer { get; set; }
     }
 }
