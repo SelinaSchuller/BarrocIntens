@@ -29,6 +29,7 @@
     <None Remove="Financiën\FinanciënMainPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
+    <None Remove="Sales\SalesDashboard.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,5 +105,11 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

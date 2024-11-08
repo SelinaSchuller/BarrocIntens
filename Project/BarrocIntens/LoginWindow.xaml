@@ -27,6 +27,7 @@
                 <StackPanel>
                     <TextBlock Text="Wachtwoord:" Foreground="#212121" FontSize="30" FontWeight="Medium"/>
                     <PasswordBox x:Name="PasswordTextBox" Background="#b39812" Foreground="Black" PasswordRevealMode="Hidden" IsPasswordRevealButtonEnabled="True" FontSize="20" InputScope="Password" BorderBrush="#f0cc05" BorderThickness="2"/>
+                    <TextBlock x:Name="ErrorTextBlock" Foreground="Red" FontSize="20"/>
                 </StackPanel>
                 <Button x:Name="LoginButton" Click="LoginButton_Click" Foreground="White" Background="#212121" FontSize="30" Margin="0 25 0 0" Padding="30 10 30 10" BorderBrush="#b59a10" BorderThickness="2" CornerRadius="20" HorizontalAlignment="Center">Login</Button>
             </StackPanel>

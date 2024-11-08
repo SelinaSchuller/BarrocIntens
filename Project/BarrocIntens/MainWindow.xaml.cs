@@ -16,14 +16,8 @@ using Microsoft.UI.Xaml.Navigation;
 using BarrocIntens.Onderhoud;
 using BarrocIntens.Inkoop;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace BarrocIntens
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
         public MainWindow()
@@ -35,16 +29,12 @@ namespace BarrocIntens
                 db.Database.EnsureCreated();
             }
 
-            var baseWindow = new InkoopDashboardWindow();
+            var baseWindow = new LoginWindow();
             baseWindow.Activate();
             DispatcherQueue.TryEnqueue(() =>
             {
                 this.Close();
             });
         }
-        /// <summary>
-        /// An empty window that can be used on its own or navigated to within a Frame.
-        /// </summary>
-
     }
 }
