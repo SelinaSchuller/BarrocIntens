@@ -1,3 +1,4 @@
+using BarrocIntens.Data;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -27,14 +28,14 @@ namespace BarrocIntens.Onderhoud
 	public sealed partial class OnderhoudMainPage : Page
 	{
 		public List<OnderhoudItem> LaatsteOnderhoudLijst { get; set; }
-		public List<StoringItem> StoringenLijst { get; set; }
+		//public List<ServiceRequests> StoringenLijst { get; set; }
 
 		public OnderhoudMainPage()
 		{
 			this.InitializeComponent();
 
-			CreateHardcodeLists();
-			this.DataContext = this;
+			//CreateHardcodeLists();
+			//this.DataContext = this;
 		}
 
 		public void CreateHardcodeLists()
@@ -49,12 +50,12 @@ namespace BarrocIntens.Onderhoud
 			};
 
 			// Hardcoded data voor "Storingen"
-			StoringenLijst = new List<StoringItem>
-			{
-				new StoringItem { KlantNaam = "Jan van Dijk", Status = 0, Date = new DateTime(2024, 10, 8) },
-				new StoringItem { KlantNaam = "Pieter de Jong", Status = 0, Date = DateTime.Today.AddDays(-1) },
-				new StoringItem { KlantNaam = "Klaas Bakker", Status = 0, Date = DateTime.Today }
-			};
+			//StoringenLijst = new List<StoringItem>
+			//{
+			//	new StoringItem { KlantNaam = "Jan van Dijk", Status = 0, Date = new DateTime(2024, 10, 8) },
+			//	new StoringItem { KlantNaam = "Pieter de Jong", Status = 0, Date = DateTime.Today.AddDays(-1) },
+			//	new StoringItem { KlantNaam = "Klaas Bakker", Status = 0, Date = DateTime.Today }
+			//};
 		}
 
 		//Deze classes zijn temp tot dat de database klaar is:
