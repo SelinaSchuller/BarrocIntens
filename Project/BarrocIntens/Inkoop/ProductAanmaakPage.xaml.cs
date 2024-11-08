@@ -27,5 +27,15 @@ namespace BarrocIntens.Inkoop
         {
             this.InitializeComponent();
         }
+
+        private void TerugButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ProductenPage));
+        }
+
+        private void OpslaanButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
