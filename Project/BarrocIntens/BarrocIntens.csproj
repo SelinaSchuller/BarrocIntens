@@ -20,6 +20,9 @@
     <Page Remove="Images\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\meldingIcon.png" />
+    <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
+    <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="SalesDashboard.xaml" />
   </ItemGroup>
 
@@ -27,6 +30,8 @@
     <None Remove="BaseWindow.xaml" />
     <None Remove="Inkoop\InkoopDashboardWIndow.xaml" />
     <None Remove="Financiën\FinanciënMainPage.xaml" />
+    <None Remove="Inkoop\ProductAanmaakPage.xaml" />
+    <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
     <None Remove="Sales\SalesDashboard.xaml" />
@@ -66,6 +71,18 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="SalesDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Inkoop\ProductAanmaakPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Inkoop\ProductenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -109,6 +126,15 @@
 
   <ItemGroup>
     <Page Update="Sales\SalesDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Onderhoud\OnderhoudIngekomenStoringen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudBaseWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

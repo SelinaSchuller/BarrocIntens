@@ -11,7 +11,7 @@
         <!-- Frame vult het volledige scherm -->
         <Frame x:Name="MainFrame" />
 
-        <!-- Overlay voor het logo altijd op de voorgrond -->
+        <!-- Logo -->
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Transparent">
             <StackPanel Width="200" Height="200">
                 <Image Width="200"

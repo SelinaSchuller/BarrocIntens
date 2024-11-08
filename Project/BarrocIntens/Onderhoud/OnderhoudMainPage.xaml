@@ -64,7 +64,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FDD716"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gray"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#545454"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -79,17 +79,21 @@
 
     <Grid Background="#3e3e3e">
         <!-- Titel bovenaan -->
-        <TextBlock Text="Onderhoud" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
+        <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Background="Transparent">
+            <StackPanel>
+                <TextBlock Text="Dashboard" Foreground="#ffffff" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
+            </StackPanel>
+        </Border>
 
         <!-- Linker zijpaneel met knoppen -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
-            <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
-            <Button Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
+            <Button Foreground="#ffffff" Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
+            <Button Foreground="#ffffff" Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
         </StackPanel>
 
         <!-- Hoofdcontent -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="50">
-            <!-- Kolom Laatste onderhoud -->
+            <!-- Kolom Laatste onderhouds -->
             <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
                     <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">

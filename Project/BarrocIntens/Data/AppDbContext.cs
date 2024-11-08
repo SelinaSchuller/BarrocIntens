@@ -11,21 +11,21 @@ namespace BarrocIntens.Data
 {
     internal class AppDbContext : DbContext
     {
-        public DbSet<Departments> Departments { get; set; }
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Customers> Customers { get; set; }
-        public DbSet<Appointments> Appointments { get; set; }
-        public DbSet<Companies> Company { get; set; }
-        public DbSet<Products> Products { get; set; }
-        public DbSet<Orders> Orders { get; set; }
-        public DbSet<LeaseContracts> LeaseContracts { get; set; }
-        public DbSet<Invoices> Invoices { get; set; }
-        public DbSet<InvoiceItems> InvoicesItems { get; set; }
-        public DbSet<ServiceRequests> ServiceRequests { get; set; }
-        public DbSet<ProductInventories> ProductInventories { get; set; }
-        public DbSet<WorkOrders> WorkOrders { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<LeaseContract> LeaseContracts { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoicesItems { get; set; }
+        public DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public DbSet<ProductInventory> ProductInventories { get; set; }
+        public DbSet<WorkOrder> WorkOrders { get; set; }
         public DbSet<Sales> Sales { get; set; }
-        public DbSet<ProductCategories> ProductCategories { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,12 +42,12 @@ namespace BarrocIntens.Data
         {
             var faker = new Faker();
 
-            modelBuilder.Entity<ProductCategories>().HasData(
-                new ProductCategories { Id = 1, Name = "Part" },
-                new ProductCategories { Id = 2, Name = "Accessory" },
-                new ProductCategories { Id = 3, Name = "Service" },
-                new ProductCategories { Id = 4, Name = "Software" },
-                new ProductCategories { Id = 5, Name = "Hardware" }
+            modelBuilder.Entity<ProductCategory>().HasData(
+                new ProductCategory { Id = 1, Name = "Part" },
+                new ProductCategory { Id = 2, Name = "Accessory" },
+                new ProductCategory { Id = 3, Name = "Service" },
+                new ProductCategory { Id = 4, Name = "Software" },
+                new ProductCategory { Id = 5, Name = "Hardware" }
             );
 
             // Departments
@@ -67,14 +67,14 @@ namespace BarrocIntens.Data
             );
 
             // Companies
-            var companies = new Faker<Companies>()
+            var companies = new Faker<Company>()
                 .RuleFor(c => c.Id, f => f.IndexFaker + 1)
                 .RuleFor(c => c.Name, f => f.Name.FullName())
                 .RuleFor(c => c.Bkr, f => f.IndexFaker < 50) // 10 with BKR registration
                 .Generate(150); // Inactive Customers
-            modelBuilder.Entity<Companies>().HasData(companies);
+            modelBuilder.Entity<Company>().HasData(companies);
             // Customers
-            var customers = new Faker<Customers>()
+            var customers = new Faker<Customer>()
                 .RuleFor(c => c.Id, f => f.IndexFaker + 1)
                 .RuleFor(c => c.Name, f => f.Name.FullName())
                 .RuleFor(c => c.Address, f => f.Address.StreetAddress())
@@ -84,11 +84,11 @@ namespace BarrocIntens.Data
                 .Generate(150); // Active Customers
 
 
-            modelBuilder.Entity<Customers>().HasData(customers);
+            modelBuilder.Entity<Customer>().HasData(customers);
 
 
             // Products
-            var products = new Faker<Products>()
+            var products = new Faker<Product>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
                 .RuleFor(p => p.Name, f => f.Commerce.ProductName())
                 .RuleFor(p => p.Price, f => f.Finance.Amount(100, 1000))
@@ -98,11 +98,11 @@ namespace BarrocIntens.Data
                 .RuleFor(p => p.VisibleForCustomers, f => true)
                 .Generate(500);
 
-            modelBuilder.Entity<Products>().HasData(products);
+            modelBuilder.Entity<Product>().HasData(products);
 
             // Invoices
             Func<Faker, double> value = f => (double)f.Finance.Amount(100, 5000);
-            var invoices = new Faker<Invoices>()
+            var invoices = new Faker<Invoice>()
                 .RuleFor(i => i.Id, f => f.IndexFaker + 1)
                 .RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
                 .RuleFor(i => i.DateCreated, f => f.Date.Recent())
@@ -110,10 +110,10 @@ namespace BarrocIntens.Data
                 .RuleFor(i => i.Paid, f => f.IndexFaker < 120) // 120 invoices with payment delay
                 .Generate(500);
 
-            modelBuilder.Entity<Invoices>().HasData(invoices);
+            modelBuilder.Entity<Invoice>().HasData(invoices);
 
             // Lease Contracts
-            var leaseContracts = new Faker<LeaseContracts>()
+            var leaseContracts = new Faker<LeaseContract>()
                 .RuleFor(l => l.Id, f => f.IndexFaker + 1)
                 .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 3))
                 .RuleFor(l => l.Start_Date, f => f.Date.Past(1))
@@ -121,10 +121,10 @@ namespace BarrocIntens.Data
                 .RuleFor(l => l.Contract_Type, f => f.PickRandom(new[] { "Repeat", "One-time" }))
                 .Generate(150);
 
-            modelBuilder.Entity<LeaseContracts>().HasData(leaseContracts);
+            modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
 
             // Work Orders
-            var serviceRequests = new Faker<ServiceRequests>()
+            var serviceRequests = new Faker<ServiceRequest>()
                 .RuleFor(w => w.Id, f => f.IndexFaker + 1)
                 .RuleFor(w => w.Description, f => f.Lorem.Sentence())
                 .RuleFor(w => w.Status, f => f.Random.Int(1, 3))
@@ -132,10 +132,10 @@ namespace BarrocIntens.Data
                 .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
                 .Generate(75);
 
-            modelBuilder.Entity<ServiceRequests>().HasData(serviceRequests);
+            modelBuilder.Entity<ServiceRequest>().HasData(serviceRequests);
 
 
-            var workOrders = new Faker<WorkOrders>()
+            var workOrders = new Faker<WorkOrder>()
                 .RuleFor(w => w.Id, f => f.IndexFaker + 1)
                 .RuleFor(w => w.RequestId, f => f.Random.Int(1, 75))
                 .RuleFor(w => w.Description, f => f.Lorem.Sentence())
@@ -153,11 +153,11 @@ namespace BarrocIntens.Data
 
             var emergencyWorkOrders = workOrders.Skip(35).ToList();
 
-            modelBuilder.Entity<WorkOrders>().HasData(routineWorkOrders);
-            modelBuilder.Entity<WorkOrders>().HasData(emergencyWorkOrders);
+            modelBuilder.Entity<WorkOrder>().HasData(routineWorkOrders);
+            modelBuilder.Entity<WorkOrder>().HasData(emergencyWorkOrders);
 
             // Appointments
-            var appointments = new Faker<Appointments>()
+            var appointments = new Faker<Appointment>()
                 .RuleFor(a => a.Id, f => f.IndexFaker + 1)
                 .RuleFor(a => a.Date, f => f.Date.Future(1))
                 .RuleFor(a => a.UserId, f => f.Random.Int(1, 4))
@@ -165,7 +165,7 @@ namespace BarrocIntens.Data
                 .RuleFor(a => a.Description, f => f.Lorem.Sentence())
                 .Generate(75);
 
-            modelBuilder.Entity<Appointments>().HasData(appointments);
+            modelBuilder.Entity<Appointment>().HasData(appointments);
 
             // Product Categories
 

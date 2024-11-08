@@ -30,6 +30,7 @@ namespace BarrocIntens
             }
 
             var baseWindow = new LoginWindow();
+
             baseWindow.Activate();
             DispatcherQueue.TryEnqueue(() =>
             {

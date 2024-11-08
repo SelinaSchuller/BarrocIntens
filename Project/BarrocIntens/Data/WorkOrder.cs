@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    internal class WorkOrders
+    internal class WorkOrder
     {
         public int Id { get; set; }
         public string Description { get; set; }
@@ -14,9 +14,9 @@ namespace BarrocIntens.Data
         public int ProductId { get; set; }
         public int AppointmentId { get; set; }
         public int RequestId { get; set; }
-        public Users User { get; set; }
-        public Products Product { get; set; }
-        public Appointments Appointment { get; set; }
-        public ServiceRequests Request { get; set; }
+        public User User { get; set; }
+        public Product Product { get; set; }
+        public Appointment Appointment { get; set; }
+        public ServiceRequest Request { get; set; }
     }
 }
