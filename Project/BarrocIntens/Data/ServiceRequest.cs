@@ -16,5 +16,8 @@ namespace BarrocIntens.Data
         public int ProductId { get; set; }
         public Customer Customer { get; set; }
         public Product Product { get; set; }
-    }
+
+		public string FormattedDateReported => Date_Reported.ToString("dd/MM/yyyy");
+
+	}
 }

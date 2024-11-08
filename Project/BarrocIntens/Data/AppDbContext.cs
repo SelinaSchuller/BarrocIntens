@@ -123,27 +123,27 @@ namespace BarrocIntens.Data
                 .Generate(150);
 
             modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
-            
+
             //ServiceRequests(storingen)
 
-			//Ik heb dit ff temp gezet omdat ik aan het testen ben:
-			//var serviceRequests = new Faker<ServiceRequest>()
-			//	.RuleFor(w => w.Id, f => f.IndexFaker + 1)
-			//	.RuleFor(w => w.Description, f => f.Lorem.Sentence())
-			//	.RuleFor(w => w.Status, f => f.Random.Int(1, 3))
-			//	.RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
-			//	.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
-			//	.Generate(75);
+            //Ik heb dit ff temp gezet omdat ik aan het testen ben:
+            var serviceRequests = new Faker<ServiceRequest>()
+                .RuleFor(w => w.Id, f => f.IndexFaker + 7)
+                .RuleFor(w => w.Description, f => f.Lorem.Sentence())
+                .RuleFor(w => w.Status, f => f.Random.Int(1, 3))
+                .RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
+                .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
+                .Generate(75);
 
-			var serviceRequests = new Faker<ServiceRequest>()
-				.RuleFor(w => w.Id, f => f.IndexFaker + 7)
-				.RuleFor(w => w.Description, f => f.Lorem.Sentence())
-				.RuleFor(w => w.Status, f => f.Random.Int(3, 3))
-				.RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
-				.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
-				.Generate(75);
+            //var serviceRequests = new Faker<ServiceRequest>()
+            //	.RuleFor(w => w.Id, f => f.IndexFaker + 7)
+            //	.RuleFor(w => w.Description, f => f.Lorem.Sentence())
+            //	.RuleFor(w => w.Status, f => f.Random.Int(3, 3))
+            //	.RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
+            //	.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
+            //	.Generate(75);
 
-			modelBuilder.Entity<ServiceRequest>().HasData(serviceRequests);
+            modelBuilder.Entity<ServiceRequest>().HasData(serviceRequests);
 
 			modelBuilder.Entity<ServiceRequest>().HasData(
 				new ServiceRequest
