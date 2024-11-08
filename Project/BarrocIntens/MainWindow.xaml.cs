@@ -48,9 +48,17 @@ namespace BarrocIntens
                 this.Close();
             });
         }
-        /// <summary>
-        /// An empty window that can be used on its own or navigated to within a Frame.
-        /// </summary>
+		private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+		{
+			SelectorBarItem selectedItem = sender.SelectedItem;
+			if(selectedItem == SalesDashboardSelector)
+			{
+				MainFrame.Navigate(typeof(SalesDashboard));
+			}
+		}
+		/// <summary>
+		/// An empty window that can be used on its own or navigated to within a Frame.
+		/// </summary>
 
-    }
+	}
 }
