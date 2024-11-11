@@ -28,34 +28,60 @@ namespace BarrocIntens.Sales
         public SalesDashboardWindow()
         {
             this.InitializeComponent();
-
 			this.Title = "Sales";
 
-			
-
 			MainFrame.Navigate(typeof(SalesMainPage));
+
+			SetButtonVisibility();
+		}
+
+		private void SetButtonVisibility()
+		{
+			CustomerPageButton.Visibility = Visibility.Visible;
+			OffertePageButton.Visibility = Visibility.Visible;
+			ContactPageButton.Visibility = Visibility.Visible;
+			NotePageButton.Visibility = Visibility.Visible;
+
+			if(MainFrame.SourcePageType == typeof(SalesMainPage))
+			{
+				CustomerPageButton.Visibility = Visibility.Collapsed;
+			}
+			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
+			{
+				OffertePageButton.Visibility = Visibility.Collapsed;
+			}
+			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
+			{
+				ContactPageButton.Visibility = Visibility.Collapsed;
+			}
+			else if(MainFrame.SourcePageType == typeof(SalesNotesPage))
+			{
+				NotePageButton.Visibility = Visibility.Collapsed;
+
+			}
 		}
 
 		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			SetButtonVisibility();
 		}
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			SetButtonVisibility();
 		}
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			SetButtonVisibility();
 		}
 
 		private void NotePageButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			MainFrame.Navigate(typeof(SalesNotesPage));
+			SetButtonVisibility();
 		}
 
-		
+
 	}
 }
