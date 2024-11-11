@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bogus;
+using System.Configuration;
 
 
 namespace BarrocIntens.Data
@@ -33,7 +34,7 @@ namespace BarrocIntens.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(
-                "server=localhost;user=root;password=;database=BarrocIntens",
+                ConfigurationManager.ConnectionStrings["BarrocIntens"].ConnectionString,
                 ServerVersion.Parse("8.0.30")
                 );
         }
@@ -57,7 +58,10 @@ namespace BarrocIntens.Data
                 new Department { Id = 1, Name = "Sales" },
                 new Department { Id = 2, Name = "Onderhoud" },
                 new Department { Id = 3, Name = "Finance" },
-                new Department { Id = 4, Name = "Inkoop" }
+                new Department { Id = 4, Name = "Inkoop" },
+                new Department { Id = 5, Name = "Hoofd Inkoop" },
+                new Department { Id = 6, Name = "Planner" }
+
             );
 
             // Users
@@ -65,7 +69,9 @@ namespace BarrocIntens.Data
                 new User { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
                 new User { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
                 new User { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
-                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 }
+                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 },
+                new User { Id = 5, Name = "Hoofd Inkoop", Email = "hoofdinkoop@barrocintens.nl", Password = "hoofdinkoop", Active = true, DepartmentId = 5 },
+                new User { Id = 6, Name = "Planner", Email = "planner@barrocintens.nl", Password = "planner", Active = true, DepartmentId = 6 }
             );
 
             // Companies
