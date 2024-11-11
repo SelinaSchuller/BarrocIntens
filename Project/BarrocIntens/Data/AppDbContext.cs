@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +96,12 @@ namespace BarrocIntens.Data
 
 
             // Products
+            modelBuilder.Entity<Product>()
+                        .HasOne(p => p.Category)
+                        .WithMany(c => c.Products)
+                        .HasForeignKey(p => p.CategoryId);
+
+            base.OnModelCreating(modelBuilder);
 
             var products = new Faker<Product>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
@@ -108,6 +114,7 @@ namespace BarrocIntens.Data
                 .Generate(500);
 
             modelBuilder.Entity<Product>().HasData(products);
+
 
             // Invoices
             Func<Faker, double> value = f => (double)f.Finance.Amount(100, 5000);
