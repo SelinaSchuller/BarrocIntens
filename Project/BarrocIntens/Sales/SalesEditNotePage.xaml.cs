@@ -59,14 +59,12 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
-				//Klant = db.Customers.SingleOrDefault(c => c.Id == _note.CustomerId);
 				NotitiesLijst = db.Notes
 					.Include(n => n.Customer)
 					.ToList();
 				_note = db.Notes.SingleOrDefault(n => n.Id == _noteId);
 				titleTextBox.Text = _note.Title.ToString();
 				descriptionTextBox.Text = _note.Description.ToString();
-				//customerTextBlock.Text = Klant.Name;
 			}
 		}
 
@@ -105,7 +103,6 @@ namespace BarrocIntens.Sales
 			if(_note == null)
 				return;
 
-			// Show confirmation dialog
 			ContentDialog deleteDialog = new ContentDialog
 			{
 				Title = "Bevestiging verwijderen",
@@ -119,7 +116,6 @@ namespace BarrocIntens.Sales
 
 			if(result == ContentDialogResult.Primary)
 			{
-				// Delete the note from the database
 				using(var db = new AppDbContext())
 				{
 					var note = db.Notes.SingleOrDefault(n => n.Id == _note.Id);
@@ -128,7 +124,6 @@ namespace BarrocIntens.Sales
 						db.Notes.Remove(note);
 						db.SaveChanges();
 
-						// Navigate back to the notes list after deletion
 						_parentWindow.NavigateToNotesPage();
 					}
 				}

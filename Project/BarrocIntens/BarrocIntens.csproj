@@ -21,10 +21,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\meldingIcon.png" />
-    <None Remove="Financiën\FinanciënMainWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
-    <None Remove="ResourceDictionary1.xaml" />
     <None Remove="SalesDashboard.xaml" />
   </ItemGroup>
 
@@ -131,25 +129,20 @@
     <PRIResource Remove="Images\**" />
   </ItemGroup>
 
-	<ItemGroup>
-		<Page Update="Sales\SalesEditNotePage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="ResourceDictionary1.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
+  <ItemGroup>
+    <Page Update="Sales\SalesEditNotePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
-	<ItemGroup>
-		<Page Update="Sales\SalesCreateNotePage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Financiën\FinanciënMainWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
+  <ItemGroup>
+    <Page Update="Sales\SalesCreateNotePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup>
+
     <Page Update="Sales\SalesNotesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
