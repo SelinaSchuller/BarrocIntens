@@ -36,7 +36,7 @@
             <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
       BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notitie" 
+            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notities" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
       BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
         </StackPanel>
