@@ -10,70 +10,56 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="#3e3e3e">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Background="Transparent">
-            <StackPanel>
-                <TextBlock Text="Dashboard" Foreground="#ffffff" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
-            </StackPanel>
-        </Border>
-
-        <StackPanel Grid.Column="2" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="10">
-            <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant" 
-             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Spacing="10" Margin="30,100,0,0">
-            <Button x:Name="CustomerPageButton" Click="CustomerPage_Click" Content="Klanten" 
-             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-            <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
-             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-            <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
-             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notitie" 
-             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-        </StackPanel>
-
-        <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerKlantenInfo" BorderBrush="black" BorderThickness="4" Margin="100,20,0,0">
+        <Grid Margin="150,0,0,0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Background="#FDD716" Grid.ColumnSpan="2">
+            <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Background="Transparent">
+                <StackPanel>
+                    <TextBlock Text="Dashboard" Foreground="#ffffff" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Column="2" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="10">
+                <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant" 
+             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            </StackPanel>
+
+            <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerKlantenInfo" BorderBrush="black" BorderThickness="4" Margin="100,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Klanten" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="0" TextAlignment="Center"/>
-                <TextBlock Text="Info" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="1" TextAlignment="Center"/>
-            </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="1" Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Background="#FDD716" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Klanten" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="0" TextAlignment="Center"/>
+                    <TextBlock Text="Info" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="1" TextAlignment="Center"/>
+                </Grid>
 
-                <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
-                    <TextBox 
+                <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
+                        <TextBox 
                   x:Name="searchTextBox" 
                   TextChanged="searchTextBox_TextChanged"
                   BorderBrush="#FDD716"
@@ -81,32 +67,33 @@
                   Background="White"
                   PlaceholderText="Search..."
                   Margin="10"  />
-                    <ListView>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical" Padding="15">
-                                    <TextBlock Text="Naam"></TextBlock>
-                                    <TextBlock Text="Adres"></TextBlock>
-                                    <TextBlock Text="Postcode"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
+                        <ListView>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Padding="15">
+                                        <TextBlock Text="Naam"></TextBlock>
+                                        <TextBlock Text="Adres"></TextBlock>
+                                        <TextBlock Text="Postcode"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
 
-                <StackPanel Grid.Column="1" BorderBrush="#FDD716" BorderThickness="4">
-                    <ListView>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical" Padding="15">
-                                    <TextBlock Text="Telefoonnummer"></TextBlock>
-                                    <TextBlock Text="Email"></TextBlock>
-                                    <TextBlock Text="Fax"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
+                    <StackPanel Grid.Column="1" BorderBrush="#FDD716" BorderThickness="4">
+                        <ListView>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Padding="15">
+                                        <TextBlock Text="Telefoonnummer"></TextBlock>
+                                        <TextBlock Text="Email"></TextBlock>
+                                        <TextBlock Text="Fax"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

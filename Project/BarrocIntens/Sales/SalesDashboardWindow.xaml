@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window
-    x:Class="BarrocIntens.Sales.SalesDashboard"
+    x:Class="BarrocIntens.Sales.SalesDashboardWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Sales"
@@ -25,5 +25,20 @@
                 <TextBlock Text="Verkoop" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
             </StackPanel>
         </Border>
+
+        <StackPanel Orientation="Vertical" Spacing="10" Margin="30,250,0,0">
+            <Button x:Name="CustomerPageButton" Click="CustomerPageButton_Click" Content="Klanten" 
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notitie" 
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+        </StackPanel>
     </Grid>
 </Window>

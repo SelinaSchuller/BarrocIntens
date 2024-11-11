@@ -34,8 +34,9 @@
     <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
-    <None Remove="Sales\SalesDashboard.xaml" />
+    <None Remove="Sales\SalesDashboardWindow.xaml" />
     <None Remove="Sales\SalesMainPage.xaml" />
+    <None Remove="Sales\SalesNotesPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -126,13 +127,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Sales\SalesNotesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Sales\SalesMainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\SalesDashboard.xaml">
+    <Page Update="Sales\SalesDashboardWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Onderhoud\OnderhoudIngekomenStoringen.xaml">
