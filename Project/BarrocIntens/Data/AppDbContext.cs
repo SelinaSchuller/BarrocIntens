@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bogus;
+using System.Configuration;
 
 
 namespace BarrocIntens.Data
 {
-
+    
     internal class AppDbContext : DbContext
     {
         public DbSet<Department> Departments { get; set; }
@@ -33,7 +34,7 @@ namespace BarrocIntens.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(
-                "server=localhost;user=root;password=;database=BarrocIntens",
+                ConfigurationManager.ConnectionStrings["BarrocIntens"].ConnectionString,
                 ServerVersion.Parse("8.0.30")
                 );
         }
@@ -57,7 +58,10 @@ namespace BarrocIntens.Data
                 new Department { Id = 1, Name = "Sales" },
                 new Department { Id = 2, Name = "Onderhoud" },
                 new Department { Id = 3, Name = "Finance" },
-                new Department { Id = 4, Name = "Inkoop" }
+                new Department { Id = 4, Name = "Inkoop" },
+                new Department { Id = 5, Name = "Hoofd Inkoop" },
+                new Department { Id = 6, Name = "Planner" }
+
             );
 
             // Users
@@ -65,14 +69,16 @@ namespace BarrocIntens.Data
                 new User { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
                 new User { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
                 new User { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
-                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 }
+                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 },
+                new User { Id = 5, Name = "Hoofd Inkoop", Email = "hoofdinkoop@barrocintens.nl", Password = "hoofdinkoop", Active = true, DepartmentId = 5 },
+                new User { Id = 6, Name = "Planner", Email = "planner@barrocintens.nl", Password = "planner", Active = true, DepartmentId = 6 }
             );
 
             // Companies
             var companies = new Faker<Company>()
                 .RuleFor(c => c.Id, f => f.IndexFaker + 1)
                 .RuleFor(c => c.Name, f => f.Name.FullName())
-                .RuleFor(c => c.Bkr, f => f.IndexFaker < 50) // 10 with BKR registration
+                .RuleFor(c => c.Bkr, f => f.Random.Bool())
                 .Generate(150); // Inactive Customers
             modelBuilder.Entity<Company>().HasData(companies);
             // Customers
@@ -93,7 +99,7 @@ namespace BarrocIntens.Data
             var products = new Faker<Product>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
                 .RuleFor(p => p.Name, f => f.Commerce.ProductName())
-                .RuleFor(p => p.Price, f => f.Finance.Amount(100, 1000))
+                .RuleFor(p => p.Price, f => (double)f.Finance.Amount(100, 1000))
                 .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5))
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.IsStock, f => f.Random.Bool())
@@ -109,7 +115,7 @@ namespace BarrocIntens.Data
                 .RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
                 .RuleFor(i => i.DateCreated, f => f.Date.Recent())
                 .RuleFor(i => i.TotalPrice, value)
-                .RuleFor(i => i.Paid, f => f.IndexFaker < 120) // 120 invoices with payment delay
+                .RuleFor(i => i.Paid, f => f.Random.Bool()) // 120 invoices with payment delay
                 .Generate(500);
 
             modelBuilder.Entity<Invoice>().HasData(invoices);
@@ -119,8 +125,14 @@ namespace BarrocIntens.Data
                 .RuleFor(l => l.Id, f => f.IndexFaker + 1)
                 .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 3))
                 .RuleFor(l => l.Start_Date, f => f.Date.Past(1))
-                .RuleFor(l => l.End_Date, f => f.Date.Future(1))
                 .RuleFor(l => l.Contract_Type, f => f.PickRandom(new[] { "Repeat", "One-time" }))
+                .RuleFor(l => l.End_Date, f => f.Date.Future(1)).Rules((f, l) =>
+                {
+                    if (l.Contract_Type == "Repeat")
+                    {
+                        l.End_Date = null;
+                    }
+                })
                 .Generate(150);
 
             modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
@@ -131,6 +143,7 @@ namespace BarrocIntens.Data
             var serviceRequests = new Faker<ServiceRequest>()
                 .RuleFor(w => w.Id, f => f.IndexFaker + 7)
                 .RuleFor(w => w.Description, f => f.Lorem.Sentence())
+                .RuleFor(w => w.Date_Reported, f => f.Date.Past(1))
                 .RuleFor(w => w.Status, f => f.Random.Int(1, 3))
                 .RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
                 .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
@@ -233,6 +246,7 @@ namespace BarrocIntens.Data
 
             modelBuilder.Entity<Appointment>().HasData(appointments);
 
+
 			// Product Categories
 
 			//Notes
@@ -253,6 +267,17 @@ namespace BarrocIntens.Data
                 new Note { Id = 14, Title = "System Alert", Description = "Resolved system alert for temperature issues.", Date_Created = new DateTime(2024, 3, 7), CustomerId = 14, EmployeeId = 3 },
                 new Note { Id = 15, Title = "Software Update", Description = "Installed latest software update for system.", Date_Created = new DateTime(2024, 3, 9), CustomerId = 15, EmployeeId = 4 }
             );
+
+            // Productinventory
+            var productInventories = new Faker<ProductInventory>()
+                .RuleFor(p => p.Id, f => f.IndexFaker + 1)
+                .RuleFor(p => p.ProductId, f => f.IndexFaker + 1)
+                .RuleFor(p => p.InStock, f => f.Random.Int(1, 20))
+                .RuleFor(p => p.AmountOrdered, f => f.Random.Int(0, 50))
+                .Generate(500);
+
+            modelBuilder.Entity<ProductInventory>().HasData(productInventories);
+
 
 		}
     }
