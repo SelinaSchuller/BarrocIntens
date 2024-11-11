@@ -1,4 +1,6 @@
 using BarrocIntens.Onderhoud;
+using BarrocIntens.Services;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -24,12 +26,20 @@ namespace BarrocIntens.Sales
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SalesDashboardWindow : Window
-    {
-        public SalesDashboardWindow()
+	{
+		public int EmployeeId { get; set; }
+		public int NoteId { get; set; }
+		public SalesDashboardWindow(int? employeeId)
         {
             this.InitializeComponent();
 			this.Title = "Sales";
+			Fullscreen fullscreenService = new Fullscreen();
+			fullscreenService.SetFullscreen(this);
 
+			if(employeeId != null)
+			{
+				EmployeeId = employeeId.Value;
+			}
 			MainFrame.Navigate(typeof(SalesMainPage));
 
 			SetButtonVisibility();
@@ -41,6 +51,7 @@ namespace BarrocIntens.Sales
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
+			NotePageButton.Content = "Notities";
 
 			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -63,6 +74,7 @@ namespace BarrocIntens.Sales
 
 		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
 		{
+			MainFrame.Navigate(typeof(SalesMainPage));
 			SetButtonVisibility();
 		}
 
@@ -78,10 +90,33 @@ namespace BarrocIntens.Sales
 
 		private void NotePageButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(typeof(SalesNotesPage));
+			MainFrame.Navigate(typeof(SalesNotesPage), this);
 			SetButtonVisibility();
 		}
 
+		public void NavigateToCreateNotePage()
+		{
+			NotePageButton.Visibility = Visibility.Visible;
+			NotePageButton.Content = "Terug";
+			MainFrame.Navigate(typeof(SalesCreateNotePage), this);
+			SetButtonVisibility();
+		}
+
+		public void NavigateToEditNotePage(int NoteId)
+		{
+			this.NoteId = NoteId;
+			NotePageButton.Visibility = Visibility.Visible;
+			NotePageButton.Content = "Terug";
+			MainFrame.Navigate(typeof(SalesEditNotePage), this);
+			SetButtonVisibility();
+		}
+
+		public void NavigateToNotesPage()
+		{
+			System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
+			MainFrame.Navigate(typeof(SalesNotesPage), this);
+			SetButtonVisibility();
+		}
 
 	}
 }

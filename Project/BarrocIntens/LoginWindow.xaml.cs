@@ -13,6 +13,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using BarrocIntens.Data;
+using BarrocIntens.Services;
+using Windows.UI.ViewManagement;
+using Microsoft.UI.Windowing;
+using Microsoft.UI;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,9 +29,13 @@ namespace BarrocIntens
 	/// </summary>
 	public sealed partial class LoginWindow : Window
 	{
+		private int _userId { get; set; }
 		public LoginWindow()
 		{
 			this.InitializeComponent();
+			this.Title = "Login Pagina";
+			Fullscreen fullscreenService = new Fullscreen();
+			fullscreenService.SetFullscreen(this);
 		}
 
 		private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -38,10 +47,12 @@ namespace BarrocIntens
 				if (db.Users.Any(u => u.Email == email && u.Password == password))
                 {
 					int departmentId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.DepartmentId).FirstOrDefault();
+					int userId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.Id).FirstOrDefault();
+					_userId = userId;
 					if (departmentId == 1)
 					{
 						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
-						var salesDashboard = new Sales.SalesDashboardWindow();
+						var salesDashboard = new Sales.SalesDashboardWindow(userId);
 						this.Close();
 						salesDashboard.Activate();
 					}
