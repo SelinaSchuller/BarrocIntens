@@ -51,7 +51,6 @@ namespace BarrocIntens.Sales
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
-			NotePageButton.Content = "Notities";
 
 			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -68,8 +67,14 @@ namespace BarrocIntens.Sales
 			else if(MainFrame.SourcePageType == typeof(SalesNotesPage))
 			{
 				NotePageButton.Visibility = Visibility.Collapsed;
-
+				NotePageButton.Content = "Notities";
 			}
+			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
+			{
+				NotePageButton.Visibility = Visibility.Visible;
+				NotePageButton.Content = "Terug";
+			}
+
 		}
 
 		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
