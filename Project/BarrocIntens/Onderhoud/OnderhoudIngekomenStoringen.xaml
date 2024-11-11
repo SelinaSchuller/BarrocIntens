@@ -8,6 +8,7 @@
     xmlns:localData="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
+
     <Grid Background="#3e3e3e" Padding="20" HorizontalAlignment="Center">
         <StackPanel>
             <TextBlock Text="Ingekomen Storingen" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" />
