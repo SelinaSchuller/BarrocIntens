@@ -21,6 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\meldingIcon.png" />
+    <None Remove="Financiën\OfferteAanmaken.xaml" />
+    <None Remove="Financiën\OfferteProductSelection.xaml" />
+    <None Remove="Financiën\TestWindowOfferte.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="SalesDashboard.xaml" />
@@ -122,6 +125,24 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Financiën\TestWindowOfferte.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Financiën\OfferteProductSelection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Financiën\OfferteAanmaken.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

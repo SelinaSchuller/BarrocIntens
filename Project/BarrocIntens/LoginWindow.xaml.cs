@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using BarrocIntens.Data;
+using BarrocIntens.Financiën;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -54,9 +55,9 @@ namespace BarrocIntens
 					else if (departmentId == 3)
 					{
 						// Verander dit naar de juiste window wanneer deze is aangemaakt
-						var financeDashboard = new Financiën.FinanciënMainPage();
+						var financeDashboard = new Financiën.TestWindowOfferte();
 						this.Close();
-						//financeDashboard.Activate();
+						financeDashboard.Activate();
 					}
 					else if (departmentId == 4)
 					{
