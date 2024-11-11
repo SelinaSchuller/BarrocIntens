@@ -13,6 +13,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using BarrocIntens.Data;
+using BarrocIntens.Services;
+using Windows.UI.ViewManagement;
+using Microsoft.UI.Windowing;
+using Microsoft.UI;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,6 +33,9 @@ namespace BarrocIntens
 		public LoginWindow()
 		{
 			this.InitializeComponent();
+			this.Title = "Login Pagina";
+			Fullscreen fullscreenService = new Fullscreen();
+			fullscreenService.SetFullscreen(this);
 		}
 
 		private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -80,10 +88,5 @@ namespace BarrocIntens
 
             }
 		}
-
-		//public int GetUserId()
-		//{
-		//	return _userId;
-		//}
 	}
 }

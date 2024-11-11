@@ -1,4 +1,5 @@
 using BarrocIntens.Data;
+using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -56,6 +57,17 @@ namespace BarrocIntens.Sales
 			_parentWindow?.NavigateToCreateNotePage();
 		}
 
+		private void EditNoteButton_Click(object sender, RoutedEventArgs e)
+		{
+			var button = sender as Button;
+			var note = button?.DataContext as Note;
+
+			if(note != null)
+			{
+				System.Diagnostics.Debug.WriteLine($"Note: {note.Title}");
+				_parentWindow?.NavigateToEditNotePage(note.Id);
+			}
+		}
 	}
 
 }

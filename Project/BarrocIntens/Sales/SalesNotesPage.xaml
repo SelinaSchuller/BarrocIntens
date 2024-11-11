@@ -28,7 +28,7 @@
             </Border>
 
             <!-- Notes List -->
-            <Border Background="Black" BorderBrush="#FDD716" BorderThickness="2" CornerRadius="0,0,20,20" Padding="10" Height="500" Width="1000">
+            <Border Background="Black" BorderBrush="#FDD716" BorderThickness="2" CornerRadius="0,0,20,20" Padding="10" Height="520" Width="1000">
                 <StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
                         <ListView x:Name="notesListView" ItemsSource="{x:Bind NotitieLijst}">
@@ -37,7 +37,7 @@
                                     <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="120" />
+                                                <ColumnDefinition Width="130" />
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="220" />
                                                 <ColumnDefinition Width="Auto" />
@@ -51,7 +51,7 @@
                                                 <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Aangemaakt door:"/>
                                                 <TextBlock Foreground="White" Text="{x:Bind Employee.Name}" FontSize="14"/>
                                             </StackPanel>
-                                            <Button Grid.Column="3" Content="Bewerken" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="3" Content="Bewerken" Click="EditNoteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>

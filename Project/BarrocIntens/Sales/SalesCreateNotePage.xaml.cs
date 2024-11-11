@@ -41,8 +41,10 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
-				KlantenLijst = db.Customers.ToList();
-				customerListView.ItemsSource = KlantenLijst;
+				KlantenLijst = db.Customers
+					.OrderBy(c => c.Name)
+					.ToList();
+				customerInput.ItemsSource = KlantenLijst;
 			}
 		}
 
@@ -62,7 +64,7 @@ namespace BarrocIntens.Sales
 				return;
 			}
 
-			if(customerListView.SelectedItem is Customer selectedCustomer)
+			if(customerInput.SelectedItem is Customer selectedCustomer)
 			{
 				
 

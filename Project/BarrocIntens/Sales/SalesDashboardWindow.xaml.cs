@@ -1,4 +1,6 @@
 using BarrocIntens.Onderhoud;
+using BarrocIntens.Services;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -24,12 +26,15 @@ namespace BarrocIntens.Sales
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SalesDashboardWindow : Window
-    {
+	{
 		public int EmployeeId { get; set; }
+		public int NoteId { get; set; }
 		public SalesDashboardWindow(int? employeeId)
         {
             this.InitializeComponent();
 			this.Title = "Sales";
+			Fullscreen fullscreenService = new Fullscreen();
+			fullscreenService.SetFullscreen(this);
 
 			if(employeeId != null)
 			{
@@ -46,6 +51,7 @@ namespace BarrocIntens.Sales
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
+			NotePageButton.Content = "Notities";
 
 			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -68,6 +74,7 @@ namespace BarrocIntens.Sales
 
 		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
 		{
+			MainFrame.Navigate(typeof(SalesMainPage));
 			SetButtonVisibility();
 		}
 
@@ -90,8 +97,17 @@ namespace BarrocIntens.Sales
 		public void NavigateToCreateNotePage()
 		{
 			NotePageButton.Visibility = Visibility.Visible;
-			NotePageButton.Content = "Terug naar Notities";
+			NotePageButton.Content = "Terug";
 			MainFrame.Navigate(typeof(SalesCreateNotePage), this);
+			SetButtonVisibility();
+		}
+
+		public void NavigateToEditNotePage(int NoteId)
+		{
+			this.NoteId = NoteId;
+			NotePageButton.Visibility = Visibility.Visible;
+			NotePageButton.Content = "Terug";
+			MainFrame.Navigate(typeof(SalesEditNotePage), this);
 			SetButtonVisibility();
 		}
 

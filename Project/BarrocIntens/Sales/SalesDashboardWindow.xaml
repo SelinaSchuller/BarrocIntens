@@ -29,16 +29,16 @@
         <StackPanel Orientation="Vertical" Spacing="10" Margin="30,250,0,0">
             <Button x:Name="CustomerPageButton" Click="CustomerPageButton_Click" Content="Klanten" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notities" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-      BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
 
         </StackPanel>
     </Grid>

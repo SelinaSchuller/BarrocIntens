@@ -8,19 +8,39 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Input;
 using static BarrocIntens.Onderhoud.OnderhoudMainPage;
 using Windows.UI.Core;
+using Microsoft.UI.Windowing;
+using BarrocIntens.Services;
+using BarrocIntens.Data;
+using System.Linq;
 
 namespace BarrocIntens.Onderhoud
 {
 	public sealed partial class OnderhoudBaseWindow : Window
 	{
-		public List<OnderhoudMainPage.StoringItem> StoringenLijst { get; set; }
+		private List<ServiceRequest> StoringenLijst { get; set; }
 
 		public OnderhoudBaseWindow()
 		{
 			this.InitializeComponent();
 			this.Title = "Onderhoud";
+			Fullscreen fullscreenService = new Fullscreen();
+			fullscreenService.SetFullscreen(this);
 
-			StoringenBadgeText.Text = StoringenLijst.Count.ToString();
+			using(var db = new AppDbContext())
+			{
+				StoringenLijst = db.ServiceRequests
+					.Where(s => s.Status == 1)
+					.ToList();
+			}
+
+			if(StoringenLijst != null)
+			{
+				StoringenBadgeText.Text = StoringenLijst.Count.ToString();
+			}
+			else
+			{
+				StoringenBadgeText.Visibility = Visibility.Collapsed;
+			}
 
 			MeldingIconImage.PointerEntered += MeldingIconImage_PointerEntered;
 			MeldingIconImage.PointerExited += MeldingIconImage_PointerExited;
@@ -37,13 +57,11 @@ namespace BarrocIntens.Onderhoud
 		//Volgende 3 functies is voor animatie van de meldingen knop/image
 		private void MeldingIconImage_PointerEntered(object sender, PointerRoutedEventArgs e)
 		{
-			// Just animate scale to indicate hover
 			AnimateScale(1.2, 0.5);
 		}
 
 		private void MeldingIconImage_PointerExited(object sender, PointerRoutedEventArgs e)
 		{
-			// Reset scale back to normal when not hovering
 			AnimateScale(1.0, 0.5);
 		}
 
