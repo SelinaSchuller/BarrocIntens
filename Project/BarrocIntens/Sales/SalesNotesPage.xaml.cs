@@ -1,3 +1,5 @@
+using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,9 +25,23 @@ namespace BarrocIntens.Sales
 	/// </summary>
 	public sealed partial class SalesNotesPage : Page
 	{
+		private List<Note> NotitieLijst { get; set; }
 		public SalesNotesPage()
 		{
 			this.InitializeComponent();
+
+			using(var db = new AppDbContext())
+			{
+				//explicit loading:
+				NotitieLijst = db.Notes
+					.Include(n => n.Customer)
+					.Include(n => n.Employee)
+					.OrderBy(n => n.Date_Created)
+					.ToList();
+
+				notesListView.ItemsSource = NotitieLijst;
+
+			}
 		}
 	}
 }
