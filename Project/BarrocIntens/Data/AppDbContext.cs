@@ -233,8 +233,27 @@ namespace BarrocIntens.Data
 
             modelBuilder.Entity<Appointment>().HasData(appointments);
 
-            // Product Categories
+			// Product Categories
 
-        }
+			//Notes
+			modelBuilder.Entity<Note>().HasData(
+                new Note { Id = 1, Title = "System Checkup", Description = "Performing a full system diagnostic.", Date_Created = new DateTime(2024, 2, 12), CustomerId = 1, EmployeeId = 1 },
+                new Note { Id = 2, Title = "Issue Report", Description = "Reported issue with water leakage.", Date_Created = new DateTime(2024, 2, 14), CustomerId = 2, EmployeeId = 1 },
+                new Note { Id = 3, Title = "Maintenance Scheduled", Description = "Scheduled maintenance for next week.", Date_Created = new DateTime(2024, 2, 15), CustomerId = 3, EmployeeId = 2 },
+                new Note { Id = 4, Title = "Customer Feedback", Description = "Received feedback on product performance.", Date_Created = new DateTime(2024, 2, 18), CustomerId = 4, EmployeeId = 2 },
+                new Note { Id = 5, Title = "Installation", Description = "Completed installation of new hardware.", Date_Created = new DateTime(2024, 2, 20), CustomerId = 5, EmployeeId = 3 },
+                new Note { Id = 6, Title = "Error Code 404", Description = "Investigated error code 404 in system.", Date_Created = new DateTime(2024, 2, 22), CustomerId = 6, EmployeeId = 3 },
+                new Note { Id = 7, Title = "System Upgrade", Description = "Upgraded system firmware to latest version.", Date_Created = new DateTime(2024, 2, 25), CustomerId = 7, EmployeeId = 4 },
+                new Note { Id = 8, Title = "Training Session", Description = "Provided training for customer staff.", Date_Created = new DateTime(2024, 2, 26), CustomerId = 8, EmployeeId = 4 },
+                new Note { Id = 9, Title = "Follow-up Visit", Description = "Scheduled follow-up visit for customer support.", Date_Created = new DateTime(2024, 2, 28), CustomerId = 9, EmployeeId = 1 },
+                new Note { Id = 10, Title = "Routine Maintenance", Description = "Routine check-up performed.", Date_Created = new DateTime(2024, 3, 1), CustomerId = 10, EmployeeId = 1 },
+                new Note { Id = 11, Title = "Product Demonstration", Description = "Gave product demonstration to new customer.", Date_Created = new DateTime(2024, 3, 3), CustomerId = 11, EmployeeId = 2 },
+                new Note { Id = 12, Title = "Warranty Claim", Description = "Processed warranty claim for customer.", Date_Created = new DateTime(2024, 3, 4), CustomerId = 12, EmployeeId = 2 },
+                new Note { Id = 13, Title = "Diagnostic Test", Description = "Conducted diagnostic tests on equipment.", Date_Created = new DateTime(2024, 3, 6), CustomerId = 13, EmployeeId = 3 },
+                new Note { Id = 14, Title = "System Alert", Description = "Resolved system alert for temperature issues.", Date_Created = new DateTime(2024, 3, 7), CustomerId = 14, EmployeeId = 3 },
+                new Note { Id = 15, Title = "Software Update", Description = "Installed latest software update for system.", Date_Created = new DateTime(2024, 3, 9), CustomerId = 15, EmployeeId = 4 }
+            );
+
+		}
     }
 }
