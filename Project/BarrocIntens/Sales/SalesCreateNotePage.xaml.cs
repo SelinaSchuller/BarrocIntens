@@ -56,7 +56,7 @@ namespace BarrocIntens.Sales
 					Title = "Titel vereist",
 					Content = "Voer een titel in voor de notitie voordat u deze opslaat.",
 					CloseButtonText = "Ok",
-					XamlRoot = this.XamlRoot // Set the XamlRoot property here
+					XamlRoot = this.XamlRoot
 				};
 				titleErrorDialog.ShowAsync();
 				return;
@@ -80,10 +80,7 @@ namespace BarrocIntens.Sales
 					db.Notes.Add(newNote);
 					db.SaveChanges();
 				}
-				//var salesWindow = new SalesDashboardWindow(EmployeeId);
-				//salesWindow.NavigateToNotesPage();
 				_parentWindow.NavigateToNotesPage();
-
 			}
 			else
 			{
@@ -92,7 +89,7 @@ namespace BarrocIntens.Sales
 					Title = "Selecteer een klant",
 					Content = "Kies een klant uit de lijst voordat u de notitie opslaat.",
 					CloseButtonText = "Ok",
-					XamlRoot = this.XamlRoot // Set the XamlRoot property here
+					XamlRoot = this.XamlRoot
 				};
 				customerErrorDialog.ShowAsync();
 			}

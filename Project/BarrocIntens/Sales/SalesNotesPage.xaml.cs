@@ -37,7 +37,6 @@ namespace BarrocIntens.Sales
 				NotitieLijst = db.Notes
 					.Include(n => n.Customer)
 					.Include(n => n.Employee)
-					.ThenInclude(e => e.Name)
 					.OrderBy(n => n.Date_Created)
 					.ToList();
 

@@ -37,21 +37,27 @@
                                     <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="120" />
                                                 <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="220" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,10,0">
-                                                <TextBlock Foreground="White" Text="{x:Bind FormattedDateCreated}" FontWeight="Light" FontSize="14" TextAlignment="Left"/>
-                                                <TextBlock HorizontalAlignment="Center" Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextAlignment="Left"/>
+                                            <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,50,0">
+                                                <TextBlock VerticalAlignment="Top" Foreground="White" Text="{x:Bind FormattedDateCreated}" FontWeight="Light" FontSize="14" TextAlignment="Left" Margin="0,0,0,10"/>
+                                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextWrapping="Wrap" TextAlignment="Left"/>
                                             </StackPanel>
-                                            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="10,0"/>
-                                            <Button Grid.Column="2" Content="Bewerken" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0"/>
+                                            <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
+                                                <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Aangemaakt door:"/>
+                                                <TextBlock Foreground="White" Text="{x:Bind Employee.Name}" FontSize="14"/>
+                                            </StackPanel>
+                                            <Button Grid.Column="3" Content="Bewerken" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+
                     </ScrollViewer>
                 </StackPanel>
             </Border>
