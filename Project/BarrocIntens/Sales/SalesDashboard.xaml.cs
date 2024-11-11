@@ -1,3 +1,4 @@
+using BarrocIntens.Onderhoud;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -27,41 +28,12 @@ namespace BarrocIntens.Sales
         public SalesDashboard()
         {
             this.InitializeComponent();
-        }
 
-        private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
-        {
+			this.Title = "Sales";
 
-        }
+			MainFrame.Navigate(typeof(SalesMainPage));
+		}
 
-        private void CustomerPage_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OffertePageButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ContactPageButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void NotePageButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-    }
+	}
 }
