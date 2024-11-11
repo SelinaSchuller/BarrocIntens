@@ -8,11 +8,12 @@
     xmlns:localData="using:BarrocIntens.Data"
     mc:Ignorable="d">
 
-    <Grid Background="#3e3e3e" Padding="10">
+
+    <Grid Background="#3e3e3e" Padding="20" HorizontalAlignment="Center">
         <StackPanel>
             <TextBlock Text="Ingekomen Storingen" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" />
 
-            <Border Width="350" Background="Black" CornerRadius="20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
+            <Border Width="345" Background="Black" CornerRadius="20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
                     <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock Text="Storingen" Foreground="Black" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
