@@ -1,0 +1,26 @@
+<Page
+    x:Class="BarrocIntens.Sales.SalesCreateNotePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BarrocIntens.Sales"
+    xmlns:localData="using:BarrocIntens.Data"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#3e3e3e" >
+        <Grid Background="black" Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="400">
+                <TextBlock Text="Nieuwe Notitie" FontSize="24" FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>
+
+                <!-- Customer Selection -->
+                <ComboBox Header="Selecteer Klant" Width="200" x:Name="customerInput" DisplayMemberPath="Name"/>
+
+                <TextBox x:Name="titleTextBox" PlaceholderText="Titel" Margin="0,10" />
+                <TextBox x:Name="descriptionTextBox" PlaceholderText="Beschrijving" Margin="0,10" TextWrapping="Wrap" AcceptsReturn="True" Height="100"/>
+                <Button Content="Opslaan" Background="#FDD716" Foreground="Black" Click="SaveNoteButton_Click" Margin="0,20"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

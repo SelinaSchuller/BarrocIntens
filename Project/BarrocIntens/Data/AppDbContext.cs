@@ -66,12 +66,12 @@ namespace BarrocIntens.Data
 
             // Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Sales", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
-                new User { Id = 2, Name = "Onderhoud", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
-                new User { Id = 3, Name = "Finance", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
-                new User { Id = 4, Name = "Inkoop", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 },
-                new User { Id = 5, Name = "Hoofd Inkoop", Email = "hoofdinkoop@barrocintens.nl", Password = "hoofdinkoop", Active = true, DepartmentId = 5 },
-                new User { Id = 6, Name = "Planner", Email = "planner@barrocintens.nl", Password = "planner", Active = true, DepartmentId = 6 }
+                new User { Id = 1, Name = "Emma de Vries", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
+                new User { Id = 2, Name = "Liam Jansen", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
+                new User { Id = 3, Name = "Sophie Bakker", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
+                new User { Id = 4, Name = "Lucas Visser", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 },
+                new User { Id = 5, Name = "Mila Smit", Email = "hoofdinkoop@barrocintens.nl", Password = "hoofdinkoop", Active = true, DepartmentId = 5 },
+                new User { Id = 6, Name = "Noah van Dijk", Email = "planner@barrocintens.nl", Password = "planner", Active = true, DepartmentId = 6 }
             );
 
             // Companies
@@ -96,17 +96,17 @@ namespace BarrocIntens.Data
 
 
             // Products
-            modelBuilder.Entity<Products>()
+            modelBuilder.Entity<Product>()
                         .HasOne(p => p.Category)
                         .WithMany(c => c.Products)
                         .HasForeignKey(p => p.CategoryId);
 
             base.OnModelCreating(modelBuilder);
 
-            var products = new Faker<Products>()
+            var products = new Faker<Product>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
                 .RuleFor(p => p.Name, f => f.Commerce.ProductName())
-                .RuleFor(p => p.Price, f => f.Finance.Amount(100, 1000))
+                .RuleFor(p => p.Price, f => (double)f.Finance.Amount(100, 1000))
                 .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5)) // Random CategoryId from 1 to 5
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.IsStock, f => f.Random.Bool())
@@ -146,8 +146,6 @@ namespace BarrocIntens.Data
             modelBuilder.Entity<LeaseContract>().HasData(leaseContracts);
 
             //ServiceRequests(storingen)
-
-            //Ik heb dit ff temp gezet omdat ik aan het testen ben:
             var serviceRequests = new Faker<ServiceRequest>()
                 .RuleFor(w => w.Id, f => f.IndexFaker + 7)
                 .RuleFor(w => w.Description, f => f.Lorem.Sentence())
@@ -156,14 +154,6 @@ namespace BarrocIntens.Data
                 .RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
                 .RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
                 .Generate(75);
-
-            //var serviceRequests = new Faker<ServiceRequest>()
-            //	.RuleFor(w => w.Id, f => f.IndexFaker + 7)
-            //	.RuleFor(w => w.Description, f => f.Lorem.Sentence())
-            //	.RuleFor(w => w.Status, f => f.Random.Int(3, 3))
-            //	.RuleFor(w => w.CustomerId, f => f.Random.Int(1, 150))
-            //	.RuleFor(w => w.ProductId, f => f.Random.Int(1, 500))
-            //	.Generate(75);
 
             modelBuilder.Entity<ServiceRequest>().HasData(serviceRequests);
 
