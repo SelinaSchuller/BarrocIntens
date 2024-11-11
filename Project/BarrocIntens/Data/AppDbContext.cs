@@ -14,6 +14,7 @@ namespace BarrocIntens.Data
     {
         public DbSet<Department> Departments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Note> Notes { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Company> Company { get; set; }

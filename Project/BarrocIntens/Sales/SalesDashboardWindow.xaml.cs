@@ -1,3 +1,4 @@
+using BarrocIntens.Onderhoud;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -22,46 +23,39 @@ namespace BarrocIntens.Sales
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SalesDashboard : Window
+    public sealed partial class SalesDashboardWindow : Window
     {
-        public SalesDashboard()
+        public SalesDashboardWindow()
         {
             this.InitializeComponent();
-        }
 
-        private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
-        {
+			this.Title = "Sales";
 
-        }
+			
 
-        private void CustomerPage_Click(object sender, RoutedEventArgs e)
-        {
+			MainFrame.Navigate(typeof(SalesMainPage));
+		}
 
-        }
+		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
+		{
 
-        private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
-        {
+		}
 
-        }
+		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
+		{
 
-        private void OffertePageButton_Click(object sender, RoutedEventArgs e)
-        {
+		}
 
-        }
+		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
+		{
 
-        private void ContactPageButton_Click(object sender, RoutedEventArgs e)
-        {
+		}
 
-        }
+		private void NotePageButton_Click(object sender, RoutedEventArgs e)
+		{
 
-        private void NotePageButton_Click(object sender, RoutedEventArgs e)
-        {
+		}
 
-        }
-
-        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-    }
+		
+	}
 }

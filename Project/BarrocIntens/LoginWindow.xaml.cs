@@ -41,7 +41,7 @@ namespace BarrocIntens
 					if (departmentId == 1)
 					{
 						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
-						var salesDashboard = new Sales.SalesDashboard();
+						var salesDashboard = new Sales.SalesDashboardWindow();
 						this.Close();
 						salesDashboard.Activate();
 					}

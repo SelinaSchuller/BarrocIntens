@@ -93,36 +93,15 @@
 
         <!-- Hoofdcontent -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="50">
-            <!-- Kolom Laatste onderhouds -->
+            <!-- Planning komt hier -->
             <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
                     <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
-                        <TextBlock Text="Laatste onderhoud" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Planning" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
                     <Rectangle Fill="Black" Height="3" Margin="0,5"/>
 
                     <ItemsControl ItemsSource="{Binding LaatsteOnderhoudLijst}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding DateFormatted}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </Border>
-
-            <!-- Kolom Storingen -->
-            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
-                <StackPanel>
-                    <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
-                        <TextBlock Text="Storingen" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </Border>
-                    <Rectangle Fill="Black" Height="2" Margin="0,5"/>
-
-                    <ItemsControl ItemsSource="{Binding StoringenLijst}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,10">

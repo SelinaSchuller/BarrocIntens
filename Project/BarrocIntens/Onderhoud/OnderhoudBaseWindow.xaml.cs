@@ -20,8 +20,6 @@ namespace BarrocIntens.Onderhoud
 			this.InitializeComponent();
 			this.Title = "Onderhoud";
 
-			CreateHardcodeList();
-
 			StoringenBadgeText.Text = StoringenLijst.Count.ToString();
 
 			MeldingIconImage.PointerEntered += MeldingIconImage_PointerEntered;
@@ -77,16 +75,5 @@ namespace BarrocIntens.Onderhoud
 			storyboard.Begin();
 		}
 
-
-		public void CreateHardcodeList()
-		{
-			// Hardcoded data for "Storingen"
-			StoringenLijst = new List<StoringItem>
-			{
-				new StoringItem { KlantNaam = "Jan van Dijk", Status = 0, Date = new DateTime(2024, 10, 8) },
-				new StoringItem { KlantNaam = "Pieter de Jong", Status = 0, Date = DateTime.Today.AddDays(-1) },
-				new StoringItem { KlantNaam = "Klaas Bakker", Status = 0, Date = DateTime.Today }
-			};
-		}
 	}
 }
