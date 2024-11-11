@@ -131,21 +131,25 @@
     <PRIResource Remove="Images\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Sales\SalesEditNotePage.xaml">
-    <Page Update="ResourceDictionary1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
+	<ItemGroup>
+		<Page Update="Sales\SalesEditNotePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="ResourceDictionary1.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Sales\SalesCreateNotePage.xaml">
-    <Page Update="Financiën\FinanciënMainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
+	<ItemGroup>
+		<Page Update="Sales\SalesCreateNotePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Financiën\FinanciënMainWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Page Update="Sales\SalesNotesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

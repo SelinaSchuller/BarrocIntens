@@ -64,7 +64,7 @@ namespace BarrocIntens.Inkoop
             }
 
 
-            if (decimal.TryParse(PrijsInput.Text, out decimal prijsOutput))
+            if (double.TryParse(PrijsInput.Text, out double prijsOutput))
             {
 
             }
@@ -86,7 +86,7 @@ namespace BarrocIntens.Inkoop
             {
                 using (var db = new AppDbContext())
                 {
-                    db.Products.Add(new Products
+                    db.Products.Add(new Product
                     {
                         Name = NaamInput.Text,
                         Description = DescInput.Text,
