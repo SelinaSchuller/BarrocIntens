@@ -32,32 +32,6 @@ namespace BarrocIntens.Sales
 		{
 
 		}
-
-		private void CustomerPage_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void NotePageButton_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
 		private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 
