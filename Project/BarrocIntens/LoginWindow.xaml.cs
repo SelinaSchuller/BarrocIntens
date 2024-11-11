@@ -24,6 +24,7 @@ namespace BarrocIntens
 	/// </summary>
 	public sealed partial class LoginWindow : Window
 	{
+		private int _userId { get; set; }
 		public LoginWindow()
 		{
 			this.InitializeComponent();
@@ -38,10 +39,12 @@ namespace BarrocIntens
 				if (db.Users.Any(u => u.Email == email && u.Password == password))
                 {
 					int departmentId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.DepartmentId).FirstOrDefault();
+					int userId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.Id).FirstOrDefault();
+					_userId = userId;
 					if (departmentId == 1)
 					{
 						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
-						var salesDashboard = new Sales.SalesDashboardWindow();
+						var salesDashboard = new Sales.SalesDashboardWindow(userId);
 						this.Close();
 						salesDashboard.Activate();
 					}
@@ -77,5 +80,10 @@ namespace BarrocIntens
 
             }
 		}
+
+		//public int GetUserId()
+		//{
+		//	return _userId;
+		//}
 	}
 }

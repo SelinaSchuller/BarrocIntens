@@ -25,6 +25,8 @@ namespace BarrocIntens.Sales
 	/// </summary>
 	public sealed partial class SalesNotesPage : Page
 	{
+		private SalesDashboardWindow _parentWindow;
+		private int EmployeeId { get; set; }
 		private List<Note> NotitieLijst { get; set; }
 		public SalesNotesPage()
 		{
@@ -32,7 +34,6 @@ namespace BarrocIntens.Sales
 
 			using(var db = new AppDbContext())
 			{
-				//explicit loading:
 				NotitieLijst = db.Notes
 					.Include(n => n.Customer)
 					.Include(n => n.Employee)
@@ -40,8 +41,21 @@ namespace BarrocIntens.Sales
 					.ToList();
 
 				notesListView.ItemsSource = NotitieLijst;
-
 			}
 		}
+
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+
+			_parentWindow = e.Parameter as SalesDashboardWindow;
+		}
+
+		public void CreateNoteButton_Click(object sender, RoutedEventArgs e)
+		{
+			_parentWindow?.NavigateToCreateNotePage();
+		}
+
 	}
+
 }
