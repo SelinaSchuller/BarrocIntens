@@ -96,11 +96,12 @@ namespace BarrocIntens.Data
 
 
             // Products
+
             var products = new Faker<Product>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
                 .RuleFor(p => p.Name, f => f.Commerce.ProductName())
                 .RuleFor(p => p.Price, f => (double)f.Finance.Amount(100, 1000))
-                .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5))
+                .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5)) // Random CategoryId from 1 to 5
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.IsStock, f => f.Random.Bool())
                 .RuleFor(p => p.VisibleForCustomers, f => true)

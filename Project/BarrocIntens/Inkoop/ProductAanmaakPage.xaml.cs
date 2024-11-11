@@ -35,6 +35,57 @@ namespace BarrocIntens.Inkoop
 
         private void OpslaanButton_Click(object sender, RoutedEventArgs e)
         {
+            NaamError.Visibility = Visibility.Collapsed;
+            DescError.Visibility = Visibility.Collapsed;
+            PrijsError.Visibility = Visibility.Collapsed;
+            CategoryError.Visibility = Visibility.Collapsed;
+
+            int validatieErrors = 0;
+
+            if (NaamInput.Text.Length == 0)
+            { 
+                NaamError.Visibility = Visibility.Visible;
+                validatieErrors += 1;
+            }
+
+            if (DescInput.Text.Length == 0)
+            {
+                DescError.Visibility = Visibility.Visible;
+                validatieErrors += 1;
+            }
+
+
+            if (double.TryParse(PrijsInput.Text, out double prijsOutput))
+            {
+
+            }
+            else
+            {
+                PrijsError.Visibility= Visibility.Visible;
+                validatieErrors += 1;
+            }
+
+            if (CategoryComboBox.SelectedValue == null)
+            {
+                CategoryError.Visibility = Visibility.Visible;
+                validatieErrors += 1;
+            }
+
+            prijsOutput = Math.Round(prijsOutput, 2);
+
+            if (validatieErrors == 0) 
+            {
+                using (var db = new AppDbContext())
+                {
+                    db.Products.Add(new Product
+                    {
+                        Name = NaamInput.Text,
+                        Description = DescInput.Text,
+                        Price = prijsOutput,
+                        IsStock = VoorraadCheckBox.IsChecked == true,
+                        VisibleForCustomers = ZichtbaarheidCheckBox.IsChecked == true,
+                        CategoryId = (int)CategoryComboBox.SelectedValue
+                    });
 
         }
     }

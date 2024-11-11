@@ -42,5 +42,52 @@ namespace BarrocIntens.Inkoop
         {
             Frame.Navigate(typeof(ProductAanmaakPage));
         }
+
+        private void BewerkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void VerwijderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                var product = button.DataContext as Product;
+
+                if (product != null)
+                {
+                    bool isDeleted = await DeleteProductFromDatabase(product);
+
+                    if (isDeleted)
+                    {
+                        var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
+                        if (productList != null)
+                        {
+                            productList.Remove(product);
+                        }
+                    }
+                }
+            }
+        }
+
+        private async Task<bool> DeleteProductFromDatabase(Product product)
+        {
+            using (var db = new AppDbContext())
+            {
+                var productToDelete = await db.Products
+                                                    .FirstOrDefaultAsync(p => p.Id == product.Id);
+
+                if (productToDelete != null)
+                {
+                    db.Products.Remove(productToDelete);
+                    await db.SaveChangesAsync();
+                    ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

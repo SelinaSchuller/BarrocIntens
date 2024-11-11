@@ -142,6 +142,7 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <Page Update="Sales\SalesNotesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
