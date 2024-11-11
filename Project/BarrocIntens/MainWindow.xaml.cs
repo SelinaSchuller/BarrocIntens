@@ -37,5 +37,15 @@ namespace BarrocIntens
                 this.Close();
             });
         }
-    }
+
+		private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+		{
+			// Your handling code here
+		}
+
+		/// <summary>
+		/// An empty window that can be used on its own or navigated to within a Frame.
+		/// </summary>
+
+	}
 }
