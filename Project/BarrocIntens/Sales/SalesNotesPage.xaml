@@ -46,7 +46,7 @@
                                                 <TextBlock HorizontalAlignment="Center" Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextAlignment="Left"/>
                                             </StackPanel>
                                             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="10,0"/>
-                                            <Button Grid.Column="2" Content="Bekijken/Bewerken" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="2" Content="Bewerken" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>

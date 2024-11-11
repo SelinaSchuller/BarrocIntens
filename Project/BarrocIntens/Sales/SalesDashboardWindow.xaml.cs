@@ -25,7 +25,7 @@ namespace BarrocIntens.Sales
     /// </summary>
     public sealed partial class SalesDashboardWindow : Window
     {
-		private int EmployeeId { get; set; }
+		public int EmployeeId { get; set; }
 		public SalesDashboardWindow(int? employeeId)
         {
             this.InitializeComponent();
@@ -89,21 +89,18 @@ namespace BarrocIntens.Sales
 
 		public void NavigateToCreateNotePage()
 		{
-			NotePageButton.Content = "Terug naar Notities";
-			MainFrame.Navigate(typeof(SalesCreateNotePage), EmployeeId);
-			SetButtonVisibility();
-		}
-
-		public void CreateNotePageButton_Click(object sender, RoutedEventArgs e)
-		{
 			NotePageButton.Visibility = Visibility.Visible;
 			NotePageButton.Content = "Terug naar Notities";
-			MainFrame.Navigate(typeof(SalesCreateNotePage), EmployeeId);
+			MainFrame.Navigate(typeof(SalesCreateNotePage), this);
 			SetButtonVisibility();
 		}
 
-
-
+		public void NavigateToNotesPage()
+		{
+			System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
+			MainFrame.Navigate(typeof(SalesNotesPage), this);
+			SetButtonVisibility();
+		}
 
 	}
 }

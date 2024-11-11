@@ -10,6 +10,7 @@ namespace BarrocIntens.Sales
 {
 	public sealed partial class SalesCreateNotePage : Page
 	{
+		private SalesDashboardWindow _parentWindow;
 		private List<Customer> KlantenLijst { get; set; }
 		private int EmployeeId { get; set; }
 
@@ -23,16 +24,18 @@ namespace BarrocIntens.Sales
 		{
 			base.OnNavigatedTo(e);
 
-			if(e.Parameter is int employeeId)
+			if(e.Parameter is SalesDashboardWindow parentWindow)
 			{
-				EmployeeId = employeeId;
+				_parentWindow = parentWindow;
+				EmployeeId = _parentWindow.EmployeeId;
 				System.Diagnostics.Debug.WriteLine($"SalesCreateNotePage: Employee Id is {EmployeeId}");
 			}
 			else
 			{
-				System.Diagnostics.Debug.WriteLine("SalesCreateNotePage: No valid Employee Id received.");
+				System.Diagnostics.Debug.WriteLine("SalesCreateNotePage: No valid SalesDashboardWindow received.");
 			}
 		}
+
 
 		private void LoadCustomers()
 		{
@@ -45,8 +48,24 @@ namespace BarrocIntens.Sales
 
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
 		{
+			// Check if the Title field is empty
+			if(string.IsNullOrWhiteSpace(titleTextBox.Text))
+			{
+				ContentDialog titleErrorDialog = new ContentDialog
+				{
+					Title = "Titel vereist",
+					Content = "Voer een titel in voor de notitie voordat u deze opslaat.",
+					CloseButtonText = "Ok",
+					XamlRoot = this.XamlRoot // Set the XamlRoot property here
+				};
+				titleErrorDialog.ShowAsync();
+				return;
+			}
+
 			if(customerListView.SelectedItem is Customer selectedCustomer)
 			{
+				
+
 				var newNote = new Note
 				{
 					Title = titleTextBox.Text,
@@ -61,18 +80,25 @@ namespace BarrocIntens.Sales
 					db.Notes.Add(newNote);
 					db.SaveChanges();
 				}
+				//var salesWindow = new SalesDashboardWindow(EmployeeId);
+				//salesWindow.NavigateToNotesPage();
+				_parentWindow.NavigateToNotesPage();
 
 			}
 			else
 			{
-				ContentDialog dialog = new ContentDialog
+				ContentDialog customerErrorDialog = new ContentDialog
 				{
 					Title = "Selecteer een klant",
 					Content = "Kies een klant uit de lijst voordat u de notitie opslaat.",
-					CloseButtonText = "Ok"
+					CloseButtonText = "Ok",
+					XamlRoot = this.XamlRoot // Set the XamlRoot property here
 				};
-				dialog.ShowAsync();
+				customerErrorDialog.ShowAsync();
 			}
 		}
+
+
 	}
 }
+
