@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -20,6 +20,11 @@
     <Page Remove="Images\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\meldingIcon.png" />
+    <None Remove="Financiën\FinanciënMainWindow.xaml" />
+    <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
+    <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
+    <None Remove="ResourceDictionary1.xaml" />
     <None Remove="Inkoop\ProductBewerkenPage.xaml" />
     <None Remove="SalesDashboard.xaml" />
   </ItemGroup>
@@ -32,6 +37,12 @@
     <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
+    <None Remove="Sales\SalesCompanyPage.xaml" />
+    <None Remove="Sales\SalesCreateNotePage.xaml" />
+    <None Remove="Sales\SalesDashboardWindow.xaml" />
+    <None Remove="Sales\SalesEditNotePage.xaml" />
+    <None Remove="Sales\SalesMainPage.xaml" />
+    <None Remove="Sales\SalesNotesPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,7 +59,8 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
-    <PackageReference Include="Soenneker.AutoFaker.Overrides.IdNamePair" Version="2.1.329" />
+    <PackageReference Include="Soenneker.AutoFaker.Overrides.IdNamePair" Version="2.1.350" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Json" Version="4.7.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -119,11 +131,5 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Inkoop\ProductBewerkenPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 </Project>

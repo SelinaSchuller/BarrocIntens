@@ -64,7 +64,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="#FDD716"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gray"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#545454"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -79,46 +79,29 @@
 
     <Grid Background="#3e3e3e">
         <!-- Titel bovenaan -->
-        <TextBlock Text="Onderhoud" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
+        <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Background="Transparent">
+            <StackPanel>
+                <TextBlock Text="Dashboard" Foreground="#ffffff" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
+            </StackPanel>
+        </Border>
 
         <!-- Linker zijpaneel met knoppen -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
-            <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
-            <Button Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
+            <Button Foreground="#ffffff" Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
+            <Button Foreground="#ffffff" Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
         </StackPanel>
 
         <!-- Hoofdcontent -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="50">
-            <!-- Kolom Laatste onderhoud -->
+            <!-- Planning komt hier -->
             <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
                 <StackPanel>
                     <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
-                        <TextBlock Text="Laatste onderhoud" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Planning" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
                     <Rectangle Fill="Black" Height="3" Margin="0,5"/>
 
                     <ItemsControl ItemsSource="{Binding LaatsteOnderhoudLijst}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding DateFormatted}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </Border>
-
-            <!-- Kolom Storingen -->
-            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
-                <StackPanel>
-                    <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
-                        <TextBlock Text="Storingen" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </Border>
-                    <Rectangle Fill="Black" Height="2" Margin="0,5"/>
-
-                    <ItemsControl ItemsSource="{Binding StoringenLijst}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="0,10">

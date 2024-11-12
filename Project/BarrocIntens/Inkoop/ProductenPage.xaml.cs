@@ -67,7 +67,7 @@ namespace BarrocIntens.Inkoop
             var button = sender as Button;
             if (button != null)
             {
-                var product = button.DataContext as Products;
+                var product = button.DataContext as Product;
 
                 if (product != null)
                 {
@@ -75,7 +75,7 @@ namespace BarrocIntens.Inkoop
 
                     if (isDeleted)
                     {
-                        var productList = ProductListView.ItemsSource as ObservableCollection<Products>;
+                        var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
                         if (productList != null)
                         {
                             productList.Remove(product);
@@ -85,7 +85,7 @@ namespace BarrocIntens.Inkoop
             }
         }
 
-        private async Task<bool> DeleteProductFromDatabase(Products product)
+        private async Task<bool> DeleteProductFromDatabase(Product product)
         {
             using (var db = new AppDbContext())
             {

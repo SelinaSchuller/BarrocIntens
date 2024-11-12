@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    internal class LeaseContracts
+    internal class LeaseContract
     {
         public int Id { get; set; }
         public string Contract_Type { get; set; }
         public DateTime Start_Date { get; set; }
-        public DateTime End_Date { get; set; }
+        public DateTime? End_Date { get; set; }
         public int CompanyId { get; set; }
-        public Companies Company { get; set; }
+        public Company Company { get; set; }
     }
 }

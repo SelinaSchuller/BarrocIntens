@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace BarrocIntens.Data
 {
-    internal class ProductInventories
+    internal class InvoiceItem
     {
         public int Id { get; set; }
+        public int Amount { get; set; }
+        public int InvoiceId { get; set; }
         public int ProductId { get; set; }
-        public int InStock { get; set; }
-        public int AmountOrdered { get; set; }
-        public Products Product { get; set; }
+        public Invoice Invoice { get; set; }
+        public Product Product { get; set; }
     }
 }
