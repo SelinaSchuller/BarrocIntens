@@ -18,7 +18,8 @@ namespace BarrocIntens.Onderhoud
 	public sealed partial class OnderhoudBaseWindow : Window
 	{
 		private List<ServiceRequest> StoringenLijst { get; set; }
-		public int EmployeeId { get; set; }
+		public int UserId { get; set; }
+		private User LoggedInUser { get; set; }
 		public OnderhoudBaseWindow(int? employeeId)
 		{
 			this.InitializeComponent();
@@ -28,10 +29,14 @@ namespace BarrocIntens.Onderhoud
 
 			if(employeeId != null)
 			{
-				EmployeeId = employeeId.Value;
-			}
+				UserId = employeeId.Value;
 
-			if(EmployeeId == 7)
+				using(var db = new AppDbContext())
+				{
+					LoggedInUser = db.Users.FirstOrDefault(u  => u.Id == UserId);
+				}
+			}
+			if(UserId == 7 && LoggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
 			{
 				LoadData();
 				StoringIcon.Visibility = Visibility.Visible;
