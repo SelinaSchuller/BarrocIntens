@@ -23,7 +23,6 @@
     <None Remove="Assets\meldingIcon.png" />
     <None Remove="Financiën\OfferteAanmaken.xaml" />
     <None Remove="Financiën\OfferteProductSelection.xaml" />
-    <None Remove="Financiën\TestWindowOfferte.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="SalesDashboard.xaml" />
@@ -54,7 +53,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
-    <PackageReference Include="Soenneker.AutoFaker.Overrides.IdNamePair" Version="2.1.329" />
+    <PackageReference Include="Soenneker.AutoFaker.Overrides.IdNamePair" Version="2.1.350" />
     <PackageReference Include="System.Json" Version="4.7.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -125,12 +124,6 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Financiën\TestWindowOfferte.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ItemGroup>

@@ -7,9 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Grid Background="#363534">
-        <StackPanel Margin="50 0 0 0">
+        <StackPanel >
             <StackPanel Spacing="600" Orientation="Horizontal">
                 <TextBlock Text="Offerte" FontSize="60" Foreground="#ffd700" FontWeight="Bold" Margin="0 20 20 30"/>
                 <Button Click="TerugButton_Click" Width="150" FontSize="20" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2">Terug</Button>
