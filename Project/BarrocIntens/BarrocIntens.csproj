@@ -36,6 +36,7 @@
     <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
+    <None Remove="Sales\SalesCompanyPage.xaml" />
     <None Remove="Sales\SalesCreateNotePage.xaml" />
     <None Remove="Sales\SalesDashboardWindow.xaml" />
     <None Remove="Sales\SalesEditNotePage.xaml" />
@@ -129,6 +130,12 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesCompanyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
 	<ItemGroup>

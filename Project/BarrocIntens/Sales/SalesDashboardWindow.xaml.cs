@@ -48,6 +48,7 @@ namespace BarrocIntens.Sales
 		private void SetButtonVisibility()
 		{
 			CustomerPageButton.Visibility = Visibility.Visible;
+			CompanyPageButton.Visibility = Visibility.Visible;
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
@@ -55,6 +56,10 @@ namespace BarrocIntens.Sales
 			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				CustomerPageButton.Visibility = Visibility.Collapsed;
+			}
+			else if(MainFrame.SourcePageType == typeof(SalesCompanyPage))
+			{
+				CompanyPageButton.Visibility = Visibility.Collapsed;
 			}
 			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -80,6 +85,12 @@ namespace BarrocIntens.Sales
 		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
 		{
 			MainFrame.Navigate(typeof(SalesMainPage));
+			SetButtonVisibility();
+		}
+
+		private void CompanyPageButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(SalesCompanyPage));
 			SetButtonVisibility();
 		}
 
