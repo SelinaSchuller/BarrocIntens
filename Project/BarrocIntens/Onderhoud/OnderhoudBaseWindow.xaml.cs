@@ -18,14 +18,30 @@ namespace BarrocIntens.Onderhoud
 	public sealed partial class OnderhoudBaseWindow : Window
 	{
 		private List<ServiceRequest> StoringenLijst { get; set; }
-
-		public OnderhoudBaseWindow()
+		public int EmployeeId { get; set; }
+		public OnderhoudBaseWindow(int? employeeId)
 		{
 			this.InitializeComponent();
 			this.Title = "Onderhoud";
 			Fullscreen fullscreenService = new Fullscreen();
 			fullscreenService.SetFullscreen(this);
 
+			if(employeeId != null)
+			{
+				EmployeeId = employeeId.Value;
+			}
+
+			if(EmployeeId == 7)
+			{
+				LoadData();
+				StoringIcon.Visibility = Visibility.Visible;
+			}
+
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
+		}
+
+		private void LoadData()
+		{
 			using(var db = new AppDbContext())
 			{
 				StoringenLijst = db.ServiceRequests
@@ -44,10 +60,7 @@ namespace BarrocIntens.Onderhoud
 
 			MeldingIconImage.PointerEntered += MeldingIconImage_PointerEntered;
 			MeldingIconImage.PointerExited += MeldingIconImage_PointerExited;
-
-			MainFrame.Navigate(typeof(OnderhoudMainPage));
 		}
-
 		private void MeldingIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			var storingenWindow = new OnderhoudIngekomenStoringen();
