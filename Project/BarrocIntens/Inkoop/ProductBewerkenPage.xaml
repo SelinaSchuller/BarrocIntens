@@ -17,10 +17,10 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="50">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Width="1450" Height="75" BorderBrush="#ffd700" CornerRadius="50 50 0 0" Background="#ffd700">
+                    <StackPanel Width="1200" Height="75" BorderBrush="#ffd700" CornerRadius="50 50 0 0" Background="#ffd700">
                         <TextBlock FontSize="30" Text="Product Bewerken" Foreground="Black" HorizontalAlignment="Center" Padding="0 15 0 0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="400" Background="Black" CornerRadius="0 0 50 50" Height="350">
+                    <StackPanel Orientation="Horizontal" Spacing="100" Background="Black" CornerRadius="0 0 50 50" Height="350">
                         <StackPanel Padding="30 15 10 15" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock x:Name="ProductNaam" Text="Product Naam:" FontSize="25" Foreground="#ffd700"/>
