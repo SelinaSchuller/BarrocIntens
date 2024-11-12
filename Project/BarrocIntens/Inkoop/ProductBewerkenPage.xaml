@@ -11,22 +11,25 @@
 
     <Grid Background="#363534">
         <StackPanel Margin="50 0 0 0">
-            <TextBlock Text="Inkoop" FontSize="60" Foreground="#ffd700" FontWeight="Bold" Margin="0 20 20 30"/>
+            <StackPanel Spacing="1200" Orientation="Horizontal">
+                <TextBlock Text="Inkoop" FontSize="60" Foreground="#ffd700" FontWeight="Bold" Margin="0 20 20 30"/>
+                <Button Click="TerugButton_Click" Width="150" FontSize="20" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2">Terug</Button>
+            </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="50">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Width="1000" Height="75" BorderBrush="#ffd700" CornerRadius="50 50 0 0" Background="#ffd700">
+                    <StackPanel Width="1450" Height="75" BorderBrush="#ffd700" CornerRadius="50 50 0 0" Background="#ffd700">
                         <TextBlock FontSize="30" Text="Product Bewerken" Foreground="Black" HorizontalAlignment="Center" Padding="0 15 0 0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="250" Background="Black" CornerRadius="0 0 50 50" Height="350">
+                    <StackPanel Orientation="Horizontal" Spacing="400" Background="Black" CornerRadius="0 0 50 50" Height="350">
                         <StackPanel Padding="30 15 10 15" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock x:Name="ProductNaam" Text="Product Naam:" FontSize="25" Foreground="#ffd700"/>
-                                <TextBox x:Name="NaamInput" Background="#363534" Width="150"/>
+                                <TextBox x:Name="NaamInput" Background="#363534" Width="300"/>
                                 <TextBlock x:Name="NaamError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                             </StackPanel>
                             <TextBlock x:Name="ProductDesc" Text="Omschrijving:" FontSize="20" Foreground="#ffd700" Margin="0 10 0 0"/>
                             <StackPanel Orientation="Horizontal" Spacing="10">
-                                <TextBox x:Name="DescInput" AcceptsReturn="True" Width="400" Height="50" Background="#363534" Margin="0 10 0 10" TextWrapping="Wrap"/>
+                                <TextBox x:Name="DescInput" AcceptsReturn="True" Width="700" Height="50" Background="#363534" Margin="0 10 0 10" TextWrapping="Wrap"/>
                                 <TextBlock x:Name="DescError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="10">
@@ -39,7 +42,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="10" Margin="0 10 0 75">
                                 <TextBlock x:Name="ProductPrijs" Text="Prijs:" FontSize="20" Foreground="#ffd700" />
-                                <TextBox x:Name="PrijsInput" Background="#363534"/>
+                                <TextBox x:Name="PrijsInput" Background="#363534" Width="150"/>
                                 <TextBlock x:Name="PrijsError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                             </StackPanel>
                         </StackPanel>

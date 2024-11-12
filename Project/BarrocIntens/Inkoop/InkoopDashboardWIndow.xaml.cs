@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using BarrocIntens.Onderhoud;
+using BarrocIntens.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,6 +29,8 @@ namespace BarrocIntens.Inkoop
         {
             this.InitializeComponent();
             contentFrame.Navigate(typeof(ProductenPage));
+            Fullscreen fullscreenService = new Fullscreen();
+            fullscreenService.SetFullscreen(this);
         }
 
         private void ProductButton_Click(object sender, RoutedEventArgs e)
