@@ -20,7 +20,7 @@
                     </StackPanel>
                     <StackPanel Background="Black" CornerRadius="0 0 50 50" Padding="10" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Spacing="25">
-                            <TextBox x:Name="SearchTextBox" PlaceholderText="Zoek hier.." Width="500"/>
+                            <TextBox x:Name="SearchTextBox" PlaceholderText="Zoek hier.." Width="800"/>
                             <Button Click="ZoekButton_Click" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2">Zoek</Button>
                         </StackPanel>
                         <StackPanel MaxHeight="600" MaxWidth="900">
