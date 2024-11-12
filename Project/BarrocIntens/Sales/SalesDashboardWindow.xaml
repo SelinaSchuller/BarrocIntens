@@ -30,6 +30,9 @@
             <Button x:Name="CustomerPageButton" Click="CustomerPageButton_Click" Content="Klanten" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
       BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+            <Button x:Name="CompanyPageButton" Click="CompanyPageButton_Click" Content="Bedrijven" 
+Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
       Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
       BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
