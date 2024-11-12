@@ -17,7 +17,7 @@
 
         <!-- Linker zijpaneel met knoppen -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
-            <Image Source="assets/Logo6_groot.png" Width="100" Height="100" Margin="0,0,0,20"/>
+            <Image Source="../assets/Logo6_groot.png" Width="100" Height="100" Margin="0,0,0,20"/>
             <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
             <Button Content="Contract Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
             <Button Content="Factuur Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
