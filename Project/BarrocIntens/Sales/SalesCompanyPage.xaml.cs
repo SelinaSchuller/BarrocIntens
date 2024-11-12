@@ -98,8 +98,6 @@ namespace BarrocIntens.Sales
 			{
 				SelectedCompany.Bkr = !SelectedCompany.Bkr;
 
-				CompanyBkrIcon.Visibility = SelectedCompany.Bkr ? Visibility.Visible : Visibility.Collapsed;
-
 				using(var db = new AppDbContext())
 				{
 					var company = db.Companies.SingleOrDefault(c => c.Id == SelectedCompany.Id);
@@ -109,6 +107,7 @@ namespace BarrocIntens.Sales
 						db.SaveChanges();
 					}
 				}
+				CompanyBkrIcon.Visibility = SelectedCompany.Bkr ? Visibility.Visible : Visibility.Collapsed;
 
 				LoadData();
 
