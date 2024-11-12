@@ -58,7 +58,7 @@ namespace BarrocIntens
 					}
 					else if (departmentId == 2)
 					{
-						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow();
+						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
 						this.Close();
 						onderhoudDashboard.Activate();
 					}
