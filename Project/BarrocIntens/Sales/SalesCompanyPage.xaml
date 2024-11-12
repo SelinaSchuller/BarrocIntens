@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <local:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
     </Page.Resources>
 
     <Grid Background="#3e3e3e">
@@ -99,9 +100,13 @@
                         <StackPanel Orientation="Horizontal" Margin="0,5,5,0" VerticalAlignment="Center">
                             <TextBlock Text="BKR:" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             <Border Width="20" Height="20" Margin="5" Padding="1" BorderBrush="#FDD716" BorderThickness="1.5" VerticalAlignment="Center" Tapped="ToggleBkr_Tapped">
-                                <SymbolIcon x:Name="CompanyBkrIcon" Symbol="Accept" Visibility="Collapsed"/>
+                                <Grid>
+                                    <Rectangle Fill="Transparent" />
+                                    <SymbolIcon x:Name="CompanyBkrIcon" Symbol="Accept" Opacity="{x:Bind SelectedCompany.Bkr, Converter={StaticResource BooleanToOpacityConverter}}" />
+                                </Grid>
                             </Border>
                         </StackPanel>
+
 
                         <StackPanel>
                             <TextBlock Text="Medewerkers:" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>

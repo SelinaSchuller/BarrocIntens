@@ -107,13 +107,12 @@ namespace BarrocIntens.Sales
 						db.SaveChanges();
 					}
 				}
-				CompanyBkrIcon.Visibility = SelectedCompany.Bkr ? Visibility.Visible : Visibility.Collapsed;
 
 				LoadData();
-
 				companiesListView.SelectedItem = CompanyList.FirstOrDefault(c => c.Id == SelectedCompany.Id);
 			}
 		}
+
 
 	}
 	public class BooleanToVisibilityConverter : IValueConverter
@@ -132,4 +131,22 @@ namespace BarrocIntens.Sales
 			return value is Visibility visibility && visibility == Visibility.Visible;
 		}
 	}
+
+	public class BooleanToOpacityConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, string language)
+		{
+			if(value is bool boolValue)
+			{
+				return boolValue ? 1.0 : 0.0;
+			}
+			return 0.0;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, string language)
+		{
+			return value is double opacity && opacity == 1.0;
+		}
+	}
+
 }
