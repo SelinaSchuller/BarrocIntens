@@ -134,7 +134,7 @@ namespace BarrocIntens.Data
             // Lease Contracts
             var leaseContracts = new Faker<LeaseContract>()
                 .RuleFor(l => l.Id, f => f.IndexFaker + 1)
-                .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 3))
+                .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 150))
                 .RuleFor(l => l.Start_Date, f => f.Date.Past(1))
                 .RuleFor(l => l.Contract_Type, f => f.PickRandom(new[] { "Repeat", "One-time" }))
                 .RuleFor(l => l.End_Date, f => f.Date.Future(1)).Rules((f, l) =>
