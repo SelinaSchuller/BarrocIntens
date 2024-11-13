@@ -64,7 +64,7 @@ namespace BarrocIntens.Inkoop
             }
 
 
-            if (double.TryParse(PrijsInput.Text, out double prijsOutput))
+            if (decimal.TryParse(PrijsInput.Text, out decimal prijsOutput))
             {
 
             }
@@ -79,8 +79,6 @@ namespace BarrocIntens.Inkoop
                 CategoryError.Visibility = Visibility.Visible;
                 validatieErrors += 1;
             }
-
-            prijsOutput = Math.Round(prijsOutput, 2);
 
             if (validatieErrors == 0) 
             {

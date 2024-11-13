@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BarrocIntens.Financiën
+namespace BarrocIntens.Sales
 {
     public sealed partial class OfferteProductSelection : UserControl
     {
@@ -27,7 +27,7 @@ namespace BarrocIntens.Financiën
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    Price = p.Price,
+                    Price = (decimal)p.Price,
                     IsSelected = false // Initialize selection state
                 }).ToList();
             }

@@ -11,7 +11,7 @@ namespace BarrocIntens.Data
         public int Id { get; set; }
         public int ContractId { get; set; }
         public DateTime DateCreated { get; set; }
-        public double TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
         public bool Paid { get; set; }
     }
 }

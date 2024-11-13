@@ -65,7 +65,7 @@ namespace BarrocIntens
 					else if (departmentId == 3)
 					{
 						// Verander dit naar de juiste window wanneer deze is aangemaakt
-						var financeDashboard = new Financi�n.Financi�nMainWindow();
+						var financeDashboard = new Financiën.FinanciënMainWindow();
 						this.Close();
 						financeDashboard.Activate();
 					}
