@@ -55,7 +55,11 @@ namespace BarrocIntens.Inkoop
 
         private void BewerkButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (sender is Button button && button.Tag is int id)
+            {
+                Frame.Navigate(typeof(ProductBewerkenPage), id);
+            }
+               
         }
 
         private async void VerwijderButton_Click(object sender, RoutedEventArgs e)
