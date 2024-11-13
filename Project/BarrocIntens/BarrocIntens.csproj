@@ -22,6 +22,8 @@
   <ItemGroup>
     <None Remove="Assets\meldingIcon.png" />
     <None Remove="Financiën\FinanciënMainWindow.xaml" />
+    <None Remove="Financiën\OfferteAanmaken.xaml" />
+    <None Remove="Financiën\OfferteProductSelection.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="ResourceDictionary1.xaml" />
@@ -132,4 +134,67 @@
   <ItemGroup>
     <PRIResource Remove="Images\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Sales\OfferteProductSelection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\OfferteAanmakenPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesCompanyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+	<ItemGroup>
+		<Page Update="Sales\SalesEditNotePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="ResourceDictionary1.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Update="Sales\SalesCreateNotePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Financiën\FinanciënMainWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+    <Page Update="Sales\SalesNotesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesDashboardWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Onderhoud\OnderhoudIngekomenStoringen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudBaseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
 </Project>

@@ -44,6 +44,9 @@ namespace BarrocIntens.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var faker = new Faker();
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<ProductCategory>().HasData(
                 new ProductCategory { Id = 1, Name = "Part" },
@@ -107,7 +110,7 @@ namespace BarrocIntens.Data
             var products = new Faker<Product>()
                 .RuleFor(p => p.Id, f => f.IndexFaker + 1)
                 .RuleFor(p => p.Name, f => f.Commerce.ProductName())
-                .RuleFor(p => p.Price, f => (double)f.Finance.Amount(100, 1000))
+                .RuleFor(p => p.Price, f => Math.Round((decimal)f.Finance.Amount(1, 1000), 2)) // Round to 2 decimal places
                 .RuleFor(p => p.CategoryId, f => f.Random.Int(1, 5)) // Random CategoryId from 1 to 5
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.IsStock, f => f.Random.Bool())
@@ -118,12 +121,11 @@ namespace BarrocIntens.Data
 
 
             // Invoices
-            Func<Faker, double> value = f => (double)f.Finance.Amount(100, 5000);
             var invoices = new Faker<Invoice>()
                 .RuleFor(i => i.Id, f => f.IndexFaker + 1)
                 .RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
                 .RuleFor(i => i.DateCreated, f => f.Date.Recent())
-                .RuleFor(i => i.TotalPrice, value)
+                .RuleFor(i => i.TotalPrice, (decimal) 0)
                 .RuleFor(i => i.Paid, f => f.Random.Bool()) // 120 invoices with payment delay
                 .Generate(500);
 
