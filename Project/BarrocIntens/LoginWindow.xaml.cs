@@ -53,13 +53,13 @@ namespace BarrocIntens
 					{
 						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
 						var salesDashboard = new Sales.SalesDashboardWindow(userId);
-						this.Close();
+						//this.Close();
 						salesDashboard.Activate();
 					}
 					else if (departmentId == 2)
 					{
 						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
-						this.Close();
+						//this.Close();
 						onderhoudDashboard.Activate();
 					}
 					else if (departmentId == 3)
@@ -72,7 +72,7 @@ namespace BarrocIntens
 					else if (departmentId == 4)
 					{
 						var inkoopDashboard = new Inkoop.InkoopDashboardWindow();
-						this.Close();
+						//this.Close();
 						inkoopDashboard.Activate();
 					}
 					else if (departmentId == null)

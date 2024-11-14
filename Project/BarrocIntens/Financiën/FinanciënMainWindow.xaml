@@ -18,7 +18,6 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
-
             <!-- Titel bovenaan -->
             <TextBlock Grid.Column="1" Text="Financiën" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35,60,0,0"/>
 
