@@ -21,13 +21,8 @@
         <TextBlock Grid.Column="1" Text="Financiën" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35,60,0,0"/>
 
         <!-- Linker zijpaneel met knoppen -->
-<<<<<<< Updated upstream
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
             <Image Source="../assets/Logo6_groot.png" Width="100" Height="100" Margin="0,0,0,20"/>
-=======
-        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20, 0, 0, 0">
-            <Image Source="../Assets/Logo6_groot.png" Width="250" Height="250" Margin="0,0,0,30"/>
->>>>>>> Stashed changes
             <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
             <Button Content="Contract Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
             <Button Content="Factuur Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
