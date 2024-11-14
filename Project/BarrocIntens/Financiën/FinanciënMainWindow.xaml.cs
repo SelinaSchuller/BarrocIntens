@@ -24,8 +24,9 @@ namespace BarrocIntens.Financiën
 {
     public sealed partial class FinanciënMainWindow
     {
+        private int _userId { get; set; }
 
-        public FinanciënMainWindow()
+        public FinanciënMainWindow(int userId)
         {
             this.InitializeComponent();
 
@@ -36,6 +37,22 @@ namespace BarrocIntens.Financiën
             {
                 contractListView.ItemsSource = db.LeaseContracts.Include(c => c.Company);
             }
+            _userId = userId;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FullFinanceScreen.Visibility = Visibility.Collapsed;
+            FactuurPage factuurPage = new FactuurPage();
+            MainFrame.Navigate(typeof(FactuurPage));
+            backButton.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            FinanciënMainWindow financiënMainWindow = new FinanciënMainWindow(_userId);
+            financiënMainWindow.Activate();
+            this.Close();
         }
     }
 

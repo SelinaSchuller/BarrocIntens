@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\meldingIcon.png" />
+    <None Remove="FactuurPage.xaml" />
     <None Remove="Financiën\FinanciënMainWindow.xaml" />
     <None Remove="Financiën\OfferteAanmaken.xaml" />
     <None Remove="Financiën\OfferteProductSelection.xaml" />
@@ -133,6 +134,12 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="FactuurPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Sales\OfferteProductSelection.xaml">

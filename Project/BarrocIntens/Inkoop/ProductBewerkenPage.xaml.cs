@@ -20,11 +20,11 @@ using BarrocIntens.Data;
 namespace BarrocIntens.Inkoop
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// An esmpty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class ProductBewerkenPage : Page
     {
-        private int _productId;
+       /* private int _productId;
 
         public ProductBewerkenPage()
         {
@@ -128,6 +128,6 @@ namespace BarrocIntens.Inkoop
             {
                 return;
             }
-        }
+        }*/
     }
 }
