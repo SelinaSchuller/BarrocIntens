@@ -17,6 +17,7 @@ using Bogus.DataSets;
 using System.Net.Mail;
 using System.Net;
 using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,9 +29,16 @@ namespace BarrocIntens
     /// </summary>
     public sealed partial class FactuurPage : Page
     {
+
         public FactuurPage()
         {
             this.InitializeComponent();
+
+            using (var db = new AppDbContext())
+            {
+                var customers = db.Customers.Select(c => c.Email).ToList();
+                CustomerComboBox.ItemsSource = customers;
+            }
 
         }
 
