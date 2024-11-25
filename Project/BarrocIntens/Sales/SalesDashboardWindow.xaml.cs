@@ -1,3 +1,4 @@
+using BarrocIntens.Financiën;
 using BarrocIntens.Onderhoud;
 using BarrocIntens.Services;
 using Microsoft.UI.Windowing;
@@ -96,8 +97,9 @@ namespace BarrocIntens.Sales
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
-			SetButtonVisibility();
-		}
+            MainFrame.Navigate(typeof(OfferteAanmakenPage));
+            SetButtonVisibility();
+        }
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{

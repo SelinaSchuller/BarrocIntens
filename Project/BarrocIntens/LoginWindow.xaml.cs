@@ -53,26 +53,26 @@ namespace BarrocIntens
 					{
 						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
 						var salesDashboard = new Sales.SalesDashboardWindow(userId);
-						this.Close();
+						//this.Close();
 						salesDashboard.Activate();
 					}
 					else if (departmentId == 2)
 					{
-						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow();
-						this.Close();
+						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
+						//this.Close();
 						onderhoudDashboard.Activate();
 					}
 					else if (departmentId == 3)
 					{
 						// Verander dit naar de juiste window wanneer deze is aangemaakt
-						var financeDashboard = new Financiën.FinanciënMainWindow();
+						var financeDashboard = new FinanciÃ«n.FinanciÃ«nMainWindow(userId);
 						this.Close();
 						financeDashboard.Activate();
 					}
 					else if (departmentId == 4)
 					{
 						var inkoopDashboard = new Inkoop.InkoopDashboardWindow();
-						this.Close();
+						//this.Close();
 						inkoopDashboard.Activate();
 					}
 					else if (departmentId == null)

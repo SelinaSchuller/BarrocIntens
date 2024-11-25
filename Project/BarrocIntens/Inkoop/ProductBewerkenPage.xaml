@@ -8,19 +8,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid Background="#363534">
+    
+    <!--<Grid Background="#363534">
         <StackPanel Margin="50 0 0 0">
-            <StackPanel Spacing="1200" Orientation="Horizontal">
+            <StackPanel Spacing="800" Orientation="Horizontal">
                 <TextBlock Text="Inkoop" FontSize="60" Foreground="#ffd700" FontWeight="Bold" Margin="0 20 20 30"/>
                 <Button Click="TerugButton_Click" Width="150" FontSize="20" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2">Terug</Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="50">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Width="1450" Height="75" BorderBrush="#ffd700" CornerRadius="50 50 0 0" Background="#ffd700">
+                    <StackPanel Width="1200" Height="75" BorderBrush="#ffd700" CornerRadius="50 50 0 0" Background="#ffd700">
                         <TextBlock FontSize="30" Text="Product Bewerken" Foreground="Black" HorizontalAlignment="Center" Padding="0 15 0 0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="400" Background="Black" CornerRadius="0 0 50 50" Height="350">
+                    <StackPanel Orientation="Horizontal" Spacing="100" Background="Black" CornerRadius="0 0 50 50" Height="350">
                         <StackPanel Padding="30 15 10 15" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock x:Name="ProductNaam" Text="Product Naam:" FontSize="25" Foreground="#ffd700"/>
@@ -48,7 +48,6 @@
                         </StackPanel>
                         <StackPanel Padding="30 15 10 15" Orientation="Vertical">
                             <TextBlock x:Name="Categorien" Text="categorieën:" FontSize="25" Foreground="#ffd700"/>
-                            <!--Plaats hier Dropdown met de Categorieën in de database-->
                             <ComboBox x:Name="CategoryComboBox" DisplayMemberPath="Name" SelectedValuePath="Id" BorderBrush="#ffd700" Foreground="#ffd700" BorderThickness="2" Width="250" FontSize="20" Margin="0 10 0 0"/>
                             <TextBlock x:Name="CategoryError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                         </StackPanel>
@@ -57,5 +56,5 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-    </Grid>
+    </Grid>-->
 </Page>
