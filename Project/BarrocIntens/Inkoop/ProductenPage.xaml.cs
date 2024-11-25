@@ -40,8 +40,34 @@ namespace BarrocIntens.Inkoop
 
         private void ZoekButton_Click(object sender, RoutedEventArgs e)
         {
+            string searchText = SearchTextBox.Text?.Trim().ToLower();
 
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                using (var db = new AppDbContext())
+                {
+                    // Filter products by name or other criteria (e.g., category)
+                    var filteredProducts = db.Products
+                        .Include(p => p.Category)
+                        .Where(p => p.Name.ToLower().Contains(searchText) ||
+                                    (p.Category != null && p.Category.Name.ToLower().Contains(searchText)))
+                        .OrderBy(p => p.Id)
+                        .ToList();
+
+                    // Update the ListView with the filtered results
+                    ProductListView.ItemsSource = filteredProducts;
+                }
+            }
+            else
+            {
+                // If no search text, reset the ListView to show all products
+                using (var db = new AppDbContext())
+                {
+                    ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+                }
+            }
         }
+
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -71,19 +97,35 @@ namespace BarrocIntens.Inkoop
 
                 if (product != null)
                 {
-                    bool isDeleted = await DeleteProductFromDatabase(product);
-
-                    if (isDeleted)
+                    var dialog = new ContentDialog
                     {
-                        var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
-                        if (productList != null)
+                        Title = "Bevestiging",
+                        Content = "Weet je zeker dat je dit product wilt verwijderen?",
+                        PrimaryButtonText = "Ja",
+                        CloseButtonText = "Nee",
+                        XamlRoot = this.XamlRoot
+                    };
+
+                    var result = await dialog.ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        bool isDeleted = await DeleteProductFromDatabase(product);
+
+                        if (isDeleted)
                         {
-                            productList.Remove(product);
+                            var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
+                            if (productList != null)
+                            {
+                                productList.Remove(product);
+                            }
                         }
                     }
                 }
             }
         }
+
+
 
         private async Task<bool> DeleteProductFromDatabase(Product product)
         {
