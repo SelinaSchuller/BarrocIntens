@@ -97,19 +97,35 @@ namespace BarrocIntens.Inkoop
 
                 if (product != null)
                 {
-                    bool isDeleted = await DeleteProductFromDatabase(product);
-
-                    if (isDeleted)
+                    var dialog = new ContentDialog
                     {
-                        var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
-                        if (productList != null)
+                        Title = "Bevestiging",
+                        Content = "Weet je zeker dat je dit product wilt verwijderen?",
+                        PrimaryButtonText = "Ja",
+                        CloseButtonText = "Nee",
+                        XamlRoot = this.XamlRoot
+                    };
+
+                    var result = await dialog.ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        bool isDeleted = await DeleteProductFromDatabase(product);
+
+                        if (isDeleted)
                         {
-                            productList.Remove(product);
+                            var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
+                            if (productList != null)
+                            {
+                                productList.Remove(product);
+                            }
                         }
                     }
                 }
             }
         }
+
+
 
         private async Task<bool> DeleteProductFromDatabase(Product product)
         {
