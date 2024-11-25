@@ -1,3 +1,5 @@
+using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,15 +28,36 @@ namespace BarrocIntens.Sales
 		public SalesMainPage()
 		{
 			this.InitializeComponent();
-		}
+
+            using (var db = new AppDbContext())
+            {
+                customersListView.ItemsSource = db.Customers.OrderBy(p => p.Id).ToList();
+            }
+        }
 
 		private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
 		{
 
 		}
 		private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
+		{			
 
-		}
-	}
+        }
+        private void customersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (customersListView.SelectedItem is Customer selectedCustomer)
+            {
+                using (var db = new AppDbContext())
+                {
+                    var customerDetails = db.Customers
+                                             .Include(c => c.Company)
+                                             .Where(c => c.Id == selectedCustomer.Id)
+                                             .OrderBy(c => c.Id)
+                                             .ToList();
+
+                    customerInfoListView.ItemsSource = customerDetails;
+                }
+            }
+        }
+    }
 }
