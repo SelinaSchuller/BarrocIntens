@@ -16,6 +16,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -55,6 +56,11 @@ namespace BarrocIntens.Sales
 			}
 
 			LoadData();
+
+			SelectedType = _note.Type;
+			newTypeTextBox.Text = string.Empty;
+			newTypeTextBox.Visibility = Visibility.Collapsed;
+			typeComboBox.SelectedItem = SelectedType;
 		}
 
 
@@ -74,37 +80,25 @@ namespace BarrocIntens.Sales
 					.Distinct()
 					.OrderBy(type => type)
 					.ToList();
-
-				SelectedType = _note.Type;
-				newTypeTextBox.Text = string.Empty;
-				IsComboBoxEnabled = true;
-				IsNewTypeTextBoxEnabled = true;
+				
+				NoteTypes.Insert(0, "-- Voeg eigen type toe --");
 			}
 		}
 
 		private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(typeComboBox.SelectedItem != null)
+			if(typeComboBox.SelectedItem.ToString() == "-- Voeg eigen type toe --")
 			{
-				IsNewTypeTextBoxEnabled = false;
+				newTypeTextBox.Visibility = Visibility.Visible;
+				//SelectedType = null;
 			}
 			else
 			{
-				IsNewTypeTextBoxEnabled = true;
+				newTypeTextBox.Visibility = Visibility.Collapsed;
 			}
 		}
 
-		private void NewTypeTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if(!string.IsNullOrWhiteSpace(newTypeTextBox.Text))
-			{
-				IsComboBoxEnabled = false;
-			}
-			else
-			{
-				IsComboBoxEnabled = true;
-			}
-		}
+		
 
 
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
@@ -129,7 +123,7 @@ namespace BarrocIntens.Sales
 					existingNote.Title = titleTextBox.Text;
 					existingNote.Description = descriptionTextBox.Text;
 
-					if(!string.IsNullOrWhiteSpace(newTypeTextBox.Text))
+					if(IsNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
 					{
 						string newType = newTypeTextBox.Text.Trim();
 						existingNote.Type = newType;
@@ -140,7 +134,7 @@ namespace BarrocIntens.Sales
 							NoteTypes = NoteTypes.OrderBy(type => type).ToList();
 						}
 					}
-					else if(!string.IsNullOrEmpty(SelectedType))
+					else if(!string.IsNullOrEmpty(SelectedType) && SelectedType != "-- Voeg eigen type toe --")
 					{
 						existingNote.Type = SelectedType;
 					}
