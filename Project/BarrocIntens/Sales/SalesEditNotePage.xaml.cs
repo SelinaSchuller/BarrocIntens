@@ -90,25 +90,23 @@ namespace BarrocIntens.Sales
 			if(typeComboBox.SelectedItem.ToString() == "-- Voeg eigen type toe --")
 			{
 				newTypeTextBox.Visibility = Visibility.Visible;
-				//SelectedType = null;
+				SelectedType = string.Empty;
 			}
 			else
 			{
 				newTypeTextBox.Visibility = Visibility.Collapsed;
+				SelectedType = typeComboBox.SelectedItem.ToString();
 			}
 		}
 
-		
-
-
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
 		{
-			if(string.IsNullOrWhiteSpace(titleTextBox.Text))
+			if((string.IsNullOrWhiteSpace(titleTextBox.Text)) || ((string.IsNullOrWhiteSpace(newTypeTextBox.Text) && string.IsNullOrWhiteSpace(SelectedType))))
 			{
 				ContentDialog titleErrorDialog = new ContentDialog
 				{
-					Title = "Titel vereist",
-					Content = "Voer een titel in voor de notitie voordat u deze opslaat.",
+					Title = "Een of meerdere velden is leeg",
+					Content = "Voer alle velden in voor de notitie voordat u deze opslaat.",
 					CloseButtonText = "Ok",
 					XamlRoot = this.XamlRoot
 				};

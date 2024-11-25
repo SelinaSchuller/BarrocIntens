@@ -21,16 +21,16 @@
                 <TextBox x:Name="titleTextBox" Margin="0,10" />
                 <TextBlock Foreground="White" Margin="0,10">Type:</TextBlock>
                 <ComboBox x:Name="typeComboBox"
-          ItemsSource="{x:Bind NoteTypes}" 
-          Margin="0,10"
-          SelectionChanged="TypeComboBox_SelectionChanged" />
+                          ItemsSource="{x:Bind NoteTypes}" 
+                          Margin="0,10"
+                          SelectionChanged="TypeComboBox_SelectionChanged" />
 
                 <TextBox x:Name="newTypeTextBox" 
-         PlaceholderText="Voer hier een nieuw type in" 
-         Margin="0,10" 
-         Foreground="White" 
-         Background="Black"
-         Visibility="Collapsed"/>
+                         PlaceholderText="Voer hier een nieuw type in" 
+                         Margin="0,10" 
+                         Foreground="White" 
+                         Background="Black"
+                         Visibility="Collapsed"/>
 
                 <TextBox x:Name="descriptionTextBox" Margin="0,10" TextWrapping="Wrap" AcceptsReturn="True" Height="100"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
