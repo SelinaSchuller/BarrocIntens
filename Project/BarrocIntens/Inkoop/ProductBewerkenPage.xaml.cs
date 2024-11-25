@@ -24,7 +24,7 @@ namespace BarrocIntens.Inkoop
     /// </summary>
     public sealed partial class ProductBewerkenPage : Page
     {
-       /* private int _productId;
+        private int _productId;
 
         public ProductBewerkenPage()
         {
@@ -69,7 +69,6 @@ namespace BarrocIntens.Inkoop
             NaamError.Visibility = Visibility.Collapsed;
             DescError.Visibility = Visibility.Collapsed;
             PrijsError.Visibility = Visibility.Collapsed;
-            CategoryError.Visibility = Visibility.Collapsed;
 
             int validatieErrors = 0;
 
@@ -93,12 +92,6 @@ namespace BarrocIntens.Inkoop
             else
             {
                 PrijsError.Visibility = Visibility.Visible;
-                validatieErrors += 1;
-            }
-
-            if (CategoryComboBox.SelectedValue == null)
-            {
-                CategoryError.Visibility = Visibility.Visible;
                 validatieErrors += 1;
             }
 
@@ -128,6 +121,6 @@ namespace BarrocIntens.Inkoop
             {
                 return;
             }
-        }*/
+        }
     }
 }
