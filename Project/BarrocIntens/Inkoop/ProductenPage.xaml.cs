@@ -1,3 +1,5 @@
+using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -7,9 +9,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -26,12 +30,44 @@ namespace BarrocIntens.Inkoop
         public ProductenPage()
         {
             this.InitializeComponent();
+
+            using (var db = new AppDbContext())
+            {
+                ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+            };
+           
         }
 
         private void ZoekButton_Click(object sender, RoutedEventArgs e)
         {
+            string searchText = SearchTextBox.Text?.Trim().ToLower();
 
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                using (var db = new AppDbContext())
+                {
+                    // Filter products by name or other criteria (e.g., category)
+                    var filteredProducts = db.Products
+                        .Include(p => p.Category)
+                        .Where(p => p.Name.ToLower().Contains(searchText) ||
+                                    (p.Category != null && p.Category.Name.ToLower().Contains(searchText)))
+                        .OrderBy(p => p.Id)
+                        .ToList();
+
+                    // Update the ListView with the filtered results
+                    ProductListView.ItemsSource = filteredProducts;
+                }
+            }
+            else
+            {
+                // If no search text, reset the ListView to show all products
+                using (var db = new AppDbContext())
+                {
+                    ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+                }
+            }
         }
+
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -42,5 +78,73 @@ namespace BarrocIntens.Inkoop
         {
             Frame.Navigate(typeof(ProductAanmaakPage));
         }
+
+        private void BewerkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int id)
+            {
+                Frame.Navigate(typeof(ProductBewerkenPage), id);
+            }
+               
+        }
+
+        private async void VerwijderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                var product = button.DataContext as Product;
+
+                if (product != null)
+                {
+                    var dialog = new ContentDialog
+                    {
+                        Title = "Bevestiging",
+                        Content = "Weet je zeker dat je dit product wilt verwijderen?",
+                        PrimaryButtonText = "Ja",
+                        CloseButtonText = "Nee",
+                        XamlRoot = this.XamlRoot
+                    };
+
+                    var result = await dialog.ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        bool isDeleted = await DeleteProductFromDatabase(product);
+
+                        if (isDeleted)
+                        {
+                            var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
+                            if (productList != null)
+                            {
+                                productList.Remove(product);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        private async Task<bool> DeleteProductFromDatabase(Product product)
+        {
+            using (var db = new AppDbContext())
+            {
+                var productToDelete = await db.Products
+                                                    .FirstOrDefaultAsync(p => p.Id == product.Id);
+
+                if (productToDelete != null)
+                {
+                    db.Products.Remove(productToDelete);
+                    await db.SaveChangesAsync();
+                    ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }

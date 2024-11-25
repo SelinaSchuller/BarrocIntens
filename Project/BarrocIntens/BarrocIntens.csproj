@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
@@ -21,8 +21,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\meldingIcon.png" />
+    <None Remove="FactuurPage.xaml" />
+    <None Remove="Financiën\FinanciënMainWindow.xaml" />
+    <None Remove="Financiën\OfferteAanmaken.xaml" />
+    <None Remove="Financiën\OfferteProductSelection.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
+    <None Remove="ResourceDictionary1.xaml" />
+    <None Remove="Inkoop\ProductBewerkenPage.xaml" />
     <None Remove="SalesDashboard.xaml" />
   </ItemGroup>
 
@@ -34,6 +40,7 @@
     <None Remove="Inkoop\ProductenPage.xaml" />
     <None Remove="Onderhoud\OnderhoudMainPage.xaml" />
     <None Remove="MainWindow.xaml" />
+    <None Remove="Sales\SalesCompanyPage.xaml" />
     <None Remove="Sales\SalesCreateNotePage.xaml" />
     <None Remove="Sales\SalesDashboardWindow.xaml" />
     <None Remove="Sales\SalesEditNotePage.xaml" />
@@ -130,18 +137,47 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\SalesEditNotePage.xaml">
+    <Page Update="FactuurPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Sales\OfferteProductSelection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\SalesCreateNotePage.xaml">
+    <Page Update="Sales\OfferteAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Sales\SalesCompanyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+	<ItemGroup>
+		<Page Update="Sales\SalesEditNotePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="ResourceDictionary1.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Update="Sales\SalesCreateNotePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Financiën\FinanciënMainWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
     <Page Update="Sales\SalesNotesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,4 +203,5 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+
 </Project>

@@ -25,7 +25,9 @@
                 <TextBlock Text="Onderhoud" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
             </StackPanel>
         </Border>
-        <Border Margin="75" HorizontalAlignment="Right" VerticalAlignment="Top">
+
+        <!-- Storingsaanvragen voor Hoofd Onderhoud-->
+        <Border x:Name="StoringIcon" Visibility="Collapsed" Margin="75" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Grid Width="50" Height="50">
                 <Image x:Name="MeldingIconImage"
        Source="../assets/meldingIcon.png"

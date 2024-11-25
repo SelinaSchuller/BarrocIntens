@@ -1,3 +1,4 @@
+using BarrocIntens.Financiën;
 using BarrocIntens.Onderhoud;
 using BarrocIntens.Services;
 using Microsoft.UI.Windowing;
@@ -48,14 +49,18 @@ namespace BarrocIntens.Sales
 		private void SetButtonVisibility()
 		{
 			CustomerPageButton.Visibility = Visibility.Visible;
+			CompanyPageButton.Visibility = Visibility.Visible;
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
-			NotePageButton.Content = "Notities";
 
 			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				CustomerPageButton.Visibility = Visibility.Collapsed;
+			}
+			else if(MainFrame.SourcePageType == typeof(SalesCompanyPage))
+			{
+				CompanyPageButton.Visibility = Visibility.Collapsed;
 			}
 			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -68,8 +73,14 @@ namespace BarrocIntens.Sales
 			else if(MainFrame.SourcePageType == typeof(SalesNotesPage))
 			{
 				NotePageButton.Visibility = Visibility.Collapsed;
-
+				NotePageButton.Content = "Notities";
 			}
+			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
+			{
+				NotePageButton.Visibility = Visibility.Visible;
+				NotePageButton.Content = "Terug";
+			}
+
 		}
 
 		private void CustomerPageButton_Click(object sender, RoutedEventArgs e)
@@ -78,10 +89,17 @@ namespace BarrocIntens.Sales
 			SetButtonVisibility();
 		}
 
-		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
+		private void CompanyPageButton_Click(object sender, RoutedEventArgs e)
 		{
+			MainFrame.Navigate(typeof(SalesCompanyPage));
 			SetButtonVisibility();
 		}
+
+		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
+		{
+            MainFrame.Navigate(typeof(OfferteAanmakenPage));
+            SetButtonVisibility();
+        }
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{
