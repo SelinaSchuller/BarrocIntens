@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,12 +30,14 @@ namespace BarrocIntens.Sales
 		private Customer Klant { get; set; }
 		private List<Note> NotitiesLijst { get; set; }
 		private Note _note { get; set; }
+		private string SelectedType { get; set; }
+		private bool IsComboBoxEnabled { get; set; } = true;
+		private bool IsNewTypeTextBoxEnabled { get; set; } = true;
 		private int _noteId { get; set; }
-
+		private List<string> NoteTypes { get; set; }
 		public SalesEditNotePage()
 		{
 			this.InitializeComponent();
-
 		}
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -65,8 +68,44 @@ namespace BarrocIntens.Sales
 				_note = db.Notes.SingleOrDefault(n => n.Id == _noteId);
 				titleTextBox.Text = _note.Title.ToString();
 				descriptionTextBox.Text = _note.Description.ToString();
+
+				NoteTypes = db.Notes
+					.Select(n => n.Type)
+					.Distinct()
+					.OrderBy(type => type)
+					.ToList();
+
+				SelectedType = _note.Type;
+				newTypeTextBox.Text = string.Empty;
+				IsComboBoxEnabled = true;
+				IsNewTypeTextBoxEnabled = true;
 			}
 		}
+
+		private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(typeComboBox.SelectedItem != null)
+			{
+				IsNewTypeTextBoxEnabled = false;
+			}
+			else
+			{
+				IsNewTypeTextBoxEnabled = true;
+			}
+		}
+
+		private void NewTypeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if(!string.IsNullOrWhiteSpace(newTypeTextBox.Text))
+			{
+				IsComboBoxEnabled = false;
+			}
+			else
+			{
+				IsComboBoxEnabled = true;
+			}
+		}
+
 
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -90,6 +129,21 @@ namespace BarrocIntens.Sales
 					existingNote.Title = titleTextBox.Text;
 					existingNote.Description = descriptionTextBox.Text;
 
+					if(!string.IsNullOrWhiteSpace(newTypeTextBox.Text))
+					{
+						string newType = newTypeTextBox.Text.Trim();
+						existingNote.Type = newType;
+
+						if(!NoteTypes.Contains(newType))
+						{
+							NoteTypes.Add(newType);
+							NoteTypes = NoteTypes.OrderBy(type => type).ToList();
+						}
+					}
+					else if(!string.IsNullOrEmpty(SelectedType))
+					{
+						existingNote.Type = SelectedType;
+					}
 
 					db.Notes.Update(existingNote);
 					db.SaveChanges();
