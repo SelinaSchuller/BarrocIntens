@@ -22,129 +22,204 @@ using Windows.Foundation.Collections;
 
 namespace BarrocIntens.Inkoop
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class ProductenPage : Page
-    {
-        public ProductenPage()
-        {
-            this.InitializeComponent();
+	/// <summary>
+	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class ProductenPage : Page
+	{
+		private bool isDeleted { get; set; }
+		private ObservableCollection<Product> Products { get; set; }
+		public ProductenPage()
+		{
+			this.InitializeComponent();
 
-            using (var db = new AppDbContext())
-            {
-                ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
-            };
-           
-        }
+			LoadProducts();
 
-        private void ZoekButton_Click(object sender, RoutedEventArgs e)
-        {
-            string searchText = SearchTextBox.Text?.Trim().ToLower();
+		}
 
-            if (!string.IsNullOrEmpty(searchText))
-            {
-                using (var db = new AppDbContext())
-                {
-                    // Filter products by name or other criteria (e.g., category)
-                    var filteredProducts = db.Products
-                        .Include(p => p.Category)
-                        .Where(p => p.Name.ToLower().Contains(searchText) ||
-                                    (p.Category != null && p.Category.Name.ToLower().Contains(searchText)))
-                        .OrderBy(p => p.Id)
-                        .ToList();
+		private void LoadProducts()
+		{
+			using(var db = new AppDbContext())
+			{
+				var products = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+				Products = new ObservableCollection<Product>(products);
+				ProductListView.ItemsSource = Products;
+			}
+		}
 
-                    // Update the ListView with the filtered results
-                    ProductListView.ItemsSource = filteredProducts;
-                }
-            }
-            else
-            {
-                // If no search text, reset the ListView to show all products
-                using (var db = new AppDbContext())
-                {
-                    ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
-                }
-            }
-        }
+		private void ZoekButton_Click(object sender, RoutedEventArgs e)
+		{
+			string searchText = SearchTextBox.Text?.Trim().ToLower();
 
+			using(var db = new AppDbContext())
+			{
+				var filteredProducts = string.IsNullOrEmpty(searchText)
+					? db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList()
+					: db.Products
+						.Include(p => p.Category)
+						.Where(p => p.Name.ToLower().Contains(searchText) ||
+									(p.Category != null && p.Category.Name.ToLower().Contains(searchText)))
+						.OrderBy(p => p.Id)
+						.ToList();
 
-        private void FilterButton_Click(object sender, RoutedEventArgs e)
-        {
+				Products.Clear();
+				foreach(var product in filteredProducts)
+				{
+					Products.Add(product);
+				}
+			}
+		}
 
-        }
+		private void FilterButton_Click(object sender, RoutedEventArgs e)
+		{
 
-        private void NieuwProductButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(ProductAanmaakPage));
-        }
+		}
 
-        private void BewerkButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is int id)
-            {
-                Frame.Navigate(typeof(ProductBewerkenPage), id);
-            }
-               
-        }
+		private void NieuwProductButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(ProductAanmaakPage));
+		}
 
-        private async void VerwijderButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if (button != null)
-            {
-                var product = button.DataContext as Product;
+		private void BewerkButton_Click(object sender, RoutedEventArgs e)
+		{
+			if(sender is Button button && button.Tag is int id)
+			{
+				Frame.Navigate(typeof(ProductBewerkenPage), id);
+			}
 
-                if (product != null)
-                {
-                    var dialog = new ContentDialog
-                    {
-                        Title = "Bevestiging",
-                        Content = "Weet je zeker dat je dit product wilt verwijderen?",
-                        PrimaryButtonText = "Ja",
-                        CloseButtonText = "Nee",
-                        XamlRoot = this.XamlRoot
-                    };
+		}
 
-                    var result = await dialog.ShowAsync();
+		private async void VerwijderButton_Click(object sender, RoutedEventArgs e)
+		{
+			System.Diagnostics.Debug.WriteLine("Start VerwijderButton_Click");
 
-                    if (result == ContentDialogResult.Primary)
-                    {
-                        bool isDeleted = await DeleteProductFromDatabase(product);
+			var button = sender as Button;
+			if(button != null && button.DataContext is Product product)
+			{
+				// Initial confirmation dialog
+				var initialDialog = new ContentDialog
+				{
+					Title = "Bevestiging",
+					Content = "Weet je zeker dat je dit product wilt verwijderen?",
+					PrimaryButtonText = "Ja",
+					CloseButtonText = "Nee",
+					XamlRoot = this.XamlRoot
+				};
 
-                        if (isDeleted)
-                        {
-                            var productList = ProductListView.ItemsSource as ObservableCollection<Product>;
-                            if (productList != null)
-                            {
-                                productList.Remove(product);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+				var initialResult = await initialDialog.ShowAsync();
 
+				if(initialResult != ContentDialogResult.Primary)
+					return; // User canceled the deletion
 
+				using(var db = new AppDbContext())
+				{
+					// Check for active ServiceRequests using this product
+					var activeServiceRequests = db.ServiceRequests
+						.Where(sr => sr.ProductId == product.Id && (sr.Status == 1 || sr.Status == 2))
+						.ToList();
 
-        private async Task<bool> DeleteProductFromDatabase(Product product)
-        {
-            using (var db = new AppDbContext())
-            {
-                var productToDelete = await db.Products
-                                                    .FirstOrDefaultAsync(p => p.Id == product.Id);
+					if(activeServiceRequests.Any())
+					{
+						// Warning dialog if ServiceRequests are using the product
+						var warningDialog = new ContentDialog
+						{
+							Title = "Product wordt nog gebruikt",
+							Content = $"Dit product wordt nog gebruikt in {activeServiceRequests.Count} storings aanvraag(aanvragen) met status (1)'Nog te doen' of (2)'Onderweg'. Als u doorgaat, wordt het product in deze servicerequests leeggemaakt. Wilt u doorgaan?",
+							PrimaryButtonText = "Ja",
+							SecondaryButtonText = "Nee",
+							XamlRoot = this.XamlRoot
+						};
 
-                if (productToDelete != null)
-                {
-                    db.Products.Remove(productToDelete);
-                    await db.SaveChangesAsync();
-                    ProductListView.ItemsSource = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
-                    return true;
-                }
-            }
+						var warningResult = await warningDialog.ShowAsync();
 
-            return false;
-        }
+						if(warningResult != ContentDialogResult.Primary)
+							return; // User chose to keep the product
 
-    }
+						// Set ProductId to null for all affected ServiceRequests
+						foreach(var serviceRequest in activeServiceRequests)
+						{
+							serviceRequest.ProductId = null;
+						}
+
+						db.ServiceRequests.UpdateRange(activeServiceRequests);
+						await db.SaveChangesAsync();
+					}
+
+					// Check for references in other tables (e.g., WorkOrders)
+					var relatedWorkOrders = db.WorkOrders.Where(wo => wo.ProductId == product.Id).ToList();
+					if(relatedWorkOrders.Any())
+					{
+						foreach(var workOrder in relatedWorkOrders)
+						{
+							workOrder.ProductId = null;
+						}
+
+						db.WorkOrders.UpdateRange(relatedWorkOrders);
+						await db.SaveChangesAsync();
+					}
+
+					// Delete the product
+					if(activeServiceRequests.Any())
+					{
+						foreach(var serviceRequest in activeServiceRequests)
+						{
+							serviceRequest.ProductId = null;
+						}
+						db.ServiceRequests.UpdateRange(activeServiceRequests);
+
+						if(!await SaveChangesWithLogging(db))
+						{
+							return; // Exit on failure
+						}
+					}
+
+					var productToDelete = db.Products.FirstOrDefault(p => p.Id == product.Id);
+					if(productToDelete != null)
+					{
+						db.Products.Remove(productToDelete);
+
+						if(!await SaveChangesWithLogging(db))
+						{
+							return; // Exit on failure
+						}
+
+						// Reload products only after successful deletion
+						ReloadProducts();
+					}
+				}
+			}
+
+			System.Diagnostics.Debug.WriteLine("End VerwijderButton_Click");
+		}
+
+		private void ReloadProducts()
+		{
+			System.Diagnostics.Debug.WriteLine("Start ReloadProducts");
+			using(var db = new AppDbContext())
+			{
+				Products.Clear(); // Ensure existing data is cleared
+				var updatedProducts = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
+				foreach(var updatedProduct in updatedProducts)
+				{
+					Products.Add(updatedProduct);
+				}
+			}
+			System.Diagnostics.Debug.WriteLine("End ReloadProducts");
+		}
+
+		private async Task<bool> SaveChangesWithLogging(AppDbContext db)
+		{
+			try
+			{
+				await db.SaveChangesAsync();
+				return true;
+			}
+			catch(Microsoft.EntityFrameworkCore.DbUpdateException ex)
+			{
+				// Log inner exception for debugging
+				System.Diagnostics.Debug.WriteLine($"DbUpdateException: {ex.InnerException?.Message}");
+				return false;
+			}
+		}
+	}
 }
