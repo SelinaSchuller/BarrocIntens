@@ -62,7 +62,7 @@ namespace BarrocIntens.Onderhoud
 			}
 		}
 
-		private void SaveAppointmentButton_Click(object sender, RoutedEventArgs e)
+		private async void SaveAppointmentButton_Click(object sender, RoutedEventArgs e)
 		{
 			if(string.IsNullOrWhiteSpace(DescriptionTextBox.Text) || DatePicker.SelectedDate == null ||
 				UserComboBox.SelectedValue == null || CustomerComboBox.SelectedValue == null)
@@ -94,6 +94,15 @@ namespace BarrocIntens.Onderhoud
 				// If a ServiceRequest is selected, create a WorkOrder
 				if(ServiceRequestComboBox.SelectedValue != null)
 				{
+					int serviceRequestId = (int)ServiceRequestComboBox.SelectedValue;
+
+					var serviceRequest = db.ServiceRequests.SingleOrDefault(sr => sr.Id == serviceRequestId);
+					if(serviceRequest != null)
+					{
+						serviceRequest.Status = 2; // Update the status to 2
+					}
+					db.ServiceRequests.Update(serviceRequest);
+
 					var workOrder = new WorkOrder
 					{
 						Description = appointment.Description,
@@ -107,15 +116,34 @@ namespace BarrocIntens.Onderhoud
 					db.SaveChanges();
 				}
 			}
-			_parentWindow.NavigateToPlanningPage();
-			//ContentDialog successDialog = new ContentDialog
-			//{
-			//	Title = "Succes",
-			//	Content = "Afspraak succesvol opgeslagen.",
-			//	CloseButtonText = "Ok",
-			//	XamlRoot = this.XamlRoot
-			//};
-			//successDialog.ShowAsync();
+			ContentDialog successDialog = new ContentDialog
+			{
+				Title = "Succes",
+				Content = "Afspraak succesvol opgeslagen.\nWilt u terugkeren naar de planning of nog een nieuwe afspraak maken?",
+				PrimaryButtonText = "Ga naar planning",
+				SecondaryButtonText = "Nieuwe afspraak",
+				XamlRoot = this.XamlRoot
+			};
+
+			var result = await successDialog.ShowAsync();
+
+			if(result == ContentDialogResult.Primary)
+			{
+				_parentWindow.NavigateToPlanningPage();
+			}
+			else if(result == ContentDialogResult.Secondary)
+			{
+				ResetForm();
+			}
 		}
+		private void ResetForm()
+		{
+			DescriptionTextBox.Text = string.Empty;
+			DatePicker.SelectedDate = null;
+			UserComboBox.SelectedIndex = -1;
+			CustomerComboBox.SelectedIndex = -1;
+			ServiceRequestComboBox.SelectedIndex = -1;
+		}
+
 	}
 }

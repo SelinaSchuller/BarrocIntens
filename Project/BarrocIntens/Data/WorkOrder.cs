@@ -13,10 +13,10 @@ namespace BarrocIntens.Data
         public int UserId { get; set; }
         public int? ProductId { get; set; }
         public int AppointmentId { get; set; }
-        public int RequestId { get; set; }
+        public int? RequestId { get; set; }
         public User User { get; set; }
         public Product? Product { get; set; }
         public Appointment Appointment { get; set; }
-        public ServiceRequest Request { get; set; }
+        public ServiceRequest? Request { get; set; }
     }
 }
