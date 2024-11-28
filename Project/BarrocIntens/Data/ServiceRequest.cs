@@ -11,7 +11,7 @@ namespace BarrocIntens.Data
         public int Id { get; set; }
         public string Description { get; set; }
         public DateTime Date_Reported { get; set; }
-        public int Status { get; set; }
+        public int Status { get; set; } //1 = UnAssigned; 2 = In Progress; 3 = Done;
         public int CustomerId { get; set; }
         public int ProductId { get; set; }
         public Customer Customer { get; set; }
