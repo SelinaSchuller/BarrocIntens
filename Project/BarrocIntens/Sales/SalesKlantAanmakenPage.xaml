@@ -47,25 +47,40 @@
                     <StackPanel Orientation="Vertical" Margin="25" Spacing="15">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="Naam:" VerticalAlignment="Center" FontSize="25"/>
-                            <TextBox x:Name="NameInput" Width="200"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Name="NameError" Text="Naam mag niet leeg zijn" Foreground="Red" FontSize="15" Visibility="Collapsed"/>
+                                <TextBox x:Name="NameInput" Width="200" Height="25"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="Adres:" VerticalAlignment="Center" FontSize="25"/>
-                            <TextBox x:Name="AdressInput" Width="300"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Name="AdressError" Text="Adres mag niet leeg zijn" Foreground="Red" FontSize="15" Visibility="Collapsed"/>
+                                <TextBox x:Name="AdressInput" Width="300"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="E-mail:" VerticalAlignment="Center" FontSize="25"/>
-                            <TextBox x:Name="EmailInput" Width="300"/>
+                            <StackPanel>
+                                <TextBlock x:Name="EmailError" Text="Voer een geldige email in" Foreground="Red" FontSize="15" Visibility="Collapsed"/>
+                                <TextBox x:Name="EmailInput" Width="300"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="Telfoonnummer:" VerticalAlignment="Center" FontSize="25"/>
-                            <TextBox x:Name="TelInput" Width="300"/>
+                            <StackPanel>
+                                <TextBlock x:Name="TelError" Text="Voer een geldige telefoon nummer in" Foreground="red" FontSize="15" Visibility="Collapsed"/>
+                                <TextBox x:Name="TelInput" Width="300"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="Bedrijf:" VerticalAlignment="Center" FontSize="25"/>
-                            <ComboBox x:Name="CompanyComboBox" DisplayMemberPath="Name" SelectedValuePath="Id" BorderBrush="#ffd700" Foreground="#ffd700" BorderThickness="2" Width="250" FontSize="20" Margin="0 10 0 0" PlaceholderText="Geen geselecteerd"/>
+                            <StackPanel>
+                                <TextBlock x:Name="CompanyError" Text="Bedrijf mag niet leeg zijn" Foreground="red" FontSize="15" Visibility="Collapsed"/>
+                                <ComboBox x:Name="CompanyComboBox" DisplayMemberPath="Name" SelectedValuePath="Id" BorderBrush="#ffd700" Foreground="#ffd700" BorderThickness="2" Width="250" FontSize="20" Margin="0 10 0 0" PlaceholderText="Geen geselecteerd"/>
+                            </StackPanel>
                         </StackPanel>
-                        <Button Click="SaveButton_Click">Opslaan</Button>
+                        <Button Click="SaveButton_Click" Width="300" FontSize="20" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2" Margin="0 40 0 0">Opslaan</Button>
                     </StackPanel>
                 </StackPanel>
             </Grid>
