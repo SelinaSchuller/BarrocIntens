@@ -26,6 +26,7 @@
     <None Remove="Financiën\OfferteAanmaken.xaml" />
     <None Remove="Financiën\OfferteProductSelection.xaml" />
     <None Remove="Onderhoud\OnderhoudAfsprakenCreatePage.xaml" />
+    <None Remove="generic.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="ResourceDictionary1.xaml" />
