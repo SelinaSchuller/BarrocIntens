@@ -48,6 +48,7 @@ namespace BarrocIntens.Onderhoud
 			}
 
 			MainFrame.Navigate(typeof(OnderhoudMainPage));
+
 			SetButtonVisibility();
 		}
 
@@ -134,11 +135,17 @@ namespace BarrocIntens.Onderhoud
 
 		private void AfspraakCreateButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(typeof(OnderhoudAfsprakenCreatePage));
+			MainFrame.Navigate(typeof(OnderhoudAfsprakenCreatePage), this);
 			SetButtonVisibility();
 		}
 
 		private void PlanningButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			SetButtonVisibility();
+		}
+
+		public void NavigateToPlanningPage()
 		{
 			MainFrame.Navigate(typeof(OnderhoudMainPage));
 			SetButtonVisibility();
