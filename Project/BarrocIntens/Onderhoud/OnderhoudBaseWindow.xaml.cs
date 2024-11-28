@@ -12,6 +12,7 @@ using Microsoft.UI.Windowing;
 using BarrocIntens.Services;
 using BarrocIntens.Data;
 using System.Linq;
+using BarrocIntens.Sales;
 
 namespace BarrocIntens.Onderhoud
 {
@@ -41,8 +42,29 @@ namespace BarrocIntens.Onderhoud
 				LoadData();
 				StoringIcon.Visibility = Visibility.Visible;
 			}
+			else if (LoggedInUser.DepartmentId == 6)
+			{
+
+			}
 
 			MainFrame.Navigate(typeof(OnderhoudMainPage));
+
+			SetButtonVisibility();
+		}
+
+		private void SetButtonVisibility()
+		{
+			PlanningButton.Visibility = Visibility.Visible;
+			AfspraakCreateButton.Visibility = Visibility.Visible;
+
+			if(MainFrame.SourcePageType == typeof(OnderhoudMainPage))
+			{
+				PlanningButton.Visibility = Visibility.Collapsed;
+			}
+			else if(MainFrame.SourcePageType == typeof(OnderhoudAfsprakenCreatePage))
+			{
+				AfspraakCreateButton.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private void LoadData()
@@ -111,5 +133,22 @@ namespace BarrocIntens.Onderhoud
 			storyboard.Begin();
 		}
 
+		private void AfspraakCreateButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(OnderhoudAfsprakenCreatePage), this);
+			SetButtonVisibility();
+		}
+
+		private void PlanningButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			SetButtonVisibility();
+		}
+
+		public void NavigateToPlanningPage()
+		{
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			SetButtonVisibility();
+		}
 	}
 }

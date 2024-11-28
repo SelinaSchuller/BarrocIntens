@@ -36,7 +36,7 @@ namespace BarrocIntens
 
             using (var db = new AppDbContext())
             {
-                var customers = db.Customers.Select(c => c.Email).ToList();
+                var customers = db.Customers.OrderBy(customer => customer.Name).Select(c => c.Email).ToList();
                 CustomerComboBox.ItemsSource = customers;
             }
 
@@ -63,10 +63,10 @@ namespace BarrocIntens
                 IsBodyHtml = false,
             };
 
-            if (IsValidEmail(Email.Text))
+            if (IsValidEmail(CustomerComboBox.SelectedItem.ToString()))
             {
                 SuccesText.Text = "E-Mail Send!";
-                mailMessage.To.Add(Email.Text);
+                mailMessage.To.Add(CustomerComboBox.SelectedItem.ToString());
 
                 smtpClient.Send(mailMessage);
 
@@ -96,6 +96,37 @@ namespace BarrocIntens
             catch
             {
                 return false;
+            }
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (AutoCheckbox.IsChecked == true)
+            {
+                Subject.Text = "Automatische Factuur";
+                Subject.IsEnabled = false;
+                if (CustomerComboBox.SelectedItem != null)
+                {
+                    Bericht.Text = $"Beste {new AppDbContext().Customers.Where(c => c.Email == CustomerComboBox.SelectedItem.ToString()).First().Name}, \n\n \n\n Met vriendelijke groet, \n\n Finance";
+                }
+                else
+                {
+                    Bericht.Text = $"Beste Klant, \n\n \n\n Met vriendelijke groet, \n\n Finance";
+                }
+            }
+            else
+            {
+                Subject.Text = "";
+                Subject.IsEnabled = true;
+                Bericht.Text = "";
+            }
+        }
+
+        private void CustomerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CustomerComboBox.SelectedItem != null && AutoCheckbox.IsChecked == true)
+            {
+                Bericht.Text = $"Beste {new AppDbContext().Customers.Where(c => c.Email == CustomerComboBox.SelectedItem.ToString()).First().Name}, \n\n \n\n Met vriendelijke groet, \n\n Finance";
             }
         }
     }

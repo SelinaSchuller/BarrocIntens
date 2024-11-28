@@ -25,6 +25,8 @@
     <None Remove="Financiën\FinanciënMainWindow.xaml" />
     <None Remove="Financiën\OfferteAanmaken.xaml" />
     <None Remove="Financiën\OfferteProductSelection.xaml" />
+    <None Remove="Onderhoud\OnderhoudAfsprakenCreatePage.xaml" />
+    <None Remove="generic.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="ResourceDictionary1.xaml" />
@@ -139,6 +141,12 @@
 
   <ItemGroup>
     <Page Update="Sales\SalesKlantAanmakenPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudAfsprakenCreatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
