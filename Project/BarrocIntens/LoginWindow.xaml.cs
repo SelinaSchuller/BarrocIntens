@@ -75,6 +75,12 @@ namespace BarrocIntens
 						//this.Close();
 						inkoopDashboard.Activate();
 					}
+					else if(departmentId == 6)
+					{
+						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
+						//this.Close();
+						onderhoudDashboard.Activate();
+					}
 					else if (departmentId == null)
 					{
 						ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppelt";
