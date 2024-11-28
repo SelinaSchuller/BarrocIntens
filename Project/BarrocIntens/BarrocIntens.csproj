@@ -44,6 +44,7 @@
     <None Remove="Sales\SalesCreateNotePage.xaml" />
     <None Remove="Sales\SalesDashboardWindow.xaml" />
     <None Remove="Sales\SalesEditNotePage.xaml" />
+    <None Remove="Sales\SalesKlantAanmakenPage.xaml" />
     <None Remove="Sales\SalesMainPage.xaml" />
     <None Remove="Sales\SalesNotesPage.xaml" />
   </ItemGroup>
@@ -134,6 +135,12 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesKlantAanmakenPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

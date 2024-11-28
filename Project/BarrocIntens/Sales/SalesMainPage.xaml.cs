@@ -1,4 +1,5 @@
 using BarrocIntens.Data;
+using BarrocIntens.Inkoop;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -37,8 +38,8 @@ namespace BarrocIntens.Sales
 
 		private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
 		{
-
-		}
+            Frame.Navigate(typeof(SalesKlantAanmakenPage));
+        }
 		private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{			
 

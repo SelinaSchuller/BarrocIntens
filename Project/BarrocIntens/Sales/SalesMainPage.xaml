@@ -95,7 +95,7 @@
                                                 <TextBlock Text="{x:Bind PhoneNumber}" FontSize="15"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="bedrijf:" FontSize="15"/>
+                                                <TextBlock Text="Bedrijf:" FontSize="15"/>
                                                 <TextBlock Text="{x:Bind Company.Name, FallbackValue='Geen Bedrijf'}" FontSize="15"/>
                                             </StackPanel>
                                         </StackPanel>
