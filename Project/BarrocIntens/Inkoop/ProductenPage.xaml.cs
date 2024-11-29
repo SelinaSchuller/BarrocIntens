@@ -96,7 +96,6 @@ namespace BarrocIntens.Inkoop
 			var button = sender as Button;
 			if(button != null && button.DataContext is Product product)
 			{
-				// Initial confirmation dialog
 				var initialDialog = new ContentDialog
 				{
 					Title = "Bevestiging",
@@ -109,87 +108,101 @@ namespace BarrocIntens.Inkoop
 				var initialResult = await initialDialog.ShowAsync();
 
 				if(initialResult != ContentDialogResult.Primary)
-					return; // User canceled the deletion
+					return;
 
-				using(var db = new AppDbContext())
+				var db = new AppDbContext();
+
+				using(var transaction = db.Database.BeginTransaction())
 				{
-					// Check for active ServiceRequests using this product
-					var activeServiceRequests = db.ServiceRequests
-						.Where(sr => sr.ProductId == product.Id && (sr.Status == 1 || sr.Status == 2))
-						.ToList();
-
-					if(activeServiceRequests.Any())
+					try
 					{
-						// Warning dialog if ServiceRequests are using the product
-						var warningDialog = new ContentDialog
+
+						using(db = new AppDbContext())
 						{
-							Title = "Product wordt nog gebruikt",
-							Content = $"Dit product wordt nog gebruikt in {activeServiceRequests.Count} storings aanvraag(aanvragen) met status (1)'Nog te doen' of (2)'Onderweg'. Als u doorgaat, wordt het product in deze servicerequests leeggemaakt. Wilt u doorgaan?",
-							PrimaryButtonText = "Ja",
-							SecondaryButtonText = "Nee",
-							XamlRoot = this.XamlRoot
-						};
+							var activeServiceRequests = db.ServiceRequests
+								.AsNoTracking()
+								.Where(sr => sr.ProductId == product.Id)
+								.ToList();
 
-						var warningResult = await warningDialog.ShowAsync();
+							if(activeServiceRequests.Any())
+							{
+								var warningDialog = new ContentDialog
+								{
+									Title = "Product wordt nog gebruikt",
+									Content = $"Dit product wordt nog gebruikt in {activeServiceRequests.Count} storings aanvraag(aanvragen) met status (1)'Nog te doen' of (2)'Onderweg'. Als u doorgaat, wordt het product in deze servicerequests leeggemaakt. Wilt u doorgaan?",
+									PrimaryButtonText = "Ja",
+									SecondaryButtonText = "Nee",
+									XamlRoot = this.XamlRoot
+								};
 
-						if(warningResult != ContentDialogResult.Primary)
-							return; // User chose to keep the product
+								var warningResult = await warningDialog.ShowAsync();
 
-						// Set ProductId to null for all affected ServiceRequests
-						foreach(var serviceRequest in activeServiceRequests)
-						{
-							serviceRequest.ProductId = null;
+								if(warningResult != ContentDialogResult.Primary)
+									return;
+
+								foreach(var serviceRequest in activeServiceRequests)
+								{
+									db.Attach(serviceRequest);
+									serviceRequest.ProductId = null;
+								}
+
+								await db.SaveChangesAsync();
+
+								foreach(var entity in db.ChangeTracker.Entries())
+								{
+									entity.State = EntityState.Detached;
+								}
+							}
+
+							var relatedWorkOrders = db.WorkOrders
+								.AsNoTracking()
+								.Where(wo => wo.ProductId == product.Id)
+								.ToList();
+
+							foreach(var workOrder in relatedWorkOrders)
+							{
+								workOrder.ProductId = null;
+								db.Entry(workOrder).State = EntityState.Modified;
+							}
+
+							await db.SaveChangesAsync();
+
+							if(activeServiceRequests.Any())
+							{
+								foreach(var serviceRequest in activeServiceRequests)
+								{
+									serviceRequest.ProductId = null;
+								}
+								db.ServiceRequests.UpdateRange(activeServiceRequests);
+
+								if(!await SaveChangesWithLogging(db))
+								{
+									return;
+								}
+							}
+
+							var productToDelete = db.Products.FirstOrDefault(p => p.Id == product.Id);
+							if(productToDelete != null)
+							{
+								db.Products.Remove(productToDelete);
+
+								if(!await SaveChangesWithLogging(db))
+								{
+									return;
+								}
+							}
 						}
-
-						db.ServiceRequests.UpdateRange(activeServiceRequests);
-						await db.SaveChangesAsync();
+						transaction.Commit();
 					}
-
-					// Check for references in other tables (e.g., WorkOrders)
-					var relatedWorkOrders = db.WorkOrders.Where(wo => wo.ProductId == product.Id).ToList();
-					if(relatedWorkOrders.Any())
+					catch(Exception ex)
 					{
-						foreach(var workOrder in relatedWorkOrders)
-						{
-							workOrder.ProductId = null;
-						}
-
-						db.WorkOrders.UpdateRange(relatedWorkOrders);
-						await db.SaveChangesAsync();
-					}
-
-					// Delete the product
-					if(activeServiceRequests.Any())
-					{
-						foreach(var serviceRequest in activeServiceRequests)
-						{
-							serviceRequest.ProductId = null;
-						}
-						db.ServiceRequests.UpdateRange(activeServiceRequests);
-
-						if(!await SaveChangesWithLogging(db))
-						{
-							return; // Exit on failure
-						}
-					}
-
-					var productToDelete = db.Products.FirstOrDefault(p => p.Id == product.Id);
-					if(productToDelete != null)
-					{
-						db.Products.Remove(productToDelete);
-
-						if(!await SaveChangesWithLogging(db))
-						{
-							return; // Exit on failure
-						}
-
-						// Reload products only after successful deletion
-						ReloadProducts();
+						transaction.Rollback();
+						System.Diagnostics.Debug.WriteLine($"Transaction rolled back: {ex.Message}");
 					}
 				}
+				ReloadProducts();
+				System.Diagnostics.Debug.WriteLine("End VerwijderButton_Click");
 			}
-
-			System.Diagnostics.Debug.WriteLine("End VerwijderButton_Click");
 		}
 
 		private void ReloadProducts()
@@ -197,7 +210,7 @@ namespace BarrocIntens.Inkoop
 			System.Diagnostics.Debug.WriteLine("Start ReloadProducts");
 			using(var db = new AppDbContext())
 			{
-				Products.Clear(); // Ensure existing data is cleared
+				Products.Clear();
 				var updatedProducts = db.Products.Include(p => p.Category).OrderBy(p => p.Id).ToList();
 				foreach(var updatedProduct in updatedProducts)
 				{
