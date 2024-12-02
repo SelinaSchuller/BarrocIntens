@@ -34,7 +34,7 @@
                     </Border>
                     <Rectangle Grid.Row="1" Fill="Black" />
                     <ListView Grid.Row="2">
-                        <!--<Grid x:Name="dayCalander">
+                        <Grid x:Name="dayCalander">
                             <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0"  Grid.Column="1">
                                 <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
                                     <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -58,7 +58,7 @@
                                     </Grid>
                                 </Grid>
                             </StackPanel>
-                        </Grid>-->
+                        </Grid>
                          <Grid Height="2000" x:Name="weekCalander">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
