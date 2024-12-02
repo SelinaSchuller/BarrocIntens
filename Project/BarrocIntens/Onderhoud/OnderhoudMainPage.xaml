@@ -8,8 +8,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
-
     <Grid Background="#3e3e3e">
         <!-- Titel bovenaan -->
         <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Background="Transparent">

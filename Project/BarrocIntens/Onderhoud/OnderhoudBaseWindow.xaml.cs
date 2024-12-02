@@ -143,15 +143,21 @@ namespace BarrocIntens.Onderhoud
 			storyboard.Begin();
 		}
 
+		private void PlanningButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			SetButtonVisibility();
+		}
+
 		private void AfspraakCreateButton_Click(object sender, RoutedEventArgs e)
 		{
 			MainFrame.Navigate(typeof(OnderhoudAfsprakenCreatePage), this);
 			SetButtonVisibility();
 		}
 
-		private void PlanningButton_Click(object sender, RoutedEventArgs e)
+		private void WorkOrdersButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			MainFrame.Navigate(typeof(OnderhoudWorkOrdersPage), this);
 			SetButtonVisibility();
 		}
 
