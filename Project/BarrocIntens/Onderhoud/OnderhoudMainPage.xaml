@@ -20,27 +20,905 @@
 
 
         <!-- Hoofdcontent -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Spacing="50">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0 200 0 0">
             <!-- Planning komt hier -->
-            <Border Width="400" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
-                <StackPanel>
-                    <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
+            <Border Width="800" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="120*" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock Text="Planning" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
-                    <Rectangle Fill="Black" Height="3" Margin="0,5"/>
-
-                    <ItemsControl ItemsSource="{Binding LaatsteOnderhoudLijst}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding DateFormatted}" Foreground="#FDD716" FontSize="20" Width="200" TextAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                    <Rectangle Grid.Row="1" Fill="Black" />
+                    <ListView Grid.Row="2">
+                        <!--<Grid x:Name="dayCalander">
+                            <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0"  Grid.Column="1">
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Maandag" />
+                                    </Button>
+                                </Border>
+                                <Grid BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Padding="10" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                    <Grid VerticalAlignment="Center">
+                                        <TextBlock Text="FakeDateTime" />
+                                    </Grid>
+                                    <Grid HorizontalAlignment="Center">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="2*"/>
+                                        </Grid.RowDefinitions>
+                                            <TextBlock FontSize="30" Text="Klant naam" />
+                                            <TextBlock FontSize="10" Grid.Row="1" Text="Descriptie van probleem&#x0a;&#x0a;yooyooyo"/>
+                                    </Grid>
+                                    <Grid VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <TextBlock Text="Medewerker naam" />
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>-->
+                         <Grid Height="2000" x:Name="weekCalander">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                        
+                            <Grid BorderBrush="Gray" BorderThickness="0 0 1 0"  Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                        <TextBlock VerticalAlignment="Bottom" Text="00:00 - 01:00" />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="01:00 - 02:00" />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="02:00 - 03:00" />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="03:00 - 04:00" />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="04:00 - 05:00" />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="05:00 - 06:00" />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="06:00 - 07:00" />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="07:00 - 08:00" />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="08:00 - 09:00" />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="09:00 - 10:00" />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="10:00 - 11:00" />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="11:00 - 12:00" />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="12:00 - 13:00" />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="13:00 - 14:00" />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="14:00 - 15:00" />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="15:00 - 16:00" />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="16:00 - 17:00" />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="17:00 - 18:00" />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="18:00 - 19:00" />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="19:00 - 20:00" />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="20:00 - 21:00" />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="21:00 - 22:00" />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="22:00 - 23:00" />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom" Text="23:00 - 24:00" />
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0"  Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Maandag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0" Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Dinsdag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                        <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0" Grid.Column="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Woensdag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                        <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0" Grid.Column="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Donderdag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                        <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0" Grid.Column="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Vrijdag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                        <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0" Grid.Column="6">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Zaterdag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                            <Grid Grid.Row="0" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0" Grid.Column="7">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="2*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Zondag" />
+                                    </Button>
+                                </Border>
+                                <Border Grid.Row="1" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="2" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="3" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="4" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="5" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="6" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="7" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="8" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="9" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="10" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="11" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="12" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="13" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="14" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="15" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="16" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="17" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="18" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="19" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="20" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="21" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="22" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="23" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                                <Border Grid.Row="24" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 0 0 1">
+                                    <TextBlock VerticalAlignment="Bottom"  />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                  </ListView>
+                </Grid>
             </Border>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

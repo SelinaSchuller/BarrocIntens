@@ -59,7 +59,7 @@ namespace BarrocIntens
 					else if (departmentId == 2)
 					{
 						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
-						//this.Close();
+						this.Close();
 						onderhoudDashboard.Activate();
 					}
 					else if (departmentId == 3)
