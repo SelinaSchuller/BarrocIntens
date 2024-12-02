@@ -41,10 +41,16 @@ namespace BarrocIntens.Onderhoud
 			{
 				LoadData();
 				StoringIcon.Visibility = Visibility.Visible;
+				AfspraakCreateButton.Visibility = Visibility.Collapsed;
 			}
 			else if (LoggedInUser.DepartmentId == 6)
 			{
-
+				AfspraakCreateButton.Visibility = Visibility.Visible;
+			}
+			else if (LoggedInUser.DepartmentId == 2)
+			{
+				AfspraakCreateButton.Visibility = Visibility.Collapsed;
+				StoringIcon.Visibility = Visibility.Collapsed;
 			}
 
 			MainFrame.Navigate(typeof(OnderhoudMainPage));
@@ -55,7 +61,11 @@ namespace BarrocIntens.Onderhoud
 		private void SetButtonVisibility()
 		{
 			PlanningButton.Visibility = Visibility.Visible;
-			AfspraakCreateButton.Visibility = Visibility.Visible;
+
+			if(LoggedInUser.DepartmentId == 6)
+			{
+				AfspraakCreateButton.Visibility = Visibility.Visible;
+			}
 
 			if(MainFrame.SourcePageType == typeof(OnderhoudMainPage))
 			{
