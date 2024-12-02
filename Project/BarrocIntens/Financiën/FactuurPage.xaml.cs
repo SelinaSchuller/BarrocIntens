@@ -63,21 +63,27 @@ namespace BarrocIntens
                 IsBodyHtml = false,
             };
 
-            if (IsValidEmail(CustomerComboBox.SelectedItem.ToString()))
+            if (CustomerComboBox.SelectedItem != null)
             {
-                SuccesText.Text = "E-Mail Send!";
-                mailMessage.To.Add(CustomerComboBox.SelectedItem.ToString());
+                if (IsValidEmail(CustomerComboBox.SelectedItem.ToString()))
+                {
+                    SuccesText.Text = "E-Mail Send!";
+                    mailMessage.To.Add(CustomerComboBox.SelectedItem.ToString());
 
-                smtpClient.Send(mailMessage);
+                    smtpClient.Send(mailMessage);
 
-                ErrorText.Text = "";
+                    ErrorText.Text = "";
 
+                }
+                else
+                {
+                    ErrorText.Text = "Email niet correct";
+                }
             }
             else
             {
-                ErrorText.Text = "Invalid Email";
+                ErrorText.Text = "Kies een Email!";
             }
-
         }
 
         bool IsValidEmail(string email)
