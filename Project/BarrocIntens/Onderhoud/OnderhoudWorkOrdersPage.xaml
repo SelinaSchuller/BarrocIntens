@@ -76,32 +76,22 @@
                                         </StackPanel>
                                         
                                         <StackPanel Orientation="Horizontal">
-                                            <Grid Margin="0,5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="Afspraak: " Foreground="#FDD716" FontSize="18" FontWeight="Bold" Margin="0,0,10,0"/>
-                                                <StackPanel Grid.Column="1">
-                                                    <TextBlock Text="{Binding Appointment.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
+                                            <StackPanel>
+                                                <TextBlock Text="Afspraak: " Foreground="#FDD716" FontSize="18" FontWeight="Bold" Margin="0,0,10,0"/>
+                                                <StackPanel>
+                                                    <TextBlock MaxWidth="300" Text="{Binding Appointment.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                     <TextBlock Text="{Binding Appointment.Customer.Name}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                     <TextBlock Text="{Binding Appointment.Date}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                 </StackPanel>
-                                            </Grid>
+                                            </StackPanel>
                                             <StackPanel Orientation="Horizontal" Margin="40,5,0,0" Width="500">
                                                 <TextBlock Text="Storing: " Foreground="#FDD716" FontSize="18" FontWeight="Bold" Margin="0,0,10,0" />
-                                                <Grid Margin="0,5">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="*" />
-                                                        <RowDefinition Height="*" />
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" x:Name="StoringNull" Text="Geen storing gekoppeld" Foreground="White" FontSize="18" TextWrapping="Wrap" Visibility="{Binding Request, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"/>
-                                                    <TextBlock Grid.Row="0"  Text="{Binding Request.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
-                                                    <TextBlock Grid.Row="1" Text="{Binding Request.Product.Name}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
-                                                    <TextBlock Grid.Row="3" Text="{Binding Request.FormattedDateReported}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
-                                                </Grid>
+                                                <StackPanel>
+                                                    <TextBlock x:Name="StoringNull" Text="Geen storing gekoppeld" Foreground="White" FontSize="18" TextWrapping="Wrap" Visibility="{Binding Request, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"/>
+                                                    <TextBlock MaxWidth="300" Text="{Binding Request.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Request.Product.Name}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Request.FormattedDateReported}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
+                                                </StackPanel>
                                             </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
