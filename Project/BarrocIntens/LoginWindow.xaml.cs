@@ -83,7 +83,7 @@ namespace BarrocIntens
 					}
 					else if (departmentId == null)
 					{
-						ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppelt";
+						ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppelt. Neem contact op met Hoofddepartment";
 						return;
                     }
                 }
