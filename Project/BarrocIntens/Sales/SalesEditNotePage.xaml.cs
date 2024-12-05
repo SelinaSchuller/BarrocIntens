@@ -9,13 +9,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,14 +29,12 @@ namespace BarrocIntens.Sales
 		private Customer Klant { get; set; }
 		private List<Note> NotitiesLijst { get; set; }
 		private Note _note { get; set; }
-		private string SelectedType { get; set; }
-		private bool IsComboBoxEnabled { get; set; } = true;
-		private bool IsNewTypeTextBoxEnabled { get; set; } = true;
 		private int _noteId { get; set; }
-		private List<string> NoteTypes { get; set; }
+
 		public SalesEditNotePage()
 		{
 			this.InitializeComponent();
+
 		}
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -56,11 +52,6 @@ namespace BarrocIntens.Sales
 			}
 
 			LoadData();
-
-			SelectedType = _note.Type;
-			newTypeTextBox.Text = string.Empty;
-			newTypeTextBox.Visibility = Visibility.Collapsed;
-			typeComboBox.SelectedItem = SelectedType;
 		}
 
 
@@ -68,45 +59,25 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
+				//Klant = db.Customers.SingleOrDefault(c => c.Id == _note.CustomerId);
 				NotitiesLijst = db.Notes
 					.Include(n => n.Customer)
 					.ToList();
 				_note = db.Notes.SingleOrDefault(n => n.Id == _noteId);
 				titleTextBox.Text = _note.Title.ToString();
 				descriptionTextBox.Text = _note.Description.ToString();
-
-				NoteTypes = db.Notes
-					.Select(n => n.Type)
-					.Distinct()
-					.OrderBy(type => type)
-					.ToList();
-				
-				NoteTypes.Insert(0, "-- Voeg eigen type toe --");
-			}
-		}
-
-		private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(typeComboBox.SelectedItem.ToString() == "-- Voeg eigen type toe --")
-			{
-				newTypeTextBox.Visibility = Visibility.Visible;
-				SelectedType = string.Empty;
-			}
-			else
-			{
-				newTypeTextBox.Visibility = Visibility.Collapsed;
-				SelectedType = typeComboBox.SelectedItem.ToString();
+				//customerTextBlock.Text = Klant.Name;
 			}
 		}
 
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
 		{
-			if((string.IsNullOrWhiteSpace(titleTextBox.Text)) || ((string.IsNullOrWhiteSpace(newTypeTextBox.Text) && string.IsNullOrWhiteSpace(SelectedType))))
+			if(string.IsNullOrWhiteSpace(titleTextBox.Text))
 			{
 				ContentDialog titleErrorDialog = new ContentDialog
 				{
-					Title = "Een of meerdere velden is leeg",
-					Content = "Voer alle velden in voor de notitie voordat u deze opslaat.",
+					Title = "Titel vereist",
+					Content = "Voer een titel in voor de notitie voordat u deze opslaat.",
 					CloseButtonText = "Ok",
 					XamlRoot = this.XamlRoot
 				};
@@ -121,21 +92,6 @@ namespace BarrocIntens.Sales
 					existingNote.Title = titleTextBox.Text;
 					existingNote.Description = descriptionTextBox.Text;
 
-					if(IsNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
-					{
-						string newType = newTypeTextBox.Text.Trim();
-						existingNote.Type = newType;
-
-						if(!NoteTypes.Contains(newType))
-						{
-							NoteTypes.Add(newType);
-							NoteTypes = NoteTypes.OrderBy(type => type).ToList();
-						}
-					}
-					else if(!string.IsNullOrEmpty(SelectedType) && SelectedType != "-- Voeg eigen type toe --")
-					{
-						existingNote.Type = SelectedType;
-					}
 
 					db.Notes.Update(existingNote);
 					db.SaveChanges();
@@ -149,6 +105,7 @@ namespace BarrocIntens.Sales
 			if(_note == null)
 				return;
 
+			// Show confirmation dialog
 			ContentDialog deleteDialog = new ContentDialog
 			{
 				Title = "Bevestiging verwijderen",
@@ -162,6 +119,7 @@ namespace BarrocIntens.Sales
 
 			if(result == ContentDialogResult.Primary)
 			{
+				// Delete the note from the database
 				using(var db = new AppDbContext())
 				{
 					var note = db.Notes.SingleOrDefault(n => n.Id == _note.Id);
@@ -170,6 +128,7 @@ namespace BarrocIntens.Sales
 						db.Notes.Remove(note);
 						db.SaveChanges();
 
+						// Navigate back to the notes list after deletion
 						_parentWindow.NavigateToNotesPage();
 					}
 				}

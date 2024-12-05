@@ -91,7 +91,7 @@ namespace BarrocIntens.Sales
 
         private void UpdateTotalPriceTextBlock()
         {
-            TotaalPriceTextBlock.Text = currentInvoice.TotalPrice.ToString("€ 0.00"); // Update the total price display
+            TotaalPriceTextBlock.Text = currentInvoice.TotalPrice.ToString("0.00"); // Update the total price display
         }
 
         private void OfferteOpslaanButton_Click(object sender, RoutedEventArgs e)

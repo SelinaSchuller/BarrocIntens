@@ -49,7 +49,7 @@
             <Border Background="#FDD716" CornerRadius="0,0,20,20" Padding="10" HorizontalAlignment="Stretch">
                 <StackPanel>
                     <Button x:Name="OfferteOpslaanButton" Click="OfferteOpslaanButton_Click" HorizontalAlignment="Left">Offerte Opslaan</Button>
-                    <TextBlock x:Name="TotaalPriceTextBlock" Text="€ 0" Foreground="Black" FontSize="20" HorizontalAlignment="Right"></TextBlock>
+                    <TextBlock x:Name="TotaalPriceTextBlock" Text="0" Foreground="Black" FontSize="20" HorizontalAlignment="Right"></TextBlock>
                 </StackPanel>                
             </Border>
         </StackPanel>

@@ -9,13 +9,15 @@
     mc:Ignorable="d">
 
     <Grid Background="#3e3e3e" Padding="50 10">
+        <!-- Frame vult het volledige scherm -->
         <Frame x:Name="MainFrame" />
 
+        <!-- Logo -->
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="Transparent">
             <StackPanel Width="200" Height="200">
                 <Image Width="200"
-                       Source="../assets/Logo6_groot.png" 
-                       Stretch="Uniform"/>
+  Source="../assets/Logo6_groot.png" 
+  Stretch="Uniform"/>
             </StackPanel>
         </Border>
         <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,600,0" Background="Transparent">
@@ -26,20 +28,21 @@
 
         <StackPanel Orientation="Vertical" Spacing="10" Margin="30,250,0,0">
             <Button x:Name="CustomerPageButton" Click="CustomerPageButton_Click" Content="Klanten" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
-            <Button x:Name="CompanyPageButton" Click="CompanyPageButton_Click" Content="Bedrijven"
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+            <Button x:Name="CompanyPageButton" Click="CompanyPageButton_Click" Content="Bedrijven" 
+Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
             <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notities" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+      BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
+
         </StackPanel>
     </Grid>
 </Window>

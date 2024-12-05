@@ -21,20 +21,16 @@
                         <TextBlock FontSize="30" Text="Product Bewerken" Foreground="Black" HorizontalAlignment="Center" Padding="0 15 0 0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Spacing="100" Background="Black" CornerRadius="0 0 50 50" Height="350">
-                        <StackPanel Padding="30 15 10 15" Orientation="Vertical" Spacing="10">
+                        <StackPanel Padding="30 15 10 15" Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock x:Name="ProductNaam" Text="Product Naam:" FontSize="25" Foreground="#ffd700"/>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock x:Name="NaamError" Text="Voer een geldige naam in" Foreground="Red" FontSize="15" Visibility="Collapsed"/>
-                                    <TextBox x:Name="NaamInput" Background="#363534" Width="300"/>
-                                </StackPanel>
+                                <TextBox x:Name="NaamInput" Background="#363534" Width="300"/>
+                                <TextBlock x:Name="NaamError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                             </StackPanel>
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock x:Name="ProductDesc" Text="Omschrijving:" FontSize="20" Foreground="#ffd700" />
-                                    <TextBlock x:Name="DescError" Text="Voer een geldige omschrijving in" Foreground="Red" FontSize="15" Visibility="Collapsed" VerticalAlignment="Center"/>
-                                </StackPanel>
-                                <TextBox x:Name="DescInput" AcceptsReturn="True" Width="700" Height="50" Background="#363534" Margin="0 0 0 10" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="ProductDesc" Text="Omschrijving:" FontSize="20" Foreground="#ffd700" Margin="0 10 0 0"/>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox x:Name="DescInput" AcceptsReturn="True" Width="700" Height="50" Background="#363534" Margin="0 10 0 10" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="DescError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock x:Name="ProductVoorraad" Text="Voorraad:" FontSize="20" Foreground="#ffd700"/>
@@ -45,17 +41,16 @@
                                 <CheckBox x:Name="ZichtbaarheidCheckBox" Foreground="#363534"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="10" Margin="0 10 0 75">
-                                <TextBlock x:Name="ProductPrijs" Text="Prijs:" FontSize="20" Foreground="#ffd700"/>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock x:Name="PrijsError" Text="Voer een geldige prijs in" Foreground="Red" FontSize="15" Visibility="Collapsed"/>
-                                    <TextBox x:Name="PrijsInput" Background="#363534" Width="150"/>
-                                </StackPanel>
+                                <TextBlock x:Name="ProductPrijs" Text="Prijs:" FontSize="20" Foreground="#ffd700" />
+                                <TextBox x:Name="PrijsInput" Background="#363534" Width="150"/>
+                                <TextBlock x:Name="PrijsError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Padding="30 15 10 15" Orientation="Vertical">
                             <TextBlock x:Name="Categorien" Text="categorieën:" FontSize="25" Foreground="#ffd700"/>
                             <!--Plaats hier Dropdown met de Categorieën in de database-->
                             <ComboBox x:Name="CategoryComboBox" DisplayMemberPath="Name" SelectedValuePath="Id" BorderBrush="#ffd700" Foreground="#ffd700" BorderThickness="2" Width="250" FontSize="20" Margin="0 10 0 0"/>
+                            <TextBlock x:Name="CategoryError" Text="*" Foreground="Red" FontSize="25" Visibility="Collapsed"/>
                         </StackPanel>
                     </StackPanel>
                     <Button Click="OpslaanButton_Click" Width="300" FontSize="20" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2" Margin="0 20 0 0">Opslaan</Button>
