@@ -97,7 +97,7 @@ namespace BarrocIntens.Sales
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(typeof(SalesOffertesPage));
+			MainFrame.Navigate(typeof(SalesOffertesPage), this);
 			SetButtonVisibility();
 		}
 

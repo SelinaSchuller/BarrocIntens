@@ -1,36 +1,33 @@
 using BarrocIntens.Data;
-using Microsoft.EntityFrameworkCore;
+using BarrocIntens.Converters;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarrocIntens.Sales
 {
     public sealed partial class SalesOffertesPage : Page
     {
         private SalesDashboardWindow _parentWindow;
-        private int EmployeeId { get; set; }
         private List<Invoice> OffertesLijst { get; set; }
+
         public SalesOffertesPage()
         {
             this.InitializeComponent();
+            LoadOffertes();
+        }
 
+        private async void LoadOffertes()
+        {
             using (var db = new AppDbContext())
             {
-                OffertesLijst = db.Invoices
+                OffertesLijst = await db.Invoices
                     .OrderBy(n => n.DateCreated)
-                    .ToList();
+                    .ToListAsync();
 
                 offerteListView.ItemsSource = OffertesLijst;
             }
@@ -39,27 +36,34 @@ namespace BarrocIntens.Sales
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
             _parentWindow = e.Parameter as SalesDashboardWindow;
         }
 
         public void CreateOfferteButton_Click(object sender, RoutedEventArgs e)
         {
-            _parentWindow.NavigateToOfferteAanmakenPage();
+            _parentWindow?.NavigateToOfferteAanmakenPage();
         }
 
         private void EditOfferteButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var note = button?.DataContext as Note;
-
-            if (note != null)
-            {
-               // System.Diagnostics.Debug.WriteLine($"Note: {note.Title}");
-                _parentWindow.NavigateToOfferteBewerkenPage();
-            }
+            _parentWindow?.NavigateToOfferteBewerkenPage();
             // finish later
         }
-    }
 
+        private void DeleteOfferteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedOfferte = offerteListView.SelectedItem as Invoice;
+            if (selectedOfferte == null)
+            {
+                return;
+            }
+            using (var db = new AppDbContext())
+            {
+                var offerte = db.Invoices.Find(selectedOfferte.Id);
+                db.Invoices.Remove(offerte);
+                db.SaveChanges();
+            }
+            LoadOffertes();
+        }
+    }
 }
