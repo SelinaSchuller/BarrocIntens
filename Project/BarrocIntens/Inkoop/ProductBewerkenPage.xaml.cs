@@ -113,7 +113,7 @@ namespace BarrocIntens.Inkoop
                     {
                         product.Name = NaamInput.Text;
                         product.Description = DescInput.Text;
-                        product.Price = (double)prijsOutput;
+                        product.Price = prijsOutput;
                         product.IsStock = VoorraadCheckBox.IsChecked == true;
                         product.VisibleForCustomers = ZichtbaarheidCheckBox.IsChecked == true;
                         product.CategoryId = (int)CategoryComboBox.SelectedValue;

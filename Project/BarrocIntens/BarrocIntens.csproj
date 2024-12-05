@@ -45,6 +45,8 @@
     <None Remove="Sales\SalesEditNotePage.xaml" />
     <None Remove="Sales\SalesMainPage.xaml" />
     <None Remove="Sales\SalesNotesPage.xaml" />
+    <None Remove="Sales\SalesOfferteEditPage.xaml" />
+    <None Remove="Sales\SalesOffertesPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -134,6 +136,18 @@
   <ItemGroup>
     <PRIResource Remove="Images\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesOfferteEditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesOffertesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <Page Update="Sales\OfferteProductSelection.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -141,7 +155,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\OfferteAanmakenPage.xaml">
+    <Page Update="Sales\SalesOfferteAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

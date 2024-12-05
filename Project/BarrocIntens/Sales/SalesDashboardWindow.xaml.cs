@@ -23,21 +23,21 @@ using Windows.UI.ViewManagement;
 
 namespace BarrocIntens.Sales
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class SalesDashboardWindow : Window
+	/// <summary>
+	/// An empty window that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class SalesDashboardWindow : Window
 	{
 		public int EmployeeId { get; set; }
 		public int NoteId { get; set; }
 		public SalesDashboardWindow(int? employeeId)
-        {
-            this.InitializeComponent();
+		{
+			this.InitializeComponent();
 			this.Title = "Sales";
 			Fullscreen fullscreenService = new Fullscreen();
 			fullscreenService.SetFullscreen(this);
 
-			if(employeeId != null)
+			if (employeeId != null)
 			{
 				EmployeeId = employeeId.Value;
 			}
@@ -46,7 +46,7 @@ namespace BarrocIntens.Sales
 			SetButtonVisibility();
 		}
 
-		private void SetButtonVisibility()
+		public void SetButtonVisibility()
 		{
 			CustomerPageButton.Visibility = Visibility.Visible;
 			CompanyPageButton.Visibility = Visibility.Visible;
@@ -54,28 +54,28 @@ namespace BarrocIntens.Sales
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
 
-			if(MainFrame.SourcePageType == typeof(SalesMainPage))
+			if (MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				CustomerPageButton.Visibility = Visibility.Collapsed;
 			}
-			else if(MainFrame.SourcePageType == typeof(SalesCompanyPage))
+			else if (MainFrame.SourcePageType == typeof(SalesCompanyPage))
 			{
 				CompanyPageButton.Visibility = Visibility.Collapsed;
 			}
-			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
+			else if (MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				OffertePageButton.Visibility = Visibility.Collapsed;
 			}
-			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
+			else if (MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				ContactPageButton.Visibility = Visibility.Collapsed;
 			}
-			else if(MainFrame.SourcePageType == typeof(SalesNotesPage))
+			else if (MainFrame.SourcePageType == typeof(SalesNotesPage))
 			{
 				NotePageButton.Visibility = Visibility.Collapsed;
 				NotePageButton.Content = "Notities";
 			}
-			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
+			else if (MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
 				NotePageButton.Visibility = Visibility.Visible;
 				NotePageButton.Content = "Terug";
@@ -97,9 +97,9 @@ namespace BarrocIntens.Sales
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
-            MainFrame.Navigate(typeof(OfferteAanmakenPage));
-            SetButtonVisibility();
-        }
+			MainFrame.Navigate(typeof(SalesOffertesPage));
+			SetButtonVisibility();
+		}
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -131,10 +131,20 @@ namespace BarrocIntens.Sales
 
 		public void NavigateToNotesPage()
 		{
-			System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
+			//System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
 			MainFrame.Navigate(typeof(SalesNotesPage), this);
 			SetButtonVisibility();
 		}
 
+		public void NavigateToOfferteAanmakenPage()
+		{
+			MainFrame.Navigate(typeof(OfferteAanmakenPage));
+			SetButtonVisibility();
+		}
+		public void NavigateToOfferteBewerkenPage()
+		{
+			MainFrame.Navigate(typeof(SalesOfferteEditPage));
+			SetButtonVisibility();
+		}
 	}
 }

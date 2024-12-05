@@ -125,7 +125,7 @@ namespace BarrocIntens.Data
                 .RuleFor(i => i.Id, f => f.IndexFaker + 1)
                 .RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
                 .RuleFor(i => i.DateCreated, f => f.Date.Recent())
-                .RuleFor(i => i.TotalPrice, (decimal) 0)
+                .RuleFor(i => i.TotalPrice, f => Math.Round((decimal)f.Finance.Amount(1, 1000), 2))
                 .RuleFor(i => i.Paid, f => f.Random.Bool()) // 120 invoices with payment delay
                 .Generate(500);
 
