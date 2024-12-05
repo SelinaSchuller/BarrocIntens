@@ -28,7 +28,6 @@ namespace BarrocIntens.Sales
 	public sealed partial class SalesEditNotePage : Page
 	{
 		private SalesDashboardWindow _parentWindow;
-		private Customer _klant { get; set; }
 		private List<Note> _notitiesLijst { get; set; }
 		private Note _note { get; set; }
 		private string _selectedType { get; set; }
@@ -67,7 +66,6 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
-				//_klant = db.Customers.SingleOrDefault(c => c.Id == _note.CustomerId);
 				_notitiesLijst = db.Notes
 
 					.Include(n => n.Customer)
