@@ -39,7 +39,9 @@ namespace BarrocIntens.Sales
 
 			if(employeeId != null)
 			{
-				employeeId = employeeId.Value;
+				this.employeeId = employeeId.Value;
+				System.Diagnostics.Debug.WriteLine($"SalesDashboardWindow initialized with EmployeeId: {this.employeeId}");
+
 			}
 			MainFrame.Navigate(typeof(SalesMainPage));
 

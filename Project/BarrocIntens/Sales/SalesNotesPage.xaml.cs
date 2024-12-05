@@ -53,6 +53,7 @@ namespace BarrocIntens.Sales
 
 		public void CreateNoteButton_Click(object sender, RoutedEventArgs e)
 		{
+			System.Diagnostics.Debug.WriteLine($"Navigating to SalesCreateNotePage. EmployeeId: {_parentWindow.employeeId}");
 			_parentWindow?.NavigateToCreateNotePage();
 		}
 

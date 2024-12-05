@@ -35,7 +35,7 @@ namespace BarrocIntens.Sales
 			{
 				_parentWindow = parentWindow;
 				_employeeId = _parentWindow.employeeId;
-				System.Diagnostics.Debug.WriteLine($"SalesCreateNotePage: Employee Id is {_employeeId}");
+				System.Diagnostics.Debug.WriteLine($"OnNavigatedTo: Received EmployeeId: {_employeeId}");
 			}
 			else
 			{
@@ -106,6 +106,8 @@ namespace BarrocIntens.Sales
 				{
 					type = _selectedType;
 				}
+
+				System.Diagnostics.Debug.WriteLine($"Title: {titleTextBox.Text} Type: {type} Description: {descriptionTextBox.Text} CustomerId: {selectedCustomer.Id} EmployeeId: {_employeeId}");
 
 				var newNote = new Note
 				{
