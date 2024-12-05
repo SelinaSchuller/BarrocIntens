@@ -28,8 +28,8 @@ namespace BarrocIntens.Sales
     /// </summary>
     public sealed partial class SalesDashboardWindow : Window
 	{
-		public int EmployeeId { get; set; }
-		public int NoteId { get; set; }
+		public int employeeId { get; set; }
+		public int noteId { get; set; }
 		public SalesDashboardWindow(int? employeeId)
         {
             this.InitializeComponent();
@@ -39,7 +39,7 @@ namespace BarrocIntens.Sales
 
 			if(employeeId != null)
 			{
-				EmployeeId = employeeId.Value;
+				employeeId = employeeId.Value;
 			}
 			MainFrame.Navigate(typeof(SalesMainPage));
 
@@ -122,7 +122,7 @@ namespace BarrocIntens.Sales
 
 		public void NavigateToEditNotePage(int NoteId)
 		{
-			this.NoteId = NoteId;
+			this.noteId = NoteId;
 			NotePageButton.Visibility = Visibility.Visible;
 			NotePageButton.Content = "Terug";
 			MainFrame.Navigate(typeof(SalesEditNotePage), this);

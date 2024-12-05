@@ -18,9 +18,9 @@ namespace BarrocIntens.Onderhoud
 {
 	public sealed partial class OnderhoudBaseWindow : Window
 	{
-		private List<ServiceRequest> StoringenLijst { get; set; }
-		public int UserId { get; set; }
-		private User LoggedInUser { get; set; }
+		private List<ServiceRequest> _storingenLijst { get; set; }
+		public int userId { get; set; }
+		private User _loggedInUser { get; set; }
 		public OnderhoudBaseWindow(int? employeeId)
 		{
 			this.InitializeComponent();
@@ -30,24 +30,24 @@ namespace BarrocIntens.Onderhoud
 
 			if(employeeId != null)
 			{
-				UserId = employeeId.Value;
+				userId = employeeId.Value;
 
 				using(var db = new AppDbContext())
 				{
-					LoggedInUser = db.Users.FirstOrDefault(u  => u.Id == UserId);
+					_loggedInUser = db.Users.FirstOrDefault(u  => u.Id == userId);
 				}
 			}
-			if(UserId == 7 && LoggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
+			if(userId == 7 && _loggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
 			{
 				LoadData();
 				StoringIcon.Visibility = Visibility.Visible;
 				AfspraakCreateButton.Visibility = Visibility.Collapsed;
 			}
-			else if (LoggedInUser.DepartmentId == 6)
+			else if (_loggedInUser.DepartmentId == 6)
 			{
 				AfspraakCreateButton.Visibility = Visibility.Visible;
 			}
-			else if (LoggedInUser.DepartmentId == 2)
+			else if (_loggedInUser.DepartmentId == 2)
 			{
 				AfspraakCreateButton.Visibility = Visibility.Collapsed;
 				StoringIcon.Visibility = Visibility.Collapsed;
@@ -62,7 +62,7 @@ namespace BarrocIntens.Onderhoud
 		{
 			PlanningButton.Visibility = Visibility.Visible;
 
-			if(LoggedInUser.DepartmentId == 6)
+			if(_loggedInUser.DepartmentId == 6)
 			{
 				AfspraakCreateButton.Visibility = Visibility.Visible;
 			}
@@ -81,14 +81,14 @@ namespace BarrocIntens.Onderhoud
 		{
 			using(var db = new AppDbContext())
 			{
-				StoringenLijst = db.ServiceRequests
+				_storingenLijst = db.ServiceRequests
 					.Where(s => s.Status == 1)
 					.ToList();
 			}
 
-			if(StoringenLijst != null)
+			if(_storingenLijst != null)
 			{
-				StoringenBadgeText.Text = StoringenLijst.Count.ToString();
+				StoringenBadgeText.Text = _storingenLijst.Count.ToString();
 			}
 			else
 			{

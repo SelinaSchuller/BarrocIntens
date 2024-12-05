@@ -35,10 +35,9 @@
                 BorderBrush="#FDD716" 
                 BorderThickness="3">
                 <StackPanel>
-                    <!-- Section Header -->
                     <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock 
-                            Text="Nieuwe" 
+                            Text="Alle Werkbronnen" 
                             Foreground="Black" 
                             FontSize="26" 
                             FontWeight="Bold" 
@@ -46,7 +45,6 @@
                     </Border>
                     <Rectangle Fill="Black" Height="3" Margin="0,5" />
 
-                    <!-- Work Orders List -->
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
                         <ListView 
                             x:Name="workOrdersListView" 
@@ -76,23 +74,24 @@
                                         </StackPanel>
                                         
                                         <StackPanel Orientation="Horizontal">
-                                            <StackPanel>
+                                            <StackPanel Orientation="Vertical" Margin="0,5">
                                                 <TextBlock Text="Afspraak: " Foreground="#FDD716" FontSize="18" FontWeight="Bold" Margin="0,0,10,0"/>
                                                 <StackPanel>
-                                                    <TextBlock MaxWidth="300" Text="{Binding Appointment.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Appointment.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                     <TextBlock Text="{Binding Appointment.Customer.Name}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                     <TextBlock Text="{Binding Appointment.Date}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                 </StackPanel>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="40,5,0,0" Width="500">
+
+                                            <StackPanel Orientation="Vertical" Margin="40,5,0,0">
                                                 <TextBlock Text="Storing: " Foreground="#FDD716" FontSize="18" FontWeight="Bold" Margin="0,0,10,0" />
                                                 <StackPanel>
-                                                    <TextBlock x:Name="StoringNull" Text="Geen storing gekoppeld" Foreground="White" FontSize="18" TextWrapping="Wrap" Visibility="{Binding Request, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"/>
-                                                    <TextBlock MaxWidth="300" Text="{Binding Request.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Request.Description}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                     <TextBlock Text="{Binding Request.Product.Name}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                     <TextBlock Text="{Binding Request.FormattedDateReported}" Foreground="White" FontSize="18" TextWrapping="Wrap" />
                                                 </StackPanel>
                                             </StackPanel>
+
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>

@@ -28,14 +28,13 @@ namespace BarrocIntens.Sales
 	public sealed partial class SalesEditNotePage : Page
 	{
 		private SalesDashboardWindow _parentWindow;
-		private Customer Klant { get; set; }
-		private List<Note> NotitiesLijst { get; set; }
+		private Customer _klant { get; set; }
+		private List<Note> _notitiesLijst { get; set; }
 		private Note _note { get; set; }
-		private string SelectedType { get; set; }
-		private bool IsComboBoxEnabled { get; set; } = true;
-		private bool IsNewTypeTextBoxEnabled { get; set; } = true;
+		private string _selectedType { get; set; }
+		private bool _isNewTypeTextBoxEnabled { get; set; } = true;
 		private int _noteId { get; set; }
-		private List<string> NoteTypes { get; set; }
+		private List<string> _noteTypes { get; set; }
 		public SalesEditNotePage()
 		{
 			this.InitializeComponent();
@@ -57,10 +56,10 @@ namespace BarrocIntens.Sales
 
 			LoadData();
 
-			SelectedType = _note.Type;
+			_selectedType = _note.Type;
 			newTypeTextBox.Text = string.Empty;
 			newTypeTextBox.Visibility = Visibility.Collapsed;
-			typeComboBox.SelectedItem = SelectedType;
+			typeComboBox.SelectedItem = _selectedType;
 		}
 
 
@@ -68,8 +67,8 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
-				//Klant = db.Customers.SingleOrDefault(c => c.Id == _note.CustomerId);
-				NotitiesLijst = db.Notes
+				//_klant = db.Customers.SingleOrDefault(c => c.Id == _note.CustomerId);
+				_notitiesLijst = db.Notes
 					.Include(n => n.Customer)
 					.ToList();
 				_note = db.Notes.SingleOrDefault(n => n.Id == _noteId);
@@ -77,13 +76,13 @@ namespace BarrocIntens.Sales
 				descriptionTextBox.Text = _note.Description.ToString();
 
 
-				NoteTypes = db.Notes
+				_noteTypes = db.Notes
 					.Select(n => n.Type)
 					.Distinct()
 					.OrderBy(type => type)
 					.ToList();
-				
-				NoteTypes.Insert(0, "-- Voeg eigen type toe --");
+
+				_noteTypes.Insert(0, "-- Voeg eigen type toe --");
 			}
 		}
 
@@ -92,18 +91,18 @@ namespace BarrocIntens.Sales
 			if(typeComboBox.SelectedItem.ToString() == "-- Voeg eigen type toe --")
 			{
 				newTypeTextBox.Visibility = Visibility.Visible;
-				SelectedType = string.Empty;
+				_selectedType = string.Empty;
 			}
 			else
 			{
 				newTypeTextBox.Visibility = Visibility.Collapsed;
-				SelectedType = typeComboBox.SelectedItem.ToString();
+				_selectedType = typeComboBox.SelectedItem.ToString();
 			}
 		}
 
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
 		{
-			if((string.IsNullOrWhiteSpace(titleTextBox.Text)) || ((string.IsNullOrWhiteSpace(newTypeTextBox.Text) && string.IsNullOrWhiteSpace(SelectedType))))
+			if((string.IsNullOrWhiteSpace(titleTextBox.Text)) || ((string.IsNullOrWhiteSpace(newTypeTextBox.Text) && string.IsNullOrWhiteSpace(_selectedType))))
 			{
 				ContentDialog titleErrorDialog = new ContentDialog
 				{
@@ -123,20 +122,20 @@ namespace BarrocIntens.Sales
 					existingNote.Title = titleTextBox.Text;
 					existingNote.Description = descriptionTextBox.Text;
 
-					if(IsNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
+					if(_isNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
 					{
 						string newType = newTypeTextBox.Text.Trim();
 						existingNote.Type = newType;
 
-						if(!NoteTypes.Contains(newType))
+						if(!_noteTypes.Contains(newType))
 						{
-							NoteTypes.Add(newType);
-							NoteTypes = NoteTypes.OrderBy(type => type).ToList();
+							_noteTypes.Add(newType);
+							_noteTypes = _noteTypes.OrderBy(type => type).ToList();
 						}
 					}
-					else if(!string.IsNullOrEmpty(SelectedType) && SelectedType != "-- Voeg eigen type toe --")
+					else if(!string.IsNullOrEmpty(_selectedType) && _selectedType != "-- Voeg eigen type toe --")
 					{
-						existingNote.Type = SelectedType;
+						existingNote.Type = _selectedType;
 					}
 
 					db.Notes.Update(existingNote);
