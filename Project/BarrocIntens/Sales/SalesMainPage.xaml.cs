@@ -60,5 +60,10 @@ namespace BarrocIntens.Sales
                 }
             }
         }
+
+        private void ProductenButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SalesProductPage));
+        }
     }
 }
