@@ -70,6 +70,7 @@ namespace BarrocIntens
                     {
                         case 1:
                             var salesDashboard = new Sales.SalesDashboardWindow(userId);
+                            System.Diagnostics.Debug.WriteLine($"User: {userId}");
                             salesDashboard.Activate();
                             break;
 

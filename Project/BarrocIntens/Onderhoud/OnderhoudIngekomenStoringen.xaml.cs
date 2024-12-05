@@ -29,7 +29,7 @@ namespace BarrocIntens.Onderhoud
 	/// </summary>
 	public sealed partial class OnderhoudIngekomenStoringen : Window
 	{
-		private List<ServiceRequest> StoringenLijst { get; set; }
+		private List<ServiceRequest> _storingenLijst { get; set; }
 
 		public OnderhoudIngekomenStoringen()
 		{
@@ -46,13 +46,13 @@ namespace BarrocIntens.Onderhoud
 			using(var db = new AppDbContext())
 			{
 				//explicit loading:
-				StoringenLijst = db.ServiceRequests
+				_storingenLijst = db.ServiceRequests
 					.Where(s => s.Status == 1)
 					.Include(s => s.Customer)
 					.OrderBy(s => s.Date_Reported)
 					.ToList();
 
-				storingenListView.ItemsSource = StoringenLijst;
+				storingenListView.ItemsSource = _storingenLijst;
 
 			}
 		}

@@ -18,9 +18,9 @@ namespace BarrocIntens.Onderhoud
 {
 	public sealed partial class OnderhoudBaseWindow : Window
 	{
-		private List<ServiceRequest> StoringenLijst { get; set; }
-		public int UserId { get; set; }
-		private User LoggedInUser { get; set; }
+		private List<ServiceRequest> _storingenLijst { get; set; }
+		public int userId { get; set; }
+		private User _loggedInUser { get; set; }
 		public OnderhoudBaseWindow(int? employeeId)
 		{
 			this.InitializeComponent();
@@ -30,21 +30,30 @@ namespace BarrocIntens.Onderhoud
 
 			if(employeeId != null)
 			{
-				UserId = employeeId.Value;
+				userId = employeeId.Value;
 
 				using(var db = new AppDbContext())
 				{
-					LoggedInUser = db.Users.FirstOrDefault(u  => u.Id == UserId);
+					_loggedInUser = db.Users.FirstOrDefault(u  => u.Id == userId);
 				}
 			}
-			if(UserId == 7 && LoggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
+			if(userId == 7 && _loggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
 			{
 				LoadData();
 				StoringIcon.Visibility = Visibility.Visible;
+				WorkOrdersButton.Visibility = Visibility.Visible;
+				AfspraakCreateButton.Visibility = Visibility.Collapsed;
 			}
-			else if (LoggedInUser.DepartmentId == 6)
+			else if (_loggedInUser.DepartmentId == 6)
 			{
-
+				AfspraakCreateButton.Visibility = Visibility.Visible;
+				WorkOrdersButton.Visibility = Visibility.Collapsed;
+			}
+			else if (_loggedInUser.DepartmentId == 2)
+			{
+				AfspraakCreateButton.Visibility = Visibility.Collapsed;
+				WorkOrdersButton.Visibility = Visibility.Collapsed;
+				StoringIcon.Visibility = Visibility.Collapsed;
 			}
 
 			MainFrame.Navigate(typeof(OnderhoudMainPage));
@@ -55,7 +64,15 @@ namespace BarrocIntens.Onderhoud
 		private void SetButtonVisibility()
 		{
 			PlanningButton.Visibility = Visibility.Visible;
-			AfspraakCreateButton.Visibility = Visibility.Visible;
+
+			if(_loggedInUser.DepartmentId == 6)
+			{
+				AfspraakCreateButton.Visibility = Visibility.Visible;
+			}
+			else if(userId == 7 && _loggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
+			{
+				WorkOrdersButton.Visibility = Visibility.Visible;
+			}
 
 			if(MainFrame.SourcePageType == typeof(OnderhoudMainPage))
 			{
@@ -65,20 +82,24 @@ namespace BarrocIntens.Onderhoud
 			{
 				AfspraakCreateButton.Visibility = Visibility.Collapsed;
 			}
+			else if(MainFrame.SourcePageType == typeof(OnderhoudWorkOrdersPage))
+			{
+				WorkOrdersButton.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		private void LoadData()
 		{
 			using(var db = new AppDbContext())
 			{
-				StoringenLijst = db.ServiceRequests
+				_storingenLijst = db.ServiceRequests
 					.Where(s => s.Status == 1)
 					.ToList();
 			}
 
-			if(StoringenLijst != null)
+			if(_storingenLijst != null)
 			{
-				StoringenBadgeText.Text = StoringenLijst.Count.ToString();
+				StoringenBadgeText.Text = _storingenLijst.Count.ToString();
 			}
 			else
 			{
@@ -133,15 +154,21 @@ namespace BarrocIntens.Onderhoud
 			storyboard.Begin();
 		}
 
+		private void PlanningButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			SetButtonVisibility();
+		}
+
 		private void AfspraakCreateButton_Click(object sender, RoutedEventArgs e)
 		{
 			MainFrame.Navigate(typeof(OnderhoudAfsprakenCreatePage), this);
 			SetButtonVisibility();
 		}
 
-		private void PlanningButton_Click(object sender, RoutedEventArgs e)
+		private void WorkOrdersButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			MainFrame.Navigate(typeof(OnderhoudWorkOrdersPage), this);
 			SetButtonVisibility();
 		}
 

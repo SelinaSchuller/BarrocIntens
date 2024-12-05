@@ -25,10 +25,10 @@ namespace BarrocIntens.Sales
 	/// </summary>
 	public sealed partial class SalesCompanyPage : Page
 	{
-		private List<Company> CompanyList { get; set; }
-		private List<Customer> CustomerList { get; set; }
-		private int CompanyId { get; set; }
-		private Company SelectedCompany { get; set; }
+		private List<Company> _companyList { get; set; }
+		private List<Customer> _customerList { get; set; }
+		private int _companyId { get; set; }
+		private Company _selectedCompany { get; set; }
 		public SalesCompanyPage()
 		{
 			this.InitializeComponent();
@@ -41,11 +41,11 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
-				CompanyList = db.Companies
+				_companyList = db.Companies
 					.OrderBy(n => n.Name)
 					.ToList();
 
-				companiesListView.ItemsSource = CompanyList;
+				companiesListView.ItemsSource = _companyList;
 			}
 		}
 
@@ -59,11 +59,11 @@ namespace BarrocIntens.Sales
 
 			if(string.IsNullOrWhiteSpace(searchText))
 			{
-				companiesListView.ItemsSource = CompanyList;
+				companiesListView.ItemsSource = _companyList;
 			}
 			else
 			{
-				companiesListView.ItemsSource = CompanyList
+				companiesListView.ItemsSource = _companyList
 					.Where(c => c.Name.ToLower().Contains(searchText))
 					.ToList();
 			}
@@ -74,42 +74,42 @@ namespace BarrocIntens.Sales
 
 			if(companiesListView.SelectedItem is Company selectedCompany)
 			{
-				SelectedCompany = selectedCompany;
+				_selectedCompany = selectedCompany;
 
-				CompanyId = selectedCompany.Id;
+				_companyId = selectedCompany.Id;
 				CompanyNameTextBlock.Text = selectedCompany.Name;
 				CompanyBkrIcon.Visibility = selectedCompany.Bkr ? Visibility.Visible : Visibility.Collapsed;
 
 				using(var db = new AppDbContext())
 				{
-					CustomerList = db.Customers
-						.Where(c => c.CompanyId == CompanyId)
+					_customerList = db.Customers
+						.Where(c => c.CompanyId == _companyId)
 						.OrderBy(n => n.Name)
 						.ToList();
 
-					customersListView.ItemsSource = CustomerList;
+					customersListView.ItemsSource = _customerList;
 				}
 			}
 		}
 
 		private void ToggleBkr_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			if(SelectedCompany != null)
+			if(_selectedCompany != null)
 			{
-				SelectedCompany.Bkr = !SelectedCompany.Bkr;
+				_selectedCompany.Bkr = !_selectedCompany.Bkr;
 
 				using(var db = new AppDbContext())
 				{
-					var company = db.Companies.SingleOrDefault(c => c.Id == SelectedCompany.Id);
+					var company = db.Companies.SingleOrDefault(c => c.Id == _selectedCompany.Id);
 					if(company != null)
 					{
-						company.Bkr = SelectedCompany.Bkr;
+						company.Bkr = _selectedCompany.Bkr;
 						db.SaveChanges();
 					}
 				}
 
 				LoadData();
-				companiesListView.SelectedItem = CompanyList.FirstOrDefault(c => c.Id == SelectedCompany.Id);
+				companiesListView.SelectedItem = _companyList.FirstOrDefault(c => c.Id == _selectedCompany.Id);
 			}
 		}
 	}

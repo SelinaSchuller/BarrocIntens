@@ -12,12 +12,12 @@ namespace BarrocIntens.Sales
 	public sealed partial class SalesCreateNotePage : Page
 	{
 		private SalesDashboardWindow _parentWindow;
-		private List<Customer> KlantenLijst { get; set; }
-		private int EmployeeId { get; set; }
-		private List<string> NoteTypes { get; set; }
-		private string SelectedType { get; set; }
-		private bool IsComboBoxEnabled { get; set; } = true;
-		private bool IsNewTypeTextBoxEnabled { get; set; } = true;
+		private List<Customer> _klantenLijst { get; set; }
+		private int _employeeId { get; set; }
+		private List<string> _noteTypes { get; set; }
+		private string _selectedType { get; set; }
+		private bool _isComboBoxEnabled { get; set; } = true;
+		private bool _isNewTypeTextBoxEnabled { get; set; } = true;
 		public SalesCreateNotePage()
 		{
 			this.InitializeComponent();
@@ -34,8 +34,8 @@ namespace BarrocIntens.Sales
 			if(e.Parameter is SalesDashboardWindow parentWindow)
 			{
 				_parentWindow = parentWindow;
-				EmployeeId = _parentWindow.EmployeeId;
-				System.Diagnostics.Debug.WriteLine($"SalesCreateNotePage: Employee Id is {EmployeeId}");
+				_employeeId = _parentWindow.employeeId;
+				System.Diagnostics.Debug.WriteLine($"OnNavigatedTo: Received EmployeeId: {_employeeId}");
 			}
 			else
 			{
@@ -47,18 +47,18 @@ namespace BarrocIntens.Sales
 		{
 			using(var db = new AppDbContext())
 			{
-				KlantenLijst = db.Customers
+				_klantenLijst = db.Customers
 					.OrderBy(c => c.Name)
 					.ToList();
-				customerInput.ItemsSource = KlantenLijst;
+				customerInput.ItemsSource = _klantenLijst;
 
-				NoteTypes = db.Notes
+				_noteTypes = db.Notes
 				.Select(n => n.Type)
 				.Distinct()
 				.OrderBy(type => type)
 				.ToList();
 
-				NoteTypes.Insert(0, "-- Voeg eigen type toe --");
+				_noteTypes.Insert(0, "-- Voeg eigen type toe --");
 			}
 		}
 
@@ -67,17 +67,17 @@ namespace BarrocIntens.Sales
 			if(typeComboBox.SelectedItem.ToString() == "-- Voeg eigen type toe --")
 			{
 				newTypeTextBox.Visibility = Visibility.Visible;
-				SelectedType = string.Empty;
+				_selectedType = string.Empty;
 			}
 			else
 			{
 				newTypeTextBox.Visibility = Visibility.Collapsed;
-				SelectedType = typeComboBox.SelectedItem.ToString();
+				_selectedType = typeComboBox.SelectedItem.ToString();
 			}
 		}
 		private void SaveNoteButton_Click(object sender, RoutedEventArgs e)
 		{
-			if((string.IsNullOrWhiteSpace(titleTextBox.Text)) || ((string.IsNullOrWhiteSpace(newTypeTextBox.Text) && string.IsNullOrWhiteSpace(SelectedType))))
+			if((string.IsNullOrWhiteSpace(titleTextBox.Text)) || ((string.IsNullOrWhiteSpace(newTypeTextBox.Text) && string.IsNullOrWhiteSpace(_selectedType))))
 			{
 				ContentDialog titleErrorDialog = new ContentDialog
 				{
@@ -91,30 +91,32 @@ namespace BarrocIntens.Sales
 			}
 			else if(customerInput.SelectedItem is Customer selectedCustomer)
 			{
-				string Type = string.Empty;
-				if(IsNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
+				string type = string.Empty;
+				if(_isNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
 				{
-					Type = newTypeTextBox.Text.Trim();
+					type = newTypeTextBox.Text.Trim();
 
-					if(!NoteTypes.Contains(Type))
+					if(!_noteTypes.Contains(type))
 					{
-						NoteTypes.Add(Type);
-						NoteTypes = NoteTypes.OrderBy(type => type).ToList();
+						_noteTypes.Add(type);
+						_noteTypes = _noteTypes.OrderBy(type => type).ToList();
 					}
 				}
-				else if(!string.IsNullOrEmpty(SelectedType) && SelectedType != "-- Voeg eigen type toe --")
+				else if(!string.IsNullOrEmpty(_selectedType) && _selectedType != "-- Voeg eigen type toe --")
 				{
-					Type = SelectedType;
+					type = _selectedType;
 				}
+
+				System.Diagnostics.Debug.WriteLine($"Title: {titleTextBox.Text} Type: {type} Description: {descriptionTextBox.Text} CustomerId: {selectedCustomer.Id} EmployeeId: {_employeeId}");
 
 				var newNote = new Note
 				{
 					Title = titleTextBox.Text,
-					Type = Type,
+					Type = type,
 					Description = descriptionTextBox.Text,
 					Date_Created = DateTime.Now,
 					CustomerId = selectedCustomer.Id,
-					EmployeeId = EmployeeId
+					EmployeeId = _employeeId
 				};
 
 				using(var db = new AppDbContext())

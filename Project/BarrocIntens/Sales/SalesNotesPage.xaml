@@ -25,10 +25,12 @@
             <Border Background="Black" BorderBrush="#FDD716" BorderThickness="2" CornerRadius="0,0,20,20" Padding="10" Height="520" Width="1000">
                 <StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                        <ListView x:Name="notesListView" ItemsSource="{x:Bind NotitieLijst}">
+                        <ListView x:Name="notesListView" ItemsSource="{x:Bind _notitieLijst}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="localData:Note">
                                     <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">
+                                        <TextBlock Text="{x:Bind Title}" Foreground="#FDD716" FontSize="20" FontWeight="Bold" TextAlignment="Left" Margin="0,0,0,10" />
+
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="130" />
@@ -38,19 +40,19 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,50,0">
-                                                <TextBlock VerticalAlignment="Top" Foreground="White" Text="{x:Bind FormattedDateCreated}" FontWeight="Light" FontSize="14" TextAlignment="Left" Margin="0,0,0,10"/>
-                                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextWrapping="Wrap" TextAlignment="Left"/>
+                                                <TextBlock VerticalAlignment="Top" Foreground="White" Text="{x:Bind FormattedDateCreated}" FontWeight="Light" FontSize="14" TextAlignment="Left" Margin="0,0,0,10" />
+                                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextWrapping="Wrap" TextAlignment="Left" />
                                             </StackPanel>
                                             <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
-                                                <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Type:"/>
-                                                <TextBlock Foreground="White" Text="{x:Bind Type}" FontSize="14"/>
+                                                <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Type:" />
+                                                <TextBlock Foreground="White" Text="{x:Bind Type}" FontSize="14" />
                                             </StackPanel>
-                                            <TextBlock Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0"/>
+                                            <TextBlock Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0" />
                                             <StackPanel Orientation="Vertical" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
-                                                <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Aangemaakt door:"/>
-                                                <TextBlock Foreground="White" Text="{x:Bind Employee.Name}" FontSize="14"/>
+                                                <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Aangemaakt door:" />
+                                                <TextBlock Foreground="White" Text="{x:Bind Employee.Name}" FontSize="14" />
                                             </StackPanel>
-                                            <Button Grid.Column="4" Content="Bewerken" Click="EditNoteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="4" Content="Bewerken" Click="EditNoteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center" />
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>
