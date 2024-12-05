@@ -38,20 +38,20 @@ namespace BarrocIntens.Data
 				ServerVersion.Parse("8.0.30")
 				);
 		}
-    
-    private static string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (byte b in bytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
+
+		private static string HashPassword(string password)
+		{
+			using(SHA256 sha256 = SHA256.Create())
+			{
+				byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+				StringBuilder builder = new StringBuilder();
+				foreach(byte b in bytes)
+				{
+					builder.Append(b.ToString("x2"));
+				}
+				return builder.ToString();
+			}
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -81,13 +81,13 @@ namespace BarrocIntens.Data
 
 			// Users
 			modelBuilder.Entity<User>().HasData(
-				new User { Id = 1, Name = "Emma de Vries", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
-				new User { Id = 2, Name = "Liam Jansen", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
-				new User { Id = 3, Name = "Sophie Bakker", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
-				new User { Id = 4, Name = "Lucas Visser", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 },
-				new User { Id = 5, Name = "Mila Smit", Email = "hoofdinkoop@barrocintens.nl", Password = "hoofdinkoop", Active = true, DepartmentId = 4 },
-				new User { Id = 6, Name = "Noah van Dijk", Email = "planner@barrocintens.nl", Password = "planner", Active = true, DepartmentId = 6 },
-				new User { Id = 7, Name = "Richard Van Vlieger", Email = "hoofdonderhoud@barrocintens.nl", Password = "hoofdonderhoud", Active = true, DepartmentId = 2 }
+				new User { Id = 1, Name = "Emma de Vries", Email = "sales@barrocintens.nl", Password = HashPassword("sales"), Active = true, DepartmentId = 1 },
+				new User { Id = 2, Name = "Liam Jansen", Email = "onderhoud@barrocintens.nl", Password = HashPassword("onderhoud"), Active = true, DepartmentId = 2 },
+				new User { Id = 3, Name = "Sophie Bakker", Email = "finance@barrocintens.nl", Password = HashPassword("finance"), Active = true, DepartmentId = 3 },
+				new User { Id = 4, Name = "Lucas Visser", Email = "inkoop@barrocintens.nl", Password = HashPassword("inkoop"), Active = true, DepartmentId = 4 },
+				new User { Id = 5, Name = "Mila Smit", Email = "hoofdinkoop@barrocintens.nl", Password = HashPassword("hoofdinkoop"), Active = true, DepartmentId = 4 },
+				new User { Id = 6, Name = "Noah van Dijk", Email = "planner@barrocintens.nl", Password = HashPassword("planner"), Active = true, DepartmentId = 6 },
+				new User { Id = 7, Name = "Richard Van Vlieger", Email = "hoofdonderhoud@barrocintens.nl", Password = HashPassword("hoofdonderhoud"), Active = true, DepartmentId = 2 }
 			);
 
 			// Companies
@@ -249,7 +249,8 @@ namespace BarrocIntens.Data
 				},
 				new WorkOrder
 				{
-					Id = 3,Description = "Vervanging van beschadigde onderdelen.",
+					Id = 3,
+					Description = "Vervanging van beschadigde onderdelen.",
 					UserId = 3,
 					Date_Created = DateTime.Today.AddDays(-2),
 					ProductId = 4,

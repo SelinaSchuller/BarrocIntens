@@ -69,6 +69,10 @@ namespace BarrocIntens.Onderhoud
 			{
 				AfspraakCreateButton.Visibility = Visibility.Visible;
 			}
+			else if(userId == 7 && _loggedInUser.Email == "hoofdonderhoud@barrocintens.nl")
+			{
+				WorkOrdersButton.Visibility = Visibility.Visible;
+			}
 
 			if(MainFrame.SourcePageType == typeof(OnderhoudMainPage))
 			{
