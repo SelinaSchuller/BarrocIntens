@@ -27,21 +27,20 @@ namespace BarrocIntens.Sales
 	public sealed partial class SalesNotesPage : Page
 	{
 		private SalesDashboardWindow _parentWindow;
-		private int EmployeeId { get; set; }
-		private List<Note> NotitieLijst { get; set; }
+		private List<Note> _notitieLijst { get; set; }
 		public SalesNotesPage()
 		{
 			this.InitializeComponent();
 
 			using(var db = new AppDbContext())
 			{
-				NotitieLijst = db.Notes
+				_notitieLijst = db.Notes
 					.Include(n => n.Customer)
 					.Include(n => n.Employee)
 					.OrderBy(n => n.Date_Created)
 					.ToList();
 
-				notesListView.ItemsSource = NotitieLijst;
+				notesListView.ItemsSource = _notitieLijst;
 			}
 		}
 

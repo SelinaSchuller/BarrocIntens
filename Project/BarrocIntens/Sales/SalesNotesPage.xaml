@@ -25,7 +25,7 @@
             <Border Background="Black" BorderBrush="#FDD716" BorderThickness="2" CornerRadius="0,0,20,20" Padding="10" Height="520" Width="1000">
                 <StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                        <ListView x:Name="notesListView" ItemsSource="{x:Bind NotitieLijst}">
+                        <ListView x:Name="notesListView" ItemsSource="{x:Bind _notitieLijst}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="localData:Note">
                                     <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">

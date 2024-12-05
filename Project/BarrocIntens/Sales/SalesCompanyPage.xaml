@@ -73,7 +73,7 @@
             PlaceholderText="Search..."
             Margin="10" />
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                            <ListView x:Name="companiesListView" ItemsSource="{x:Bind CompanyList}" SelectionChanged="CompaniesListView_SelectionChanged">
+                            <ListView x:Name="companiesListView" ItemsSource="{x:Bind _companyList}" SelectionChanged="CompaniesListView_SelectionChanged">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="localData:Company">
                                         <StackPanel Orientation="Vertical" Padding="15">
@@ -102,7 +102,7 @@
                             <Border Width="20" Height="20" Margin="5" Padding="1" BorderBrush="#FDD716" BorderThickness="1.5" VerticalAlignment="Center" Tapped="ToggleBkr_Tapped">
                                 <Grid>
                                     <Rectangle Fill="Transparent" />
-                                    <SymbolIcon x:Name="CompanyBkrIcon" Symbol="Accept" Opacity="{x:Bind SelectedCompany.Bkr, Converter={StaticResource BooleanToOpacityConverter}}" />
+                                    <SymbolIcon x:Name="CompanyBkrIcon" Symbol="Accept" Opacity="{x:Bind _selectedCompany.Bkr, Converter={StaticResource BooleanToOpacityConverter}}" />
                                 </Grid>
                             </Border>
                         </StackPanel>
@@ -110,7 +110,7 @@
                         <StackPanel>
                             <TextBlock Text="Medewerkers:" FontSize="20" FontWeight="Bold" Foreground="White" Margin="0,0,0,20"/>
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="300">
-                                <ListView x:Name="customersListView" ItemsSource="{x:Bind CustomerList}">
+                                <ListView x:Name="customersListView" ItemsSource="{x:Bind _customerList}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="localData:Customer">
                                             <StackPanel Orientation="Vertical" Padding="15">
