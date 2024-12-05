@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="BarrocIntens.Sales.SalesMainPage"
+    x:Class="BarrocIntens.Sales.SalesProductPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Sales"
@@ -28,18 +28,10 @@
             </Border>
 
             <StackPanel Grid.Column="2" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="10">
-                <StackPanel Orientation="Vertical" Spacing="10" Margin="0 25 0 0">
-                    <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant" 
-                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-                    <Button x:Name="ProductenButton" Click="ProductenButton_Click" Content="Producten Lijst"
-                Background="#FDD716" Foreground="black" FontSize="16" FontWeight="bold"
-                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
-                </StackPanel>
-                
+                <Button x:Name="BackButton" Click="BackButton_Click" Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" BorderBrush="Black" BorderThickness="4" Width="150" Height="40">Terug</Button>
             </StackPanel>
 
-            <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerKlantenInfo" BorderBrush="black" BorderThickness="4" Margin="100,20,0,0">
+            <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerProductenInfo" BorderBrush="black" BorderThickness="4" Margin="100,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -54,7 +46,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Klanten" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="0" TextAlignment="Center"/>
+                    <TextBlock Text="Producten" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="0" TextAlignment="Center"/>
                     <TextBlock Text="Info" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="1" TextAlignment="Center"/>
                 </Grid>
 
@@ -67,9 +59,9 @@
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
                         <TextBox x:Name="searchTextBox"  TextChanged="searchTextBox_TextChanged" BorderBrush="#FDD716" BorderThickness="2" Background="White" PlaceholderText="Search..." Margin="10"  />
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                            <ListView x:Name="customersListView" SelectionChanged="customersListView_SelectionChanged">
+                            <ListView x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged">
                                 <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="localData:Customer">
+                                    <DataTemplate x:DataType="localData:Product">
                                         <StackPanel Orientation="Vertical" Padding="15">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{x:Bind Name}" FontSize="18"></TextBlock>
@@ -83,26 +75,24 @@
 
                     <StackPanel Grid.Column="1" BorderBrush="#FDD716" BorderThickness="4">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                            <ListView x:Name="customerInfoListView">
+                            <ListView x:Name="ProductInfoListView">
                                 <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="localData:Customer">
+                                    <DataTemplate x:DataType="localData:Product">
                                         <StackPanel Orientation="Vertical" Padding="15" Spacing="10">
-                                            <TextBlock Text="Klanten info" FontSize="25" FontWeight="Bold"/>
-                                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="Klant naam:" FontSize="15"/>
-                                                <TextBlock Text="{x:Bind Name}" FontSize="15"/>
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Bind Name}" FontWeight="Bold" FontSize="25"/>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="Adres:" FontSize="15"/>
-                                                <TextBlock Text="{x:Bind Address}" FontSize="15"/>
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Bind Description}" TextWrapping="Wrap"/>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="Telefoonnummer:" FontSize="15"/>
-                                                <TextBlock Text="{x:Bind PhoneNumber}" FontSize="15"/>
+                                            <StackPanel>
+                                                <TextBlock>
+                                                        <Run Text="€"/>
+                                                        <Run Text="{x:Bind Price}"/>
+                                                </TextBlock>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="Bedrijf:" FontSize="15"/>
-                                                <TextBlock Text="{x:Bind Company.Name, FallbackValue='Geen Bedrijf'}" FontSize="15"/>
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Bind Category.Name, FallbackValue='Geen categorie'}" FontWeight="Bold" Margin="0 20 0 0"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </DataTemplate>

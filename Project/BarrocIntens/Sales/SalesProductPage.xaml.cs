@@ -1,5 +1,4 @@
 using BarrocIntens.Data;
-using BarrocIntens.Inkoop;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -10,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,24 +24,22 @@ namespace BarrocIntens.Sales
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SalesMainPage : Page
+    public sealed partial class SalesProductPage : Page
     {
-        private List<Customer> CustomerList { get; set; } = new List<Customer>();
+        private List<Product> ProductList { get; set; } = new List<Product>();
 
-        public SalesMainPage()
+        public SalesProductPage()
         {
             this.InitializeComponent();
 
             using (var db = new AppDbContext())
             {
-                CustomerList = db.Customers.OrderBy(p => p.Id).ToList();
-                customersListView.ItemsSource = CustomerList;
+                ProductList = db.Products.Include(p => p.Category)
+                                         .Where(p => p.VisibleForCustomers)
+                                         .OrderBy(p => p.Id)
+                                         .ToList();
+                ProductListView.ItemsSource = ProductList;
             }
-        }
-
-        private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SalesKlantAanmakenPage));
         }
 
         private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -50,37 +48,36 @@ namespace BarrocIntens.Sales
 
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                customersListView.ItemsSource = CustomerList;
+                ProductListView.ItemsSource = ProductList;
             }
             else
             {
-                customersListView.ItemsSource = CustomerList
+                ProductListView.ItemsSource = ProductList
                     .Where(c => c.Name != null && c.Name.ToLower().Contains(searchText))
                     .ToList();
             }
         }
 
-        private void customersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (customersListView.SelectedItem is Customer selectedCustomer)
+            Frame.Navigate(typeof(SalesMainPage));
+        }
+
+        private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProductListView.SelectedItem is Product selectedProduct)
             {
                 using (var db = new AppDbContext())
                 {
-                    var customerDetails = db.Customers
-                                             .Include(c => c.Company)
-                                             .Where(c => c.Id == selectedCustomer.Id)
-                                             .OrderBy(c => c.Id)
-                                             .ToList();
+                    var productDetails = db.Products
+                                           .Include(c => c.Category)
+                                           .Where(c => c.Id == selectedProduct.Id)
+                                           .OrderBy(c => c.Id)
+                                           .ToList();
 
-                    customerInfoListView.ItemsSource = customerDetails;
+                    ProductInfoListView.ItemsSource = productDetails;
                 }
             }
         }
-
-        private void ProductenButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SalesProductPage));
-        }
     }
-
 }
