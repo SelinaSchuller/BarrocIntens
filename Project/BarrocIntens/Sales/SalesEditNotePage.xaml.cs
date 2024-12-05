@@ -165,7 +165,6 @@ namespace BarrocIntens.Sales
 
 			if(result == ContentDialogResult.Primary)
 			{
-				// Delete the note from the database
 				using(var db = new AppDbContext())
 				{
 					var note = db.Notes.SingleOrDefault(n => n.Id == _note.Id);
@@ -173,8 +172,6 @@ namespace BarrocIntens.Sales
 					{
 						db.Notes.Remove(note);
 						db.SaveChanges();
-
-						// Navigate back to the notes list after deletion
 						_parentWindow.NavigateToNotesPage();
 					}
 				}
