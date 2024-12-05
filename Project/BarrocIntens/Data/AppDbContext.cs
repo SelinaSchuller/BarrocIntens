@@ -31,7 +31,6 @@ namespace BarrocIntens.Data
 		public DbSet<Sales> Sales { get; set; }
 		public DbSet<ProductCategory> ProductCategories { get; set; }
 
-
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseMySql(
