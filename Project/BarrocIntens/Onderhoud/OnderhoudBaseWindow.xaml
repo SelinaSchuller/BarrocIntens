@@ -30,7 +30,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
             <Button Click="PlanningButton_Click" x:Name="PlanningButton" Foreground="#ffffff" Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
             <Button Click="AfspraakCreateButton_Click" x:Name="AfspraakCreateButton" Foreground="#ffffff" Content="Afspraak maken" Style="{StaticResource HoverButtonStyle}"/>
-            <Button Click="WorkOrdersButton_Click" x:Name="WorkOrdersButton" Foreground="#ffffff" Content="Werk Bronnen" Style="{StaticResource HoverButtonStyle}"/>
+            <Button x:Name="WorkOrdersButton" Click="WorkOrdersButton_Click" Foreground="#ffffff" Content="Werk Bronnen" Style="{StaticResource HoverButtonStyle}"/>
         </StackPanel>
         
         <!-- Storingsaanvragen voor Hoofd Onderhoud-->
