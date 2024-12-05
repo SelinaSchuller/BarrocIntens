@@ -11,23 +11,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="#3e3e3e">
-
-        <!-- Title at the Top Center -->
         <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Background="Transparent">
             <StackPanel>
                 <TextBlock Text="Notities" Foreground="#ffffff" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
             </StackPanel>
         </Border>
 
-        <!-- Main Content Section Centered -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0">
-
-            <!-- Title Section -->
             <Border Background="#FDD716" CornerRadius="20,20,0,0" Padding="10" HorizontalAlignment="Stretch">
                 <TextBlock Text="Notities" Foreground="Black" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
             </Border>
 
-            <!-- Notes List -->
             <Border Background="Black" BorderBrush="#FDD716" BorderThickness="2" CornerRadius="0,0,20,20" Padding="10" Height="520" Width="1000">
                 <StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
@@ -39,6 +33,7 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="130" />
                                                 <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="220" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
@@ -46,24 +41,25 @@
                                                 <TextBlock VerticalAlignment="Top" Foreground="White" Text="{x:Bind FormattedDateCreated}" FontWeight="Light" FontSize="14" TextAlignment="Left" Margin="0,0,0,10"/>
                                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" Text="{x:Bind Customer.Name}" FontSize="16" TextWrapping="Wrap" TextAlignment="Left"/>
                                             </StackPanel>
-                                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0"/>
-                                            <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
+                                            <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
+                                                <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Type:"/>
+                                                <TextBlock Foreground="White" Text="{x:Bind Type}" FontSize="14"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Text="{x:Bind Description}" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0"/>
+                                            <StackPanel Orientation="Vertical" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
                                                 <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold" Text="Aangemaakt door:"/>
                                                 <TextBlock Foreground="White" Text="{x:Bind Employee.Name}" FontSize="14"/>
                                             </StackPanel>
-                                            <Button Grid.Column="3" Content="Bewerken" Click="EditNoteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="4" Content="Bewerken" Click="EditNoteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
                     </ScrollViewer>
                 </StackPanel>
             </Border>
 
-
-            <!-- New Note Button -->
             <Button Content="Nieuwe Notitie Aanmaken" Background="#3e3e3e" BorderBrush="#FDD716" BorderThickness="2" 
                     Foreground="#FDD716" Margin="0,10,0,0" HorizontalAlignment="Left" Padding="10" Click="CreateNoteButton_Click"/>
         </StackPanel>

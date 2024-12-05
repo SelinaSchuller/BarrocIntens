@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bogus;
 using System.Configuration;
+using System.Security.Cryptography;
 
 
 namespace BarrocIntens.Data
@@ -39,7 +40,19 @@ namespace BarrocIntens.Data
                 );
         }
 
-
+        private static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,16 +80,19 @@ namespace BarrocIntens.Data
 
             );
 
+
             // Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Emma de Vries", Email = "sales@barrocintens.nl", Password = "sales", Active = true, DepartmentId = 1 },
-                new User { Id = 2, Name = "Liam Jansen", Email = "onderhoud@barrocintens.nl", Password = "onderhoud", Active = true, DepartmentId = 2 },
-                new User { Id = 3, Name = "Sophie Bakker", Email = "finance@barrocintens.nl", Password = "finance", Active = true, DepartmentId = 3 },
-                new User { Id = 4, Name = "Lucas Visser", Email = "inkoop@barrocintens.nl", Password = "inkoop", Active = true, DepartmentId = 4 },
-                new User { Id = 5, Name = "Mila Smit", Email = "hoofdinkoop@barrocintens.nl", Password = "hoofdinkoop", Active = true, DepartmentId = 4 },
-                new User { Id = 6, Name = "Noah van Dijk", Email = "planner@barrocintens.nl", Password = "planner", Active = true, DepartmentId = 6 },
-                new User { Id = 7, Name = "Richard Van Vlieger", Email = "hoofdonderhoud@barrocintens.nl", Password = "hoofdonderhoud", Active = true, DepartmentId = 2 }
+                new User { Id = 1, Name = "Emma de Vries", Email = "sales@barrocintens.nl", Password = HashPassword("sales"), Active = true, DepartmentId = 1 },
+                new User { Id = 2, Name = "Liam Jansen", Email = "onderhoud@barrocintens.nl", Password = HashPassword("onderhoud"), Active = true, DepartmentId = 2 },
+                new User { Id = 3, Name = "Sophie Bakker", Email = "finance@barrocintens.nl", Password = HashPassword("finance"), Active = true, DepartmentId = 3 },
+                new User { Id = 4, Name = "Lucas Visser", Email = "inkoop@barrocintens.nl", Password = HashPassword("inkoop"), Active = true, DepartmentId = 4 },
+                new User { Id = 5, Name = "Mila Smit", Email = "hoofdinkoop@barrocintens.nl", Password = HashPassword("hoofdinkoop"), Active = true, DepartmentId = 4 },
+                new User { Id = 6, Name = "Noah van Dijk", Email = "planner@barrocintens.nl", Password = HashPassword("planner"), Active = true, DepartmentId = 6 },
+                new User { Id = 7, Name = "Richard Van Vlieger", Email = "hoofdonderhoud@barrocintens.nl", Password = HashPassword("hoofdonderhoud"), Active = true, DepartmentId = 2 }
             );
+
+
 
             // Companies
             var companies = new Faker<Company>()
@@ -134,7 +150,7 @@ namespace BarrocIntens.Data
             // Lease Contracts
             var leaseContracts = new Faker<LeaseContract>()
                 .RuleFor(l => l.Id, f => f.IndexFaker + 1)
-                .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 3))
+                .RuleFor(l => l.CompanyId, f => f.Random.Int(1, 150))
                 .RuleFor(l => l.Start_Date, f => f.Date.Past(1))
                 .RuleFor(l => l.Contract_Type, f => f.PickRandom(new[] { "Repeat", "One-time" }))
                 .RuleFor(l => l.End_Date, f => f.Date.Future(1)).Rules((f, l) =>
@@ -252,21 +268,21 @@ namespace BarrocIntens.Data
 
 			//Notes
 			modelBuilder.Entity<Note>().HasData(
-                new Note { Id = 1, Title = "System Checkup", Description = "Performing a full system diagnostic.", Date_Created = new DateTime(2024, 2, 12), CustomerId = 1, EmployeeId = 1 },
-                new Note { Id = 2, Title = "Issue Report", Description = "Reported issue with water leakage.", Date_Created = new DateTime(2024, 2, 14), CustomerId = 2, EmployeeId = 1 },
-                new Note { Id = 3, Title = "Maintenance Scheduled", Description = "Scheduled maintenance for next week.", Date_Created = new DateTime(2024, 2, 15), CustomerId = 3, EmployeeId = 2 },
-                new Note { Id = 4, Title = "Customer Feedback", Description = "Received feedback on product performance.", Date_Created = new DateTime(2024, 2, 18), CustomerId = 4, EmployeeId = 2 },
-                new Note { Id = 5, Title = "Installation", Description = "Completed installation of new hardware.", Date_Created = new DateTime(2024, 2, 20), CustomerId = 5, EmployeeId = 3 },
-                new Note { Id = 6, Title = "Error Code 404", Description = "Investigated error code 404 in system.", Date_Created = new DateTime(2024, 2, 22), CustomerId = 6, EmployeeId = 3 },
-                new Note { Id = 7, Title = "System Upgrade", Description = "Upgraded system firmware to latest version.", Date_Created = new DateTime(2024, 2, 25), CustomerId = 7, EmployeeId = 4 },
-                new Note { Id = 8, Title = "Training Session", Description = "Provided training for customer staff.", Date_Created = new DateTime(2024, 2, 26), CustomerId = 8, EmployeeId = 4 },
-                new Note { Id = 9, Title = "Follow-up Visit", Description = "Scheduled follow-up visit for customer support.", Date_Created = new DateTime(2024, 2, 28), CustomerId = 9, EmployeeId = 1 },
-                new Note { Id = 10, Title = "Routine Maintenance", Description = "Routine check-up performed.", Date_Created = new DateTime(2024, 3, 1), CustomerId = 10, EmployeeId = 1 },
-                new Note { Id = 11, Title = "Product Demonstration", Description = "Gave product demonstration to new customer.", Date_Created = new DateTime(2024, 3, 3), CustomerId = 11, EmployeeId = 2 },
-                new Note { Id = 12, Title = "Warranty Claim", Description = "Processed warranty claim for customer.", Date_Created = new DateTime(2024, 3, 4), CustomerId = 12, EmployeeId = 2 },
-                new Note { Id = 13, Title = "Diagnostic Test", Description = "Conducted diagnostic tests on equipment.", Date_Created = new DateTime(2024, 3, 6), CustomerId = 13, EmployeeId = 3 },
-                new Note { Id = 14, Title = "System Alert", Description = "Resolved system alert for temperature issues.", Date_Created = new DateTime(2024, 3, 7), CustomerId = 14, EmployeeId = 3 },
-                new Note { Id = 15, Title = "Software Update", Description = "Installed latest software update for system.", Date_Created = new DateTime(2024, 3, 9), CustomerId = 15, EmployeeId = 4 }
+                new Note { Id = 1, Title = "System Checkup", Type = "Terug bellen", Description = "Performing a full system diagnostic.", Date_Created = new DateTime(2024, 2, 12), CustomerId = 1, EmployeeId = 1 },
+                new Note { Id = 2, Title = "Issue Report", Type = "Terug bellen", Description = "Reported issue with water leakage.", Date_Created = new DateTime(2024, 2, 14), CustomerId = 2, EmployeeId = 1 },
+                new Note { Id = 3, Title = "Maintenance Scheduled", Type = "Afspraak nog te maken", Description = "Scheduled maintenance for next week.", Date_Created = new DateTime(2024, 2, 15), CustomerId = 3, EmployeeId = 2 },
+                new Note { Id = 4, Title = "Customer Feedback", Type = "Afspraak nog te maken", Description = "Received feedback on product performance.", Date_Created = new DateTime(2024, 2, 18), CustomerId = 4, EmployeeId = 2 },
+                new Note { Id = 5, Title = "Installation", Type = "Afspraak is gemaakt", Description = "Completed installation of new hardware.", Date_Created = new DateTime(2024, 2, 20), CustomerId = 5, EmployeeId = 3 },
+                new Note { Id = 6, Title = "Error Code 404", Type = "Afspraak is gemaakt", Description = "Investigated error code 404 in system.", Date_Created = new DateTime(2024, 2, 22), CustomerId = 6, EmployeeId = 3 },
+                new Note { Id = 7, Title = "System Upgrade", Type = "Is afgerond", Description = "Upgraded system firmware to latest version.", Date_Created = new DateTime(2024, 2, 25), CustomerId = 7, EmployeeId = 4 },
+                new Note { Id = 8, Title = "Training Session", Type = "Is afgerond", Description = "Provided training for customer staff.", Date_Created = new DateTime(2024, 2, 26), CustomerId = 8, EmployeeId = 4 },
+                new Note { Id = 9, Title = "Follow-up Visit", Type = "Overig", Description = "Scheduled follow-up visit for customer support.", Date_Created = new DateTime(2024, 2, 28), CustomerId = 9, EmployeeId = 1 },
+                new Note { Id = 10, Title = "Routine Maintenance", Type = "Overig", Description = "Routine check-up performed.", Date_Created = new DateTime(2024, 3, 1), CustomerId = 10, EmployeeId = 1 },
+                new Note { Id = 11, Title = "Product Demonstration", Type = "Terug bellen", Description = "Gave product demonstration to new customer.", Date_Created = new DateTime(2024, 3, 3), CustomerId = 11, EmployeeId = 2 },
+                new Note { Id = 12, Title = "Warranty Claim", Type = "Afspraak nog te maken", Description = "Processed warranty claim for customer.", Date_Created = new DateTime(2024, 3, 4), CustomerId = 12, EmployeeId = 2 },
+                new Note { Id = 13, Title = "Diagnostic Test", Type = "Afspraak is gemaakt", Description = "Conducted diagnostic tests on equipment.", Date_Created = new DateTime(2024, 3, 6), CustomerId = 13, EmployeeId = 3 },
+                new Note { Id = 14, Title = "System Alert", Type = "Is afgerond", Description = "Resolved system alert for temperature issues.", Date_Created = new DateTime(2024, 3, 7), CustomerId = 14, EmployeeId = 3 },
+                new Note { Id = 15, Title = "Software Update", Type = "Overig", Description = "Installed latest software update for system.", Date_Created = new DateTime(2024, 3, 9), CustomerId = 15, EmployeeId = 4 }
             );
 
             // Productinventory

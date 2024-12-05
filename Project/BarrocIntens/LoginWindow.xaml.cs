@@ -18,75 +18,92 @@ using Windows.UI.ViewManagement;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using WinRT.Interop;
+using System.Text;
+using System.Security.Cryptography;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens
 {
-	/// <summary>
-	/// An empty window that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class LoginWindow : Window
-	{
-		private int _userId { get; set; }
-		public LoginWindow()
-		{
-			this.InitializeComponent();
-			this.Title = "Login Pagina";
-			Fullscreen fullscreenService = new Fullscreen();
-			fullscreenService.SetFullscreen(this);
-		}
+    /// <summary>
+    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class LoginWindow : Window
+    {
+        private int _userId { get; set; }
+        public LoginWindow()
+        {
+            this.InitializeComponent();
+            this.Title = "Login Pagina";
+            Fullscreen fullscreenService = new Fullscreen();
+            fullscreenService.SetFullscreen(this);
+        }
 
-		private void LoginButton_Click(object sender, RoutedEventArgs e)
-		{
-			using (var db = new AppDbContext())
-			{
-				string email = mailTextBox.Text;
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new AppDbContext())
+            {
+                string email = mailTextBox.Text;
                 string password = PasswordTextBox.Password;
-				if (db.Users.Any(u => u.Email == email && u.Password == password))
+                string hashedPassword = HashPassword(password); // Hash the entered password
+
+                // Compare the hashed password with the stored hashed password
+                var user = db.Users.FirstOrDefault(u => u.Email == email && u.Password == hashedPassword);
+
+                if (user != null)
                 {
-					int departmentId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.DepartmentId).FirstOrDefault();
-					int userId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.Id).FirstOrDefault();
-					_userId = userId;
-					if (departmentId == 1)
-					{
-						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
-						var salesDashboard = new Sales.SalesDashboardWindow(userId);
-						this.Close();
-						salesDashboard.Activate();
-					}
-					else if (departmentId == 2)
-					{
-						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
-						this.Close();
-						onderhoudDashboard.Activate();
-					}
-					else if (departmentId == 3)
-					{
-						// Verander dit naar de juiste window wanneer deze is aangemaakt
-						var financeDashboard = new Financiën.FinanciënMainWindow();
-						this.Close();
-						financeDashboard.Activate();
-					}
-					else if (departmentId == 4)
-					{
-						var inkoopDashboard = new Inkoop.InkoopDashboardWindow();
-						this.Close();
-						inkoopDashboard.Activate();
-					}
-					else if (departmentId == null)
-					{
-						ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppelt";
-						return;
+                    int departmentId = user.DepartmentId;
+                    int userId = user.Id;
+                    _userId = userId;
+
+                    switch (departmentId)
+                    {
+                        case 1:
+                            var salesDashboard = new Sales.SalesDashboardWindow(userId);
+                            salesDashboard.Activate();
+                            break;
+
+                        case 2:
+                            var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
+                            onderhoudDashboard.Activate();
+                            break;
+
+                        case 3:
+                            var financeDashboard = new Financiën.FinanciënMainWindow(userId);
+                            this.Close();
+                            financeDashboard.Activate();
+                            break;
+
+                        case 4:
+                            var inkoopDashboard = new Inkoop.InkoopDashboardWindow();
+                            inkoopDashboard.Activate();
+                            break;
+
+                        case 6:
+                            var plannerDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
+                            plannerDashboard.Activate();
+                            break;
+
+                        default:
+                            ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppeld";
+                            return;
                     }
                 }
-				else
-				{
-                    ErrorTextBlock.Text = "E-mail of wachtwoord is onjuist";	
+                else
+                {
+                    ErrorTextBlock.Text = "E-mail of wachtwoord is onjuist";
                 }
-
             }
-		}
-	}
+        }
+    }
 }
