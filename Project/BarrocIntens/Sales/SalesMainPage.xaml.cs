@@ -21,29 +21,45 @@ using Windows.Foundation.Collections;
 
 namespace BarrocIntens.Sales
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class SalesMainPage : Page
-	{
-		public SalesMainPage()
-		{
-			this.InitializeComponent();
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class SalesMainPage : Page
+    {
+        private List<Customer> CustomerList { get; set; } = new List<Customer>();
+
+        public SalesMainPage()
+        {
+            this.InitializeComponent();
 
             using (var db = new AppDbContext())
             {
-                customersListView.ItemsSource = db.Customers.OrderBy(p => p.Id).ToList();
+                CustomerList = db.Customers.OrderBy(p => p.Id).ToList();
+                customersListView.ItemsSource = CustomerList;
             }
         }
 
-		private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
-		{
+        private void NewCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
             Frame.Navigate(typeof(SalesKlantAanmakenPage));
         }
-		private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{			
 
+        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = (sender as TextBox)?.Text.ToLower();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                customersListView.ItemsSource = CustomerList;
+            }
+            else
+            {
+                customersListView.ItemsSource = CustomerList
+                    .Where(c => c.Name != null && c.Name.ToLower().Contains(searchText))
+                    .ToList();
+            }
         }
+
         private void customersListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (customersListView.SelectedItem is Customer selectedCustomer)
@@ -66,4 +82,5 @@ namespace BarrocIntens.Sales
             Frame.Navigate(typeof(SalesProductPage));
         }
     }
+
 }

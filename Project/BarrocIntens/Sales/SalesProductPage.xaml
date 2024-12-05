@@ -80,16 +80,19 @@
                                     <DataTemplate x:DataType="localData:Product">
                                         <StackPanel Orientation="Vertical" Padding="15" Spacing="10">
                                             <StackPanel>
-                                                <TextBlock Text="{x:Bind Name}"/>
+                                                <TextBlock Text="{x:Bind Name}" FontWeight="Bold" FontSize="25"/>
                                             </StackPanel>
                                             <StackPanel>
-                                                <TextBlock Text="{x:Bind Description}"/>
+                                                <TextBlock Text="{x:Bind Description}" TextWrapping="Wrap"/>
                                             </StackPanel>
                                             <StackPanel>
-                                                <TextBlock Text="{x:Bind Price}"/>
+                                                <TextBlock>
+                                                        <Run Text="€"/>
+                                                        <Run Text="{x:Bind Price}"/>
+                                                </TextBlock>
                                             </StackPanel>
                                             <StackPanel>
-                                                <TextBlock Text="{x:Bind Category.Name, FallbackValue='No Category'}"/>
+                                                <TextBlock Text="{x:Bind Category.Name, FallbackValue='Geen categorie'}" FontWeight="Bold" Margin="0 20 0 0"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </DataTemplate>

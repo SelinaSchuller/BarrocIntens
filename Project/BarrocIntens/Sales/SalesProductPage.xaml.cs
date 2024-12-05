@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,13 +26,35 @@ namespace BarrocIntens.Sales
     /// </summary>
     public sealed partial class SalesProductPage : Page
     {
+        private List<Product> ProductList { get; set; } = new List<Product>();
+
         public SalesProductPage()
         {
             this.InitializeComponent();
 
             using (var db = new AppDbContext())
             {
-                ProductListView.ItemsSource = db.Products.Include(p => p.Category).Where(p => p.VisibleForCustomers).OrderBy(p => p.Id).ToList();
+                ProductList = db.Products.Include(p => p.Category)
+                                         .Where(p => p.VisibleForCustomers)
+                                         .OrderBy(p => p.Id)
+                                         .ToList();
+                ProductListView.ItemsSource = ProductList;
+            }
+        }
+
+        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = (sender as TextBox)?.Text.ToLower();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                ProductListView.ItemsSource = ProductList;
+            }
+            else
+            {
+                ProductListView.ItemsSource = ProductList
+                    .Where(c => c.Name != null && c.Name.ToLower().Contains(searchText))
+                    .ToList();
             }
         }
 
@@ -47,19 +70,14 @@ namespace BarrocIntens.Sales
                 using (var db = new AppDbContext())
                 {
                     var productDetails = db.Products
-                                             .Include(c => c.Category)
-                                             .Where(c => c.Id == selectedProduct.Id)
-                                             .OrderBy(c => c.Id)
-                                             .ToList();
+                                           .Include(c => c.Category)
+                                           .Where(c => c.Id == selectedProduct.Id)
+                                           .OrderBy(c => c.Id)
+                                           .ToList();
 
                     ProductInfoListView.ItemsSource = productDetails;
                 }
             }
-        }
-
-        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }
