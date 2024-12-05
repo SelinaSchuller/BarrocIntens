@@ -24,11 +24,11 @@
           SelectionChanged="TypeComboBox_SelectionChanged" />
 
                 <TextBox x:Name="newTypeTextBox" 
-         PlaceholderText="Voer hier een nieuw type in" 
-         Margin="0,10" 
-         Foreground="White" 
-         Background="Black"
-         Visibility="Collapsed"/>
+                         PlaceholderText="Voer hier een nieuw type in" 
+                         Margin="0,10" 
+                         Foreground="White" 
+                         Background="Black"
+                         Visibility="Collapsed"/>
                 <TextBox x:Name="descriptionTextBox" PlaceholderText="Beschrijving" Margin="0,10" TextWrapping="Wrap" AcceptsReturn="True" Height="100"/>
                 <Button Content="Opslaan" Background="#FDD716" Foreground="Black" Click="SaveNoteButton_Click" Margin="0,20"/>
             </StackPanel>

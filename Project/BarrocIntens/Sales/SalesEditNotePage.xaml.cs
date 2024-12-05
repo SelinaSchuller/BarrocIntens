@@ -69,12 +69,12 @@ namespace BarrocIntens.Sales
 			{
 				//_klant = db.Customers.SingleOrDefault(c => c.Id == _note.CustomerId);
 				_notitiesLijst = db.Notes
+
 					.Include(n => n.Customer)
 					.ToList();
 				_note = db.Notes.SingleOrDefault(n => n.Id == _noteId);
 				titleTextBox.Text = _note.Title.ToString();
 				descriptionTextBox.Text = _note.Description.ToString();
-
 
 				_noteTypes = db.Notes
 					.Select(n => n.Type)
@@ -150,7 +150,6 @@ namespace BarrocIntens.Sales
 			if(_note == null)
 				return;
 
-			// Show confirmation dialog
 			ContentDialog deleteDialog = new ContentDialog
 			{
 				Title = "Bevestiging verwijderen",

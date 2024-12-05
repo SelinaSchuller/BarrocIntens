@@ -26,6 +26,7 @@ namespace BarrocIntens.Sales
 			newTypeTextBox.Text = string.Empty;
 			newTypeTextBox.Visibility = Visibility.Collapsed;
 		}
+
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
@@ -41,7 +42,6 @@ namespace BarrocIntens.Sales
 				System.Diagnostics.Debug.WriteLine("SalesCreateNotePage: No valid SalesDashboardWindow received.");
 			}
 		}
-
 
 		private void LoadData()
 		{
@@ -61,6 +61,7 @@ namespace BarrocIntens.Sales
 				_noteTypes.Insert(0, "-- Voeg eigen type toe --");
 			}
 		}
+
 		private void TypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(typeComboBox.SelectedItem.ToString() == "-- Voeg eigen type toe --")
