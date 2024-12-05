@@ -46,7 +46,7 @@ namespace BarrocIntens.Sales
 			if(e.Parameter is SalesDashboardWindow parentWindow)
 			{
 				_parentWindow = parentWindow;
-				_noteId = _parentWindow.NoteId;
+				_noteId = _parentWindow.noteId;
 				System.Diagnostics.Debug.WriteLine($"SalesEditNotePage: Note Id is {_noteId}");
 			}
 			else

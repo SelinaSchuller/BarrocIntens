@@ -25,7 +25,7 @@ namespace BarrocIntens.Onderhoud
 	/// </summary>
 	public sealed partial class OnderhoudWorkOrdersPage : Page
 	{
-		private List<WorkOrder> workOrders { get; set; }
+		private List<WorkOrder> _workOrders { get; set; }
 		public OnderhoudWorkOrdersPage()
 		{
 			this.InitializeComponent();
@@ -36,7 +36,7 @@ namespace BarrocIntens.Onderhoud
 		{
 			using(var db = new AppDbContext())
 			{
-				workOrders = db.WorkOrders
+				_workOrders = db.WorkOrders
 					.OrderByDescending(w => w.Date_Created)
 					.Include(w => w.Appointment)
 					.ThenInclude(a => a.Customer)
@@ -45,7 +45,7 @@ namespace BarrocIntens.Onderhoud
 					.Include(w => w.User)
 					.Include(w => w.Product)
 					.ToList();
-				workOrdersListView.ItemsSource = workOrders;
+				workOrdersListView.ItemsSource = _workOrders;
 
 			}
 		}

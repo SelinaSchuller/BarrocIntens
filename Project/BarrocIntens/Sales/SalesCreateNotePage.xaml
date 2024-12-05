@@ -19,7 +19,7 @@
                 <TextBox x:Name="titleTextBox" PlaceholderText="Titel" Margin="0,10" />
                 <TextBlock Foreground="White" Margin="0,10">Type:</TextBlock>
                 <ComboBox x:Name="typeComboBox"
-          ItemsSource="{x:Bind NoteTypes}" 
+          ItemsSource="{x:Bind _noteTypes}" 
           Margin="0,10"
           SelectionChanged="TypeComboBox_SelectionChanged" />
 

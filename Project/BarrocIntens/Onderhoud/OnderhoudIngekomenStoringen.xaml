@@ -21,7 +21,7 @@
                     <Rectangle Fill="Black" Height="2" Margin="0,5"/>
 
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="400">
-                        <ListView x:Name="storingenListView" ItemsSource="{x:Bind StoringenLijst}">
+                        <ListView x:Name="storingenListView" ItemsSource="{x:Bind _storingenLijst}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="localData:ServiceRequest">
                                     <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="5" Margin="5">
