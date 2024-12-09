@@ -112,6 +112,8 @@ namespace BarrocIntens.Sales
 				companiesListView.SelectedItem = _companyList.FirstOrDefault(c => c.Id == _selectedCompany.Id);
 			}
 		}
+
+
 	}
 	public class BooleanToVisibilityConverter : IValueConverter
 	{
