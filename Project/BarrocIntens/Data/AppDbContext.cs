@@ -103,9 +103,9 @@ namespace BarrocIntens.Data
 				.RuleFor(c => c.Name, f => f.Name.FullName())
 				.RuleFor(c => c.Address, f => f.Address.StreetAddress())
 				.RuleFor(c => c.Email, f => f.Internet.Email())
-				.RuleFor(c => c.PhoneNumber, f => f.Phone.PhoneNumber())
+				.RuleFor(c => c.PhoneNumber, f => f.Random.Replace("(###) ###-####"))
 				.RuleFor(c => c.CompanyId, f => f.Random.Int(1, 150))
-				.Generate(150); // Active Customers
+				.Generate(150);
 
 
 			modelBuilder.Entity<Customer>().HasData(customers);
