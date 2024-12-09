@@ -30,7 +30,8 @@ namespace BarrocIntens.Sales
 	{
 		public int employeeId { get; set; }
 		public int noteId { get; set; }
-		public SalesDashboardWindow(int? employeeId)
+        public int OfferteId { get; set; }
+        public SalesDashboardWindow(int? employeeId)
         {
             this.InitializeComponent();
 			this.Title = "Sales";
