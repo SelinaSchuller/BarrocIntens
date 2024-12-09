@@ -1,4 +1,4 @@
-using BarrocIntens.FinanciÃ«n;
+using BarrocIntens.Financiën;
 using BarrocIntens.Onderhoud;
 using BarrocIntens.Services;
 using Microsoft.UI.Windowing;
@@ -79,12 +79,15 @@ namespace BarrocIntens.Sales
 				NotePageButton.Content = "Notities";
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			else if(MainFrame.SourcePageType == typeof(SalesStoringAanvraagCreatePage))
 			{
 				CreateServiceRequestPageButton.Visibility = Visibility.Collapsed;
 			}
 =======
 >>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
+=======
+>>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
 			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
 				NotePageButton.Visibility = Visibility.Visible;
@@ -108,6 +111,7 @@ namespace BarrocIntens.Sales
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
 <<<<<<< HEAD
+<<<<<<< HEAD
 			MainFrame.Navigate(typeof(SalesOffertesPage), this);
 			SetButtonVisibility();
 		}
@@ -116,6 +120,11 @@ namespace BarrocIntens.Sales
             SetButtonVisibility();
         }
 >>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
+=======
+            MainFrame.Navigate(typeof(OfferteAanmakenPage));
+            SetButtonVisibility();
+        }
+>>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -165,6 +174,7 @@ namespace BarrocIntens.Sales
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		public void NavigateToOfferteAanmakenPage()
 		{
 			MainFrame.Navigate(typeof(OfferteAanmakenPage));
@@ -178,5 +188,7 @@ namespace BarrocIntens.Sales
 		}
 =======
 >>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
+=======
+>>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
 	}
 }

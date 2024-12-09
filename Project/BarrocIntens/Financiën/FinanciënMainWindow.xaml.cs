@@ -1,4 +1,7 @@
-﻿using Microsoft.UI.Xaml;
+﻿using BarrocIntens.Data;
+using BarrocIntens.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -10,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Contacts;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -20,35 +24,36 @@ namespace BarrocIntens.Financiën
 {
     public sealed partial class FinanciënMainWindow
     {
-        public List<Contract> ContractLijst { get; set; }
+        private int _userId { get; set; }
 
-        public FinanciënMainWindow()
+        public FinanciënMainWindow(int userId)
         {
             this.InitializeComponent();
 
-            // Temporary list for contracts
-            ContractLijst = new List<Contract>
+            Fullscreen fullscreenService = new Fullscreen();
+            fullscreenService.SetFullscreen(this);
+
+            using (var db = new AppDbContext())
             {
-                new Contract { KlantNaam = "Jan van Dijk", StartDatum = new DateTime(2024, 6, 1), EindDatum = new DateTime(2025, 6, 1) },
-                new Contract { KlantNaam = "Pieter de Jong", StartDatum = new DateTime(2024, 3, 25), EindDatum = new DateTime(2025, 3, 25) },
-                new Contract { KlantNaam = "Klaas Bakker", StartDatum = new DateTime(2024, 3, 12), EindDatum = new DateTime(2025, 3, 12) },
-                new Contract { KlantNaam = "Maria Jansen", StartDatum = new DateTime(2024, 1, 1), EindDatum = new DateTime(2025, 1, 1) }
-            };
+                contractListView.ItemsSource = db.LeaseContracts.Include(c => c.Company);
+            }
+            _userId = userId;
         }
 
-        //Deze class is temp tot dat de database klaar is:
-        public class Contract
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            public string KlantNaam { get; set; }
-            public DateTime StartDatum { get; set; }
-            public DateTime EindDatum { get; set; }
-
-            public string StartDatumFormatted => StartDatum.ToString("dd/MM/yyyy");
-            public string EindDatumFormatted => EindDatum.ToString("dd/MM/yyyy");
+            FullFinanceScreen.Visibility = Visibility.Collapsed;
+            FactuurPage factuurPage = new FactuurPage();
+            MainFrame.Navigate(typeof(FactuurPage));
+            backButton.Visibility = Visibility.Visible;
         }
 
-
-
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            FinanciënMainWindow financiënMainWindow = new FinanciënMainWindow(_userId);
+            financiënMainWindow.Activate();
+            this.Close();
+        }
     }
 
 }

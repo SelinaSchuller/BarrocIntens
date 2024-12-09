@@ -18,33 +18,49 @@ using Windows.UI.ViewManagement;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using WinRT.Interop;
+using System.Text;
+using System.Security.Cryptography;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens
 {
-	/// <summary>
-	/// An empty window that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class LoginWindow : Window
-	{
-		private int _userId { get; set; }
-		public LoginWindow()
-		{
-			this.InitializeComponent();
-			this.Title = "Login Pagina";
-			Fullscreen fullscreenService = new Fullscreen();
-			fullscreenService.SetFullscreen(this);
-		}
+    /// <summary>
+    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class LoginWindow : Window
+    {
+        private int _userId { get; set; }
+        public LoginWindow()
+        {
+            this.InitializeComponent();
+            this.Title = "Login Pagina";
+            Fullscreen fullscreenService = new Fullscreen();
+            fullscreenService.SetFullscreen(this);
+        }
 
-		private void LoginButton_Click(object sender, RoutedEventArgs e)
-		{
-			using (var db = new AppDbContext())
-			{
-				string email = mailTextBox.Text;
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new AppDbContext())
+            {
+                string email = mailTextBox.Text;
                 string password = PasswordTextBox.Password;
-				if (db.Users.Any(u => u.Email == email && u.Password == password))
+                string hashedPassword = HashPassword(password); // Hash the entered password
+
+                // Compare the hashed password with the stored hashed password
+                var user = db.Users.FirstOrDefault(u => u.Email == email && u.Password == hashedPassword);
+
+                if (user != null)
                 {
                     int departmentId = user.DepartmentId;
                     int userId = user.Id;
@@ -84,12 +100,11 @@ namespace BarrocIntens
                             return;
                     }
                 }
-				else
-				{
-                    ErrorTextBlock.Text = "E-mail of wachtwoord is onjuist";	
+                else
+                {
+                    ErrorTextBlock.Text = "E-mail of wachtwoord is onjuist";
                 }
-
             }
-		}
-	}
+        }
+    }
 }
