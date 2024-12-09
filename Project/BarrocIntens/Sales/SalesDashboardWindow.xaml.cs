@@ -78,16 +78,10 @@ namespace BarrocIntens.Sales
 				NotePageButton.Visibility = Visibility.Collapsed;
 				NotePageButton.Content = "Notities";
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
 			else if(MainFrame.SourcePageType == typeof(SalesStoringAanvraagCreatePage))
 			{
 				CreateServiceRequestPageButton.Visibility = Visibility.Collapsed;
 			}
-=======
->>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
-=======
->>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
 			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
 				NotePageButton.Visibility = Visibility.Visible;
@@ -110,21 +104,10 @@ namespace BarrocIntens.Sales
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
-<<<<<<< HEAD
-<<<<<<< HEAD
-			MainFrame.Navigate(typeof(SalesOffertesPage), this);
+
+			//MainFrame.Navigate(typeof(SalesOffertesPage), this);
 			SetButtonVisibility();
-		}
-=======
-            MainFrame.Navigate(typeof(OfferteAanmakenPage));
-            SetButtonVisibility();
         }
->>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
-=======
-            MainFrame.Navigate(typeof(OfferteAanmakenPage));
-            SetButtonVisibility();
-        }
->>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -173,8 +156,6 @@ namespace BarrocIntens.Sales
 			SetButtonVisibility();
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 		public void NavigateToOfferteAanmakenPage()
 		{
 			MainFrame.Navigate(typeof(OfferteAanmakenPage));
@@ -182,13 +163,9 @@ namespace BarrocIntens.Sales
 		}
 		public void NavigateToOfferteBewerkenPage(int OfferteId)
 		{
-			this.OfferteId = OfferteId;
-            MainFrame.Navigate(typeof(SalesOfferteEditPage), this);
+			//this.OfferteId = OfferteId;
+            //MainFrame.Navigate(typeof(SalesOfferteEditPage), this);
             SetButtonVisibility();
 		}
-=======
->>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
-=======
->>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
 	}
 }

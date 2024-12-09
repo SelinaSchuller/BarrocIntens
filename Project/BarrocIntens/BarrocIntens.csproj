@@ -88,7 +88,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="SalesDashboard.xaml">
+    <Page Update="SalesDashboardWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -143,17 +143,6 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <Page Update="Sales\SalesStoringAanvraagCreatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-
-  <Page Update="Sales\SalesOfferteEditPage.xaml">
-=======
->>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
     <Page Update="Sales\SalesProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

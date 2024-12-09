@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Window
     x:Class="BarrocIntens.Sales.SalesDashboardWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -34,7 +33,6 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-<<<<<<< HEAD
                 <Button Grid.Row="0" x:Name="CustomerPageButton" Click="CustomerPageButton_Click" Content="Klanten" 
                 Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
                 BorderBrush="Black" BorderThickness="4" Width="150" Height="45" HorizontalAlignment="Center"/>
@@ -50,33 +48,12 @@
                 <Button Grid.Row="4" x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notities" 
                 Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
                 BorderBrush="Black" BorderThickness="4" Width="150" Height="45" HorizontalAlignment="Center"/>
-               <Button Grid.Row="5" x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
-      Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-      BorderBrush="Black" BorderThickness="4" Width="150" Height="45" HorizontalAlignment="Center"/>
-                <Button Grid.Row="6" x:Name="CreateServiceRequestPageButton" Click="CreateServiceRequestPageButton_Click"
+                <Button Grid.Row="5" x:Name="CreateServiceRequestPageButton" Click="CreateServiceRequestPageButton_Click"
                 Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold"
                 BorderBrush="Black" BorderThickness="4" Width="170" Height="70" HorizontalAlignment="Center">
                     <TextBlock Text="Nieuwe Storings Aanvraag" TextWrapping="Wrap" TextAlignment="Center" />
                 </Button>
             </Grid>
-=======
-        <StackPanel Orientation="Vertical" Spacing="10" Margin="30,250,0,0">
-            <Button x:Name="CustomerPageButton" Click="CustomerPageButton_Click" Content="Klanten" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
-            <Button x:Name="CompanyPageButton" Click="CompanyPageButton_Click" Content="Bedrijven"
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
-            <Button x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
-            <Button x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
-            <Button x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notities" 
-                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                    BorderBrush="Black" BorderThickness="4" Width="150" Height="45"/>
->>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
         </StackPanel>
     </Grid>
 </Window>
