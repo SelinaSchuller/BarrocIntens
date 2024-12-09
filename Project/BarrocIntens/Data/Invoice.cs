@@ -13,5 +13,7 @@ namespace BarrocIntens.Data
         public DateTime DateCreated { get; set; }
         public decimal TotalPrice { get; set; }
         public bool Paid { get; set; }
+        public LeaseContract Contract { get; set; }
+
     }
 }

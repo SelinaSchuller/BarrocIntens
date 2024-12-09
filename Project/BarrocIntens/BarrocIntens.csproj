@@ -50,6 +50,8 @@
     <None Remove="Sales\SalesKlantAanmakenPage.xaml" />
     <None Remove="Sales\SalesMainPage.xaml" />
     <None Remove="Sales\SalesNotesPage.xaml" />
+    <None Remove="Sales\SalesOfferteEditPage.xaml" />
+    <None Remove="Sales\SalesOffertesPage.xaml" />
     <None Remove="Sales\SalesProductPage.xaml" />
     <None Remove="Sales\SalesStoringAanvraagCreatePage.xaml" />
   </ItemGroup>
@@ -179,6 +181,7 @@
 
   <ItemGroup>
     <Page Update="FactuurPage.xaml">
+    <Page Update="Sales\SalesOffertesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -190,6 +193,7 @@
 
   <ItemGroup>
     <Page Update="Sales\OfferteAanmakenPage.xaml">
+    <Page Update="Sales\SalesOfferteAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
