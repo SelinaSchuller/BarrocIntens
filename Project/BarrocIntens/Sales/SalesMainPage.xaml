@@ -28,9 +28,15 @@
             </Border>
 
             <StackPanel Grid.Column="2" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="10">
-                <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant" 
-             Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-             BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+                <StackPanel Orientation="Vertical" Spacing="10" Margin="0 25 0 0">
+                    <Button x:Name="NewCustomerButton" Click="NewCustomerButton_Click" Content="Nieuwe Klant" 
+                Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+                    <Button x:Name="ProductenButton" Click="ProductenButton_Click" Content="Producten Lijst"
+                Background="#FDD716" Foreground="black" FontSize="16" FontWeight="bold"
+                BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+                </StackPanel>
+                
             </StackPanel>
 
             <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerKlantenInfo" BorderBrush="black" BorderThickness="4" Margin="100,20,0,0">

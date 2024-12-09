@@ -26,6 +26,7 @@
     <None Remove="Financiën\OfferteProductSelection.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
+    <None Remove="Onderhoud\OnderhoudWorkOrdersPage.xaml" />
     <None Remove="ResourceDictionary1.xaml" />
     <None Remove="Inkoop\ProductBewerkenPage.xaml" />
     <None Remove="SalesDashboard.xaml" />
@@ -47,6 +48,7 @@
     <None Remove="Sales\SalesNotesPage.xaml" />
     <None Remove="Sales\SalesOfferteEditPage.xaml" />
     <None Remove="Sales\SalesOffertesPage.xaml" />
+    <None Remove="Sales\SalesProductPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -139,6 +141,20 @@
 
   <ItemGroup>
     <Page Update="Sales\SalesOfferteEditPage.xaml">
+
+    <Page Update="Sales\SalesProductPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudWorkOrdersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesKlantAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -46,39 +46,42 @@ namespace BarrocIntens
                 string password = PasswordTextBox.Password;
 				if (db.Users.Any(u => u.Email == email && u.Password == password))
                 {
-					int departmentId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.DepartmentId).FirstOrDefault();
-					int userId = db.Users.Where(u => u.Email == email && u.Password == password).Select(u => u.Id).FirstOrDefault();
-					_userId = userId;
-					if (departmentId == 1)
-					{
-						//Opens een nieuwe window (SalesDashboard) en closed de huidige window (LoginWindow)
-						var salesDashboard = new Sales.SalesDashboardWindow(userId);
-						this.Close();
-						salesDashboard.Activate();
-					}
-					else if (departmentId == 2)
-					{
-						var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
-						this.Close();
-						onderhoudDashboard.Activate();
-					}
-					else if (departmentId == 3)
-					{
-						// Verander dit naar de juiste window wanneer deze is aangemaakt
-						var financeDashboard = new Financiën.FinanciënMainWindow();
-						this.Close();
-						financeDashboard.Activate();
-					}
-					else if (departmentId == 4)
-					{
-						var inkoopDashboard = new Inkoop.InkoopDashboardWindow();
-						this.Close();
-						inkoopDashboard.Activate();
-					}
-					else if (departmentId == null)
-					{
-						ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppelt";
-						return;
+                    int departmentId = user.DepartmentId;
+                    int userId = user.Id;
+                    _userId = userId;
+
+                    switch (departmentId)
+                    {
+                        case 1:
+                            var salesDashboard = new Sales.SalesDashboardWindow(userId);
+                            System.Diagnostics.Debug.WriteLine($"User: {userId}");
+                            salesDashboard.Activate();
+                            break;
+
+                        case 2:
+                            var onderhoudDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
+                            onderhoudDashboard.Activate();
+                            break;
+
+                        case 3:
+                            var financeDashboard = new Financiën.FinanciënMainWindow(userId);
+                            this.Close();
+                            financeDashboard.Activate();
+                            break;
+
+                        case 4:
+                            var inkoopDashboard = new Inkoop.InkoopDashboardWindow();
+                            inkoopDashboard.Activate();
+                            break;
+
+                        case 6:
+                            var plannerDashboard = new Onderhoud.OnderhoudBaseWindow(userId);
+                            plannerDashboard.Activate();
+                            break;
+
+                        default:
+                            ErrorTextBlock.Text = "Er is geen Department aan deze user gekoppeld";
+                            return;
                     }
                 }
 				else

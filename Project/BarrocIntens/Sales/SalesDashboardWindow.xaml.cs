@@ -1,4 +1,4 @@
-using BarrocIntens.Financiën;
+using BarrocIntens.FinanciÃ«n;
 using BarrocIntens.Onderhoud;
 using BarrocIntens.Services;
 using Microsoft.UI.Windowing;
@@ -28,19 +28,20 @@ namespace BarrocIntens.Sales
 	/// </summary>
 	public sealed partial class SalesDashboardWindow : Window
 	{
-		public int EmployeeId { get; set; }
-		public int NoteId { get; set; }
-        public int OfferteId { get; set; }
-        public SalesDashboardWindow(int? employeeId)
-		{
-			this.InitializeComponent();
+		public int employeeId { get; set; }
+		public int noteId { get; set; }
+		public SalesDashboardWindow(int? employeeId)
+        {
+            this.InitializeComponent();
 			this.Title = "Sales";
 			Fullscreen fullscreenService = new Fullscreen();
 			fullscreenService.SetFullscreen(this);
 
 			if (employeeId != null)
 			{
-				EmployeeId = employeeId.Value;
+				this.employeeId = employeeId.Value;
+				System.Diagnostics.Debug.WriteLine($"SalesDashboardWindow initialized with EmployeeId: {this.employeeId}");
+
 			}
 			MainFrame.Navigate(typeof(SalesMainPage));
 
@@ -123,7 +124,7 @@ namespace BarrocIntens.Sales
 
 		public void NavigateToEditNotePage(int NoteId)
 		{
-			this.NoteId = NoteId;
+			this.noteId = NoteId;
 			NotePageButton.Visibility = Visibility.Visible;
 			NotePageButton.Content = "Terug";
 			MainFrame.Navigate(typeof(SalesEditNotePage), this);

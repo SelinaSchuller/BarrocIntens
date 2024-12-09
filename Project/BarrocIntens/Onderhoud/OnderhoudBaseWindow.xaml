@@ -25,7 +25,13 @@
                 <TextBlock Text="Onderhoud" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
             </StackPanel>
         </Border>
-
+        <!-- Linker zijpaneel met knoppen -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
+            <Button Click="PlanningButton_Click" x:Name="PlanningButton" Foreground="#ffffff" Content="Planning" Style="{StaticResource HoverButtonStyle}"/>
+            <Button Click="AfspraakCreateButton_Click" x:Name="AfspraakCreateButton" Foreground="#ffffff" Content="Afspraak maken" Style="{StaticResource HoverButtonStyle}"/>
+            <Button x:Name="WorkOrdersButton" Click="WorkOrdersButton_Click" Foreground="#ffffff" Content="Werk Bronnen" Style="{StaticResource HoverButtonStyle}"/>
+        </StackPanel>
+       
         <!-- Storingsaanvragen voor Hoofd Onderhoud-->
         <Border x:Name="StoringIcon" Visibility="Collapsed" Margin="75" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Grid Width="50" Height="50">
