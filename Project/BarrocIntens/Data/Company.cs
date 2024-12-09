@@ -11,5 +11,7 @@ namespace BarrocIntens.Data
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Bkr { get; set; }
+
+        public ICollection<LeaseContract> LeaseContracts { get; set; }
     }
 }

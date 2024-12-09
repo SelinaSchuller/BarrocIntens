@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Sales"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:localData="using:BarrocIntens.Data"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -65,39 +65,50 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
-                        <TextBox 
-                  x:Name="searchTextBox" 
-                  TextChanged="searchTextBox_TextChanged"
-                  BorderBrush="#FDD716"
-                  BorderThickness="2"
-                  Background="White"
-                  PlaceholderText="Search..."
-                  Margin="10"  />
-                        <ListView>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical" Padding="15">
-                                        <TextBlock Text="Naam"></TextBlock>
-                                        <TextBlock Text="Adres"></TextBlock>
-                                        <TextBlock Text="Postcode"></TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <TextBox x:Name="searchTextBox"  TextChanged="searchTextBox_TextChanged" BorderBrush="#FDD716" BorderThickness="2" Background="White" PlaceholderText="Search..." Margin="10"  />
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
+                            <ListView x:Name="customersListView" SelectionChanged="customersListView_SelectionChanged">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="localData:Customer">
+                                        <StackPanel Orientation="Vertical" Padding="15">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind Name}" FontSize="18"></TextBlock>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" BorderBrush="#FDD716" BorderThickness="4">
-                        <ListView>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical" Padding="15">
-                                        <TextBlock Text="Telefoonnummer"></TextBlock>
-                                        <TextBlock Text="Email"></TextBlock>
-                                        <TextBlock Text="Fax"></TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
+                            <ListView x:Name="customerInfoListView">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="localData:Customer">
+                                        <StackPanel Orientation="Vertical" Padding="15" Spacing="10">
+                                            <TextBlock Text="Klanten info" FontSize="25" FontWeight="Bold"/>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="Klant naam:" FontSize="15"/>
+                                                <TextBlock Text="{x:Bind Name}" FontSize="15"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="Adres:" FontSize="15"/>
+                                                <TextBlock Text="{x:Bind Address}" FontSize="15"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="Telefoonnummer:" FontSize="15"/>
+                                                <TextBlock Text="{x:Bind PhoneNumber}" FontSize="15"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="Bedrijf:" FontSize="15"/>
+                                                <TextBlock Text="{x:Bind Company.Name, FallbackValue='Geen Bedrijf'}" FontSize="15"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
                     </StackPanel>
                 </Grid>
             </Grid>
