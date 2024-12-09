@@ -9,11 +9,13 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,7 +37,6 @@ namespace BarrocIntens.Sales
 		public SalesEditNotePage()
 		{
 			this.InitializeComponent();
-
 		}
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -53,6 +54,7 @@ namespace BarrocIntens.Sales
 			}
 
 			LoadData();
+
 			_selectedType = _note.Type;
 			newTypeTextBox.Text = string.Empty;
 			newTypeTextBox.Visibility = Visibility.Collapsed;
@@ -65,11 +67,13 @@ namespace BarrocIntens.Sales
 			using(var db = new AppDbContext())
 			{
 				_notitiesLijst = db.Notes
+
 					.Include(n => n.Customer)
 					.ToList();
 				_note = db.Notes.SingleOrDefault(n => n.Id == _noteId);
 				titleTextBox.Text = _note.Title.ToString();
 				descriptionTextBox.Text = _note.Description.ToString();
+
 				_noteTypes = db.Notes
 					.Select(n => n.Type)
 					.Distinct()
@@ -100,8 +104,8 @@ namespace BarrocIntens.Sales
 			{
 				ContentDialog titleErrorDialog = new ContentDialog
 				{
-					Title = "Titel vereist",
-					Content = "Voer een titel in voor de notitie voordat u deze opslaat.",
+					Title = "Een of meerdere velden is leeg",
+					Content = "Voer alle velden in voor de notitie voordat u deze opslaat.",
 					CloseButtonText = "Ok",
 					XamlRoot = this.XamlRoot
 				};
@@ -115,6 +119,7 @@ namespace BarrocIntens.Sales
 					var existingNote = db.Notes.SingleOrDefault(n => n.Id == _note.Id);
 					existingNote.Title = titleTextBox.Text;
 					existingNote.Description = descriptionTextBox.Text;
+
 					if(_isNewTypeTextBoxEnabled && !string.IsNullOrWhiteSpace(newTypeTextBox.Text))
 					{
 						string newType = newTypeTextBox.Text.Trim();
@@ -143,7 +148,6 @@ namespace BarrocIntens.Sales
 			if(_note == null)
 				return;
 
-			// Show confirmation dialog
 			ContentDialog deleteDialog = new ContentDialog
 			{
 				Title = "Bevestiging verwijderen",
@@ -157,7 +161,6 @@ namespace BarrocIntens.Sales
 
 			if(result == ContentDialogResult.Primary)
 			{
-				// Delete the note from the database
 				using(var db = new AppDbContext())
 				{
 					var note = db.Notes.SingleOrDefault(n => n.Id == _note.Id);
