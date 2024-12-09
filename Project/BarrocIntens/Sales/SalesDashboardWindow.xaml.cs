@@ -55,7 +55,6 @@ namespace BarrocIntens.Sales
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
-			CreateServiceRequestPageButton.Visibility = Visibility.Visible;
 
 			if (MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -78,11 +77,7 @@ namespace BarrocIntens.Sales
 				NotePageButton.Visibility = Visibility.Collapsed;
 				NotePageButton.Content = "Notities";
 			}
-			else if(MainFrame.SourcePageType == typeof(SalesStoringAanvraagCreatePage))
-			{
-				CreateServiceRequestPageButton.Visibility = Visibility.Collapsed;
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
+			else if (MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
 				NotePageButton.Visibility = Visibility.Visible;
 				NotePageButton.Content = "Terug";
@@ -118,12 +113,6 @@ namespace BarrocIntens.Sales
 			MainFrame.Navigate(typeof(SalesNotesPage), this);
 			SetButtonVisibility();
 		}
-		
-		private void CreateServiceRequestPageButton_Click(object sender, RoutedEventArgs e)
-		{
-			MainFrame.Navigate(typeof(SalesStoringAanvraagCreatePage), this);
-			SetButtonVisibility();
-		}
 
 		public void NavigateToCreateNotePage()
 		{
@@ -146,12 +135,6 @@ namespace BarrocIntens.Sales
 		{
 			//System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
 			MainFrame.Navigate(typeof(SalesNotesPage), this);
-			SetButtonVisibility();
-		}
-		public void NavigateToMainPage()
-		{
-			System.Diagnostics.Debug.WriteLine("Navigating to SalesMainPage after saving storing.");
-			MainFrame.Navigate(typeof(SalesMainPage), this);
 			SetButtonVisibility();
 		}
 

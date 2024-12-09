@@ -49,7 +49,6 @@
     <None Remove="Sales\SalesOfferteEditPage.xaml" />
     <None Remove="Sales\SalesOffertesPage.xaml" />
     <None Remove="Sales\SalesProductPage.xaml" />
-    <None Remove="Sales\SalesStoringAanvraagCreatePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -141,14 +140,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\SalesStoringAanvraagCreatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
+    <Page Update="Sales\SalesOfferteEditPage.xaml">
 
-  <ItemGroup>
-
-  <Page Update="Sales\SalesOfferteEditPage.xaml">
     <Page Update="Sales\SalesProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
