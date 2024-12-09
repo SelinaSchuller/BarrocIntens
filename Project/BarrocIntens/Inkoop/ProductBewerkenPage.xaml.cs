@@ -20,7 +20,7 @@ using BarrocIntens.Data;
 namespace BarrocIntens.Inkoop
 {
     /// <summary>
-    /// An esmpty page that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class ProductBewerkenPage : Page
     {
@@ -69,6 +69,7 @@ namespace BarrocIntens.Inkoop
             NaamError.Visibility = Visibility.Collapsed;
             DescError.Visibility = Visibility.Collapsed;
             PrijsError.Visibility = Visibility.Collapsed;
+            CategoryError.Visibility = Visibility.Collapsed;
 
             int validatieErrors = 0;
 
@@ -95,6 +96,12 @@ namespace BarrocIntens.Inkoop
                 validatieErrors += 1;
             }
 
+            if (CategoryComboBox.SelectedValue == null)
+            {
+                CategoryError.Visibility = Visibility.Visible;
+                validatieErrors += 1;
+            }
+
             prijsOutput = Math.Round(prijsOutput, 2);
 
             if (validatieErrors == 0)
@@ -106,7 +113,7 @@ namespace BarrocIntens.Inkoop
                     {
                         product.Name = NaamInput.Text;
                         product.Description = DescInput.Text;
-                        product.Price = (decimal)prijsOutput;
+                        product.Price = prijsOutput;
                         product.IsStock = VoorraadCheckBox.IsChecked == true;
                         product.VisibleForCustomers = ZichtbaarheidCheckBox.IsChecked == true;
                         product.CategoryId = (int)CategoryComboBox.SelectedValue;

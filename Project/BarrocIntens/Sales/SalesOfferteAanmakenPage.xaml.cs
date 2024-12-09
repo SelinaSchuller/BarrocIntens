@@ -13,7 +13,6 @@ namespace BarrocIntens.Sales
     {
         private List<InvoiceItem> selectedInvoiceItems = new List<InvoiceItem>();
         private Invoice currentInvoice;
-
         public OfferteAanmakenPage()
         {
             this.InitializeComponent();
@@ -21,16 +20,15 @@ namespace BarrocIntens.Sales
             {
                 currentInvoice = new Invoice
                 {
-                    ContractId = new Random().Next(500, 9999),
+                    ContractId = 0,
                     DateCreated = DateTime.Now,
                     TotalPrice = 0,
                     Paid = false
                 };
                 db.Invoices.Add(currentInvoice);
-                db.SaveChanges(); // Save the new invoice to the database
+                db.SaveChanges();
             }
         }
-
         private async void ProductAddButton_Click(object sender, RoutedEventArgs e)
         {
             var productSelectionDialog = new OfferteProductSelection();
@@ -40,12 +38,11 @@ namespace BarrocIntens.Sales
                 CloseButtonText = "Cancel",
             };
 
-            dialog.XamlRoot = this.XamlRoot; // Set the XamlRoot explicitly
+            dialog.XamlRoot = this.XamlRoot;
 
             var result = await dialog.ShowAsync();
             AddSelectedProductIds(productSelectionDialog.SelectedProductIds);
         }
-
         public void AddSelectedProductIds(List<int> productIds)
         {
             using (var db = new AppDbContext())
@@ -54,51 +51,52 @@ namespace BarrocIntens.Sales
 
                 foreach (var product in products)
                 {
-                    // Create a new InvoiceItem with default amount of 1
                     var invoiceItem = new InvoiceItem
                     {
-                        Amount = 1, // Default to 1 for the first addition
+                        Amount = 1,
                         ProductId = product.Id,
-                        InvoiceId = currentInvoice.Id // Use the correct invoice ID
+                        InvoiceId = currentInvoice.Id
                     };
-                    selectedInvoiceItems.Add(invoiceItem); // Add the invoice item to the list
-                    currentInvoice.TotalPrice += product.Price; // Update the total price
-                    db.InvoicesItems.Add(invoiceItem); // Add the invoice item to the database
+                    selectedInvoiceItems.Add(invoiceItem);
+                    currentInvoice.TotalPrice += product.Price;
+                    db.InvoicesItems.Add(invoiceItem);
                 }
 
-                db.SaveChanges(); // Commit changes to the database
+                db.SaveChanges();
                 UpdateProductsListView();
-                UpdateTotalPriceTextBlock(); // Update the total price display
+                UpdateTotalPriceTextBlock();
             }
         }
-
         private void UpdateProductsListView()
         {
-            OfferteProducten.ItemsSource = null; // Reset the ItemsSource
+            OfferteProducten.ItemsSource = null;
 
-            // Get InvoiceItems from the database using the current invoice ID
             List<InvoiceItem> InvoiceProducts;
             using (var db = new AppDbContext())
             {
                 InvoiceProducts = db.InvoicesItems
-                    .Include(i => i.Product) // Include Product details if needed
-                    .Where(i => i.InvoiceId == currentInvoice.Id) // Use the correct invoice ID
+                    .Include(i => i.Product)
+                    .Where(i => i.InvoiceId == currentInvoice.Id)
                     .ToList();
             }
 
-            OfferteProducten.ItemsSource = InvoiceProducts; // Set the new ItemsSource
+            OfferteProducten.ItemsSource = InvoiceProducts;
         }
-
         private void UpdateTotalPriceTextBlock()
         {
-            TotaalPriceTextBlock.Text = currentInvoice.TotalPrice.ToString("€ 0.00"); // Update the total price display
+            TotaalPriceTextBlock.Text = currentInvoice.TotalPrice.ToString("0.00");
         }
-
         private void OfferteOpslaanButton_Click(object sender, RoutedEventArgs e)
         {
-            // Implement save functionality if needed
+            var totalPrices = TotaalPriceTextBlock.Text;
+            decimal totalPrice = decimal.Parse(totalPrices);
+            using (var db = new AppDbContext())
+            {
+                var invoice = db.Invoices.Find(currentInvoice.Id);
+                invoice.TotalPrice = decimal.Parse(totalPrices);
+                db.SaveChanges();
+            }
         }
-
         private void AantalProducten_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox AantalTextBox = sender as TextBox;
@@ -127,22 +125,19 @@ namespace BarrocIntens.Sales
 
                     if (invoiceItem != null)
                     {
-                        // Calculate the price change based on the previous amount
                         int previousQuantity = invoiceItem.Amount;
 
-                        // Update the total price based on the change in quantity
-                        totalPrice -= previousQuantity * prijsDecimal; // Remove the price of the previous quantity
-                        invoiceItem.Amount = newQuantity; // Update the amount in the invoice item
-                        totalPrice += newQuantity * prijsDecimal; // Add the price of the new quantity
+                        totalPrice -= previousQuantity * prijsDecimal;
+                        invoiceItem.Amount = newQuantity;
+                        totalPrice += newQuantity * prijsDecimal;
                     }
 
-                    db.SaveChanges(); // Commit changes to the database
-                    currentInvoice.TotalPrice = totalPrice; // Update the current invoice total price
-                    UpdateTotalPriceTextBlock(); // Update the total price display
+                    db.SaveChanges();
+                    currentInvoice.TotalPrice = totalPrice;
+                    UpdateTotalPriceTextBlock();
                 }
             }
         }
-
         private void DeleteProductButton_Click(object sender, RoutedEventArgs e)
         {
             Button deleteButton = sender as Button;
@@ -156,33 +151,27 @@ namespace BarrocIntens.Sales
                     TextBlock productIdTextBlock = FindChild<TextBlock>(listViewItem, "ProductId");
                     int productId = int.Parse(productIdTextBlock.Text);
 
-                    // Find the invoice item to delete with eager loading of the Product
                     var invoiceItem = db.InvoicesItems
-                        .Include(i => i.Product) // Eager load the Product
+                        .Include(i => i.Product)
                         .FirstOrDefault(i => i.InvoiceId == currentInvoice.Id && i.ProductId == productId);
 
                     if (invoiceItem != null)
                     {
-                        // Check if Product is not null before accessing its properties
                         if (invoiceItem.Product != null)
                         {
-                            // Update the total price by subtracting the price of the product
-                            decimal productPrice = invoiceItem.Product.Price; // Get the price of the product
+                            decimal productPrice = invoiceItem.Product.Price;
                             currentInvoice.TotalPrice -= invoiceItem.Amount * productPrice;
 
-                            // Remove the item from the database
                             db.InvoicesItems.Remove(invoiceItem);
-                            db.SaveChanges(); // Commit changes to the database
+                            db.SaveChanges();
 
-                            // Update the UI
-                            UpdateProductsListView(); // Refresh the ListView
-                            UpdateTotalPriceTextBlock(); // Update the total price display
+                            UpdateProductsListView();
+                            UpdateTotalPriceTextBlock();
                         }
                     }
                 }
             }
         }
-
         private T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);
@@ -194,7 +183,6 @@ namespace BarrocIntens.Sales
 
         private T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
-            // Confirm parent is valid.
             if (parent == null) return null;
 
             T foundChild = null;
@@ -203,7 +191,6 @@ namespace BarrocIntens.Sales
             for (int i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
-                // If the child is not of the requested type child
                 T childType = child as T;
                 if (childType != null && !string.IsNullOrEmpty(childName))
                 {
