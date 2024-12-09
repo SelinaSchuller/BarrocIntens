@@ -31,21 +31,15 @@ namespace BarrocIntens.Sales
         public SalesProductPage()
         {
             this.InitializeComponent();
-            LoadProductsAsync();
-        }
 
-        private async void LoadProductsAsync()
-        {
             using (var db = new AppDbContext())
             {
-                ProductList = await db.Products
-                                        .Include(p => p.Category)
-                                        .Where(p => p.VisibleForCustomers)
-                                        .OrderBy(p => p.Id)
-                                        .ToListAsync();
+                ProductList = db.Products.Include(p => p.Category)
+                                         .Where(p => p.VisibleForCustomers)
+                                         .OrderBy(p => p.Id)
+                                         .ToList();
+                ProductListView.ItemsSource = ProductList;
             }
-
-            ProductListView.ItemsSource = ProductList;
         }
 
         private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -69,20 +63,20 @@ namespace BarrocIntens.Sales
             Frame.Navigate(typeof(SalesMainPage));
         }
 
-        private async void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ProductListView.SelectedItem is Product selectedProduct)
             {
                 using (var db = new AppDbContext())
                 {
-                    var productDetails = await db.Products
-                                                    .Include(c => c.Category)
-                                                    .Where(c => c.Id == selectedProduct.Id)
-                                                    .OrderBy(c => c.Id)
-                                                    .ToListAsync();
+                    var productDetails = db.Products
+                                           .Include(c => c.Category)
+                                           .Where(c => c.Id == selectedProduct.Id)
+                                           .OrderBy(c => c.Id)
+                                           .ToList();
 
                     ProductInfoListView.ItemsSource = productDetails;
-                }             
+                }
             }
         }
     }

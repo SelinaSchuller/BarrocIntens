@@ -11,12 +11,12 @@ namespace BarrocIntens.Data
         public int Id { get; set; }
         public string Description { get; set; }
         public int UserId { get; set; }
-        public DateTime Date_Created { get; set; }
-        public int? ProductId { get; set; }
+		public DateTime Date_Created { get; set; }
+		public int? ProductId { get; set; }
         public int AppointmentId { get; set; }
-        public int RequestId { get; set; }
+        public int? RequestId { get; set; }
         public User User { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
         public Appointment Appointment { get; set; }
         public ServiceRequest? Request { get; set; }
 

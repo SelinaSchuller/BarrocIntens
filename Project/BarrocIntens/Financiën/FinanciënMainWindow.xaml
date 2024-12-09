@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Financiën"
+    xmlns:localData="using:BarrocIntens.Data"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -11,49 +12,80 @@
 
     
     <Grid Background="#3e3e3e">
-        
-        <!-- Titel bovenaan -->
-        <TextBlock Text="Financiën" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
+        <Frame Grid.ColumnSpan="2" x:Name="MainFrame" />
+        <Grid x:Name="FullFinanceScreen">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <!-- Titel bovenaan -->
+            <TextBlock Grid.Column="1" Text="Financiën" Foreground="#FDD716" FontSize="40" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35,60,0,0"/>
 
-        <!-- Linker zijpaneel met knoppen -->
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40">
-            <Image Source="../assets/Logo6_groot.png" Width="100" Height="100" Margin="0,0,0,20"/>
-            <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
-            <Button Content="Contract Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
-            <Button Content="Factuur Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
-            <Button Content="Maand/Jaar Opgave" Style="{StaticResource HoverButtonStyle}"/>
-        </StackPanel>
+            <!-- Linker zijpaneel met knoppen -->
+            <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20, 0, 0, 0">
+                    <Image Source="../Assets/Logo6_groot.png" Width="250" Height="250" Margin="0,0,0,30"/>
+                    <Button Content="Klant Gegevens" Style="{StaticResource HoverButtonStyle}"/>
+                <Button Content="Contract Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
+                <Button Click="Button_Click" Content="Factuur Aanmaken" Style="{StaticResource HoverButtonStyle}"/>
+                <Button Content="Maand/Jaar Opgave" Style="{StaticResource HoverButtonStyle}"/>
+            </StackPanel>
 
-        <!-- Hoofdcontent in het midden -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Margin="30">
-            <Border Width="600" Background="Black" CornerRadius="20,20,20,20" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
-                <StackPanel>
-                    <!-- Full-width Title Bar -->
-                    <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
-                        <TextBlock Text="Contracten" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </Border>
+            <!-- Hoofdcontent in het midden -->
+            <Grid Grid.Column="1" Margin="30, 175, 30, 30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Border Grid.RowSpan="1" Background="Black" HorizontalAlignment="Stretch" CornerRadius="40" Padding="0" BorderBrush="#FDD716" BorderThickness="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <!-- Full-width Title Bar -->
+                        <Border Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
+                            <TextBlock Text="Contracten" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        </Border>
 
-                    <!-- Kolom headers -->
-                    <StackPanel Orientation="Horizontal" Margin="0,10" Padding="10,0,10,0">
-                        <TextBlock Text="Naam" Foreground="#FDD716" FontSize="20" FontWeight="Bold" Width="200" TextAlignment="Center"/>
-                        <TextBlock Text="Start Datum" Foreground="#FDD716" FontSize="20" FontWeight="Bold" Width="200" TextAlignment="Center"/>
-                        <TextBlock Text="Eind Datum" Foreground="#FDD716" FontSize="20" FontWeight="Bold" Width="200" TextAlignment="Center"/>
-                    </StackPanel>
+                        <!-- Kolom headers -->
+                        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,10" Padding="10,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Bedrijf" Foreground="#FDD716" FontSize="20" FontWeight="Bold" Width="200" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Start Datum" Foreground="#FDD716" FontSize="20" FontWeight="Bold" Width="200" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Eind Datum" Foreground="#FDD716" FontSize="20" FontWeight="Bold" Width="200" TextAlignment="Center"/>
+                        </Grid>
 
-                    <Rectangle Fill="Black" Height="2" Margin="0,5"/>
-                    <ItemsControl ItemsSource="{Binding ContractLijst}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="0,10" Padding="10,0,10,0">
-                                    <TextBlock Text="{Binding KlantNaam}" Foreground="#FDD716" FontSize="18" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding StartDatumFormatted}" Foreground="#FDD716" FontSize="18" Width="200" TextAlignment="Center"/>
-                                    <TextBlock Text="{Binding EindDatumFormatted}" Foreground="#FDD716" FontSize="18" Width="200" TextAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+                        <Rectangle Grid.Row="2" Fill="Black" Height="2" Margin="0,5"/>
+                        <Grid Grid.Row="3" >
+                            <ListView x:Name="contractListView" >
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="localData:LeaseContract">
+                                        <Grid Margin="0,10" Padding="10,0,10,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="1*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=Company.Name}" Foreground="#FDD716"  FontSize="18" Width="200" TextAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Path=Start_Date}" Foreground="#FDD716" FontSize="18" Width="200" TextAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Path=End_Date}" Foreground="#FDD716" FontSize="18" Width="200" TextAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid x:Name="backButton" VerticalAlignment="Bottom" Margin="20, 0" Visibility="Collapsed" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
+            <Button Content="Terug" Style="{StaticResource HoverButtonStyle}" Click="Button_Click_1" />
+        </Grid>
     </Grid>
 </Window>
