@@ -138,8 +138,6 @@ namespace BarrocIntens.Sales
 				customerErrorDialog.ShowAsync();
 			}
 		}
-
-
 	}
 }
 

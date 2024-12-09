@@ -51,6 +51,7 @@
     <None Remove="Sales\SalesMainPage.xaml" />
     <None Remove="Sales\SalesNotesPage.xaml" />
     <None Remove="Sales\SalesProductPage.xaml" />
+    <None Remove="Sales\SalesStoringAanvraagCreatePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -139,6 +140,12 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Sales\SalesStoringAanvraagCreatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
