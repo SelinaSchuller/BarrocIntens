@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.UI.Xaml.Media;
+using System.Diagnostics;
 
 namespace BarrocIntens.Sales
 {
@@ -30,6 +32,7 @@ namespace BarrocIntens.Sales
                     .ToListAsync();
 
                 offerteListView.ItemsSource = OffertesLijst;
+                InfoMessageTextBlock.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -46,24 +49,54 @@ namespace BarrocIntens.Sales
 
         private void EditOfferteButton_Click(object sender, RoutedEventArgs e)
         {
-            _parentWindow?.NavigateToOfferteBewerkenPage();
-            // finish later
-        }
-
-        private void DeleteOfferteButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedOfferte = offerteListView.SelectedItem as Invoice;
-            if (selectedOfferte == null)
+            var button = sender as Button;
+            var stackPanel = FindParent<StackPanel>(button);
+            var offerteIdTextBlock = stackPanel?.Children
+                .OfType<TextBlock>()
+                .FirstOrDefault(tb => tb.Name == "OfferteIdTextBlock");
+            if (offerteIdTextBlock == null)
             {
                 return;
             }
-            using (var db = new AppDbContext())
+            int offerteId = int.Parse(offerteIdTextBlock.Text);
+            _parentWindow?.NavigateToOfferteBewerkenPage(offerteId);
+        }
+        private void DeleteOfferteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var stackPanel = FindParent<StackPanel>(button);
+            var offerteIdTextBlock = stackPanel?.Children
+                .OfType<TextBlock>()
+                .FirstOrDefault(tb => tb.Name == "OfferteIdTextBlock");
+
+            if (offerteIdTextBlock != null)
             {
-                var offerte = db.Invoices.Find(selectedOfferte.Id);
-                db.Invoices.Remove(offerte);
-                db.SaveChanges();
+                int offerteId = int.Parse(offerteIdTextBlock.Text);
+
+                using (var db = new AppDbContext())
+                {
+                    var offerte = db.Invoices.Find(offerteId);
+
+                    if (offerte != null)
+                    {
+                        db.Invoices.Remove(offerte);
+                        db.SaveChanges();
+                    }
+
+                }
+                LoadOffertes();
             }
-            LoadOffertes();
+        }
+
+        // Methode om een parent te vinden van een bepaald type als textblock niet gevonden worden
+        private T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+
+            if (parentObject == null) return null;
+
+            T parent = parentObject as T;
+            return parent ?? FindParent<T>(parentObject);
         }
     }
 }

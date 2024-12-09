@@ -30,7 +30,8 @@ namespace BarrocIntens.Sales
 	{
 		public int EmployeeId { get; set; }
 		public int NoteId { get; set; }
-		public SalesDashboardWindow(int? employeeId)
+        public int OfferteId { get; set; }
+        public SalesDashboardWindow(int? employeeId)
 		{
 			this.InitializeComponent();
 			this.Title = "Sales";
@@ -141,10 +142,11 @@ namespace BarrocIntens.Sales
 			MainFrame.Navigate(typeof(OfferteAanmakenPage));
 			SetButtonVisibility();
 		}
-		public void NavigateToOfferteBewerkenPage()
+		public void NavigateToOfferteBewerkenPage(int OfferteId)
 		{
-			MainFrame.Navigate(typeof(SalesOfferteEditPage));
-			SetButtonVisibility();
+			this.OfferteId = OfferteId;
+            MainFrame.Navigate(typeof(SalesOfferteEditPage), this);
+            SetButtonVisibility();
 		}
 	}
 }
