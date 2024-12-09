@@ -23,10 +23,10 @@ using Windows.UI.ViewManagement;
 
 namespace BarrocIntens.Sales
 {
-	/// <summary>
-	/// An empty window that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class SalesDashboardWindow : Window
+    /// <summary>
+    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class SalesDashboardWindow : Window
 	{
 		public int employeeId { get; set; }
 		public int noteId { get; set; }
@@ -37,7 +37,7 @@ namespace BarrocIntens.Sales
 			Fullscreen fullscreenService = new Fullscreen();
 			fullscreenService.SetFullscreen(this);
 
-			if (employeeId != null)
+			if(employeeId != null)
 			{
 				this.employeeId = employeeId.Value;
 				System.Diagnostics.Debug.WriteLine($"SalesDashboardWindow initialized with EmployeeId: {this.employeeId}");
@@ -48,7 +48,7 @@ namespace BarrocIntens.Sales
 			SetButtonVisibility();
 		}
 
-		public void SetButtonVisibility()
+		private void SetButtonVisibility()
 		{
 			CustomerPageButton.Visibility = Visibility.Visible;
 			CompanyPageButton.Visibility = Visibility.Visible;
@@ -57,31 +57,34 @@ namespace BarrocIntens.Sales
 			NotePageButton.Visibility = Visibility.Visible;
 			CreateServiceRequestPageButton.Visibility = Visibility.Visible;
 
-			if (MainFrame.SourcePageType == typeof(SalesMainPage))
+			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				CustomerPageButton.Visibility = Visibility.Collapsed;
 			}
-			else if (MainFrame.SourcePageType == typeof(SalesCompanyPage))
+			else if(MainFrame.SourcePageType == typeof(SalesCompanyPage))
 			{
 				CompanyPageButton.Visibility = Visibility.Collapsed;
 			}
-			else if (MainFrame.SourcePageType == typeof(SalesMainPage))
+			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				OffertePageButton.Visibility = Visibility.Collapsed;
 			}
-			else if (MainFrame.SourcePageType == typeof(SalesMainPage))
+			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
 				ContactPageButton.Visibility = Visibility.Collapsed;
 			}
-			else if (MainFrame.SourcePageType == typeof(SalesNotesPage))
+			else if(MainFrame.SourcePageType == typeof(SalesNotesPage))
 			{
 				NotePageButton.Visibility = Visibility.Collapsed;
 				NotePageButton.Content = "Notities";
 			}
+<<<<<<< HEAD
 			else if(MainFrame.SourcePageType == typeof(SalesStoringAanvraagCreatePage))
 			{
 				CreateServiceRequestPageButton.Visibility = Visibility.Collapsed;
 			}
+=======
+>>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
 			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
 				NotePageButton.Visibility = Visibility.Visible;
@@ -104,9 +107,15 @@ namespace BarrocIntens.Sales
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
+<<<<<<< HEAD
 			MainFrame.Navigate(typeof(SalesOffertesPage), this);
 			SetButtonVisibility();
 		}
+=======
+            MainFrame.Navigate(typeof(OfferteAanmakenPage));
+            SetButtonVisibility();
+        }
+>>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -144,7 +153,7 @@ namespace BarrocIntens.Sales
 
 		public void NavigateToNotesPage()
 		{
-			//System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
+			System.Diagnostics.Debug.WriteLine("Navigating to SalesNotesPage after saving note.");
 			MainFrame.Navigate(typeof(SalesNotesPage), this);
 			SetButtonVisibility();
 		}
@@ -155,6 +164,7 @@ namespace BarrocIntens.Sales
 			SetButtonVisibility();
 		}
 
+<<<<<<< HEAD
 		public void NavigateToOfferteAanmakenPage()
 		{
 			MainFrame.Navigate(typeof(OfferteAanmakenPage));
@@ -166,5 +176,7 @@ namespace BarrocIntens.Sales
             MainFrame.Navigate(typeof(SalesOfferteEditPage), this);
             SetButtonVisibility();
 		}
+=======
+>>>>>>> parent of 06a312d (Merge branch 'Merge-fix' of https://github.com/SelinaSchuller/BarrocIntens into Merge-fix)
 	}
 }
