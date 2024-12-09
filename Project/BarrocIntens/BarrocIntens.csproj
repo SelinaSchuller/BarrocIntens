@@ -32,7 +32,7 @@
     <None Remove="Onderhoud\OnderhoudWorkOrdersPage.xaml" />
     <None Remove="ResourceDictionary1.xaml" />
     <None Remove="Inkoop\ProductBewerkenPage.xaml" />
-    <None Remove="SalesDashboard.xaml" />
+    <None Remove="SalesDashboardWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -169,7 +169,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="FactuurPage.xaml">
     <Page Update="Sales\SalesOffertesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,7 +180,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\OfferteAanmakenPage.xaml">
     <Page Update="Sales\SalesOfferteAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
