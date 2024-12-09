@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.Data.Xml.Dom;
 
 namespace BarrocIntens.Sales
 {
@@ -22,11 +21,8 @@ namespace BarrocIntens.Sales
 		{
 			this.InitializeComponent();
 			
-			LoadData();
-			newTypeTextBox.Text = string.Empty;
-			newTypeTextBox.Visibility = Visibility.Collapsed;
+			LoadCustomers();
 		}
-
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
@@ -43,7 +39,8 @@ namespace BarrocIntens.Sales
 			}
 		}
 
-		private void LoadData()
+
+		private void LoadCustomers()
 		{
 			using(var db = new AppDbContext())
 			{
@@ -81,8 +78,8 @@ namespace BarrocIntens.Sales
 			{
 				ContentDialog titleErrorDialog = new ContentDialog
 				{
-					Title = "Een of meerdere velden is leeg",
-					Content = "Voer alle velden in voor de notitie voordat u deze opslaat.",
+					Title = "Titel vereist",
+					Content = "Voer een titel in voor de notitie voordat u deze opslaat.",
 					CloseButtonText = "Ok",
 					XamlRoot = this.XamlRoot
 				};

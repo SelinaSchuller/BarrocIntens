@@ -21,12 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\meldingIcon.png" />
-    <None Remove="FactuurPage.xaml" />
     <None Remove="Financiën\FinanciënMainWindow.xaml" />
     <None Remove="Financiën\OfferteAanmaken.xaml" />
     <None Remove="Financiën\OfferteProductSelection.xaml" />
-    <None Remove="Onderhoud\OnderhoudAfsprakenCreatePage.xaml" />
-    <None Remove="generic.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
     <None Remove="Onderhoud\OnderhoudWorkOrdersPage.xaml" />
@@ -47,9 +44,10 @@
     <None Remove="Sales\SalesCreateNotePage.xaml" />
     <None Remove="Sales\SalesDashboardWindow.xaml" />
     <None Remove="Sales\SalesEditNotePage.xaml" />
-    <None Remove="Sales\SalesKlantAanmakenPage.xaml" />
     <None Remove="Sales\SalesMainPage.xaml" />
     <None Remove="Sales\SalesNotesPage.xaml" />
+    <None Remove="Sales\SalesOfferteEditPage.xaml" />
+    <None Remove="Sales\SalesOffertesPage.xaml" />
     <None Remove="Sales\SalesProductPage.xaml" />
     <None Remove="Sales\SalesStoringAanvraagCreatePage.xaml" />
   </ItemGroup>
@@ -149,6 +147,8 @@
   </ItemGroup>
 
   <ItemGroup>
+
+  <Page Update="Sales\SalesOfferteEditPage.xaml">
     <Page Update="Sales\SalesProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,13 +167,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Onderhoud\OnderhoudAfsprakenCreatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="FactuurPage.xaml">
+    <Page Update="Sales\SalesOffertesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -184,7 +178,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\OfferteAanmakenPage.xaml">
+    <Page Update="Sales\SalesOfferteAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

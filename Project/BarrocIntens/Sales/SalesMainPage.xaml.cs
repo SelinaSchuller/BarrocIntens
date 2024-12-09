@@ -1,6 +1,3 @@
-using BarrocIntens.Data;
-using BarrocIntens.Inkoop;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -21,9 +18,6 @@ using Windows.Foundation.Collections;
 
 namespace BarrocIntens.Sales
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class SalesMainPage : Page
     {
         private List<Customer> CustomerList { get; set; } = new List<Customer>();
@@ -82,5 +76,4 @@ namespace BarrocIntens.Sales
             Frame.Navigate(typeof(SalesProductPage));
         }
     }
-
 }
