@@ -50,8 +50,6 @@
     <None Remove="Sales\SalesKlantAanmakenPage.xaml" />
     <None Remove="Sales\SalesMainPage.xaml" />
     <None Remove="Sales\SalesNotesPage.xaml" />
-    <None Remove="Sales\SalesOfferteEditPage.xaml" />
-    <None Remove="Sales\SalesOffertesPage.xaml" />
     <None Remove="Sales\SalesProductPage.xaml" />
     <None Remove="Sales\SalesStoringAanvraagCreatePage.xaml" />
   </ItemGroup>
@@ -145,17 +143,17 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <Page Update="Sales\SalesStoringAanvraagCreatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Sales\SalesOfferteEditPage.xaml">
+          <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
-  <Page Update="Sales\SalesOfferteEditPage.xaml">
-=======
->>>>>>> parent of 1d107a2 (Merge pull request #56 from SelinaSchuller/Offerte-List,Edit,Delete)
     <Page Update="Sales\SalesProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,6 +179,10 @@
 
   <ItemGroup>
     <Page Update="FactuurPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+<ItemGroup>
     <Page Update="Sales\SalesOffertesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,7 +194,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Sales\OfferteAanmakenPage.xaml">
     <Page Update="Sales\SalesOfferteAanmakenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
