@@ -16,16 +16,19 @@
 
                 <TextBlock Text="Beschrijving" FontSize="16" FontWeight="Bold" Foreground="White"/>
                 <TextBox x:Name="descriptionTextBox" PlaceholderText="Voeg een beschrijving toe" 
-                         TextWrapping="Wrap" AcceptsReturn="True" Height="100" Margin="0,0,0,10"/>
+             TextWrapping="Wrap" AcceptsReturn="True" Height="100" Margin="0,0,0,10"/>
 
                 <TextBlock Text="Gebruikte Producten" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                <CheckBox x:Name="noProductCheckBox" Content="No product needed for repair" FontSize="14" Foreground="White"
+              Margin="0, 0, 0, 10" Checked="NoProductCheckBox_Checked" Unchecked="NoProductCheckBox_Unchecked"/>
                 <ScrollViewer Height="200" VerticalScrollBarVisibility="Auto" ViewChanged="OnScrollViewerViewChanged">
                     <StackPanel>
                         <ListView x:Name="productsListView">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="localData:Product">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <CheckBox x:Name="ProductCheckBox" Content="{Binding Name}" Tag="{Binding}" />
+                                        <CheckBox x:Name="ProductCheckBox" Content="{Binding Name}" Tag="{Binding}" 
+                                      Checked="ProductCheckBox_Checked" Unchecked="ProductCheckBox_Unchecked"/>
                                         <TextBox PlaceholderText="Aantal" Width="50" IsEnabled="{Binding IsChecked, ElementName=ProductCheckBox}" />
                                     </StackPanel>
                                 </DataTemplate>
@@ -36,7 +39,7 @@
                 </ScrollViewer>
 
                 <Button Content="Opslaan" Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
-                        Click="SaveWorkOrderButton_Click" HorizontalAlignment="Stretch" />
+            Click="SaveWorkOrderButton_Click" HorizontalAlignment="Stretch" />
             </StackPanel>
         </Grid>
     </Grid>

@@ -1,4 +1,5 @@
 using BarrocIntens.Data;
+using BarrocIntens.Sales;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using WinRT.Interop;
 
 namespace BarrocIntens.Onderhoud
 {
@@ -19,6 +21,7 @@ namespace BarrocIntens.Onderhoud
 		private int _currentPage = 0;
 		private const int PageSize = 10;
 		private bool _isLoading = false;
+		private OnderhoudBaseWindow _parentWindow;
 		public OnderhoudWorkOrderCreatePage()
 		{
 			this.InitializeComponent();
@@ -83,44 +86,84 @@ namespace BarrocIntens.Onderhoud
 		{
 			base.OnNavigatedTo(e);
 
-			if(e.Parameter is int appointmentId)
+			if(e.Parameter is OnderhoudBaseWindow parentWindow)
 			{
-				_appointmentId = appointmentId;
+				_parentWindow = parentWindow;
+
+				_appointmentId = _parentWindow.appointmentId;
 				await InitializePageAsync();
 				await LoadProductsAsync();
 			}
+			else
+			{
+				System.Diagnostics.Debug.WriteLine("OnderhoudWorkOrderCreatePage: No valid OnderhoudBaseWindow received.");
+			}
 		}
 
 
-		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+		private void NoProductCheckBox_Checked(object sender, RoutedEventArgs e)
 		{
-			if(sender is CheckBox checkBox)
+			foreach(var item in productsListView.Items)
 			{
-				var parentPanel = checkBox.Parent as StackPanel;
-				if(parentPanel != null)
+				var container = productsListView.ContainerFromItem(item) as ListViewItem;
+				if(container != null)
 				{
-					var quantityBox = parentPanel.Children.OfType<TextBox>().FirstOrDefault();
-					if(quantityBox != null)
+					var panel = container.ContentTemplateRoot as StackPanel;
+					var checkBox = panel.Children[0] as CheckBox;
+					if(checkBox != null)
 					{
-						quantityBox.IsEnabled = false;
-						quantityBox.Text = string.Empty;
+						checkBox.IsEnabled = false;
+						checkBox.IsChecked = false;
 					}
 				}
 			}
 		}
-		private void CheckBox_Checked(object sender, RoutedEventArgs e)
+
+		private void NoProductCheckBox_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(sender is CheckBox checkBox)
+			foreach(var item in productsListView.Items)
 			{
-				var parentPanel = checkBox.Parent as StackPanel;
-				if(parentPanel != null)
+				var container = productsListView.ContainerFromItem(item) as ListViewItem;
+				if(container != null)
 				{
-					var quantityBox = parentPanel.Children.OfType<TextBox>().FirstOrDefault();
-					if(quantityBox != null)
+					var panel = container.ContentTemplateRoot as StackPanel;
+					var checkBox = panel.Children[0] as CheckBox;
+					if(checkBox != null)
 					{
-						quantityBox.IsEnabled = true;
+						checkBox.IsEnabled = true;
 					}
 				}
+			}
+		}
+
+		private void ProductCheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			noProductCheckBox.IsChecked = false;
+			noProductCheckBox.IsEnabled = false;
+		}
+
+		private void ProductCheckBox_Unchecked(object sender, RoutedEventArgs e)
+		{
+			bool anyChecked = false;
+
+			foreach(var item in productsListView.Items)
+			{
+				var container = productsListView.ContainerFromItem(item) as ListViewItem;
+				if(container != null)
+				{
+					var panel = container.ContentTemplateRoot as StackPanel;
+					var checkBox = panel.Children[0] as CheckBox;
+					if(checkBox != null && checkBox.IsChecked == true)
+					{
+						anyChecked = true;
+						break;
+					}
+				}
+			}
+
+			if(!anyChecked)
+			{
+				noProductCheckBox.IsEnabled = true;
 			}
 		}
 
@@ -137,6 +180,37 @@ namespace BarrocIntens.Onderhoud
 		private async void SaveWorkOrderButton_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedProducts = new List<WorkOrderProduct>();
+
+			if(noProductCheckBox.IsChecked == true)
+			{
+				var workOrder = new WorkOrder
+				{
+					AppointmentId = _appointmentId,
+					UserId = _currentUserId,
+					Date_Created = DateTime.Now,
+					Description = descriptionTextBox.Text,
+					WorkOrderProducts = null
+				};
+
+				using(var db = new AppDbContext())
+				{
+					db.WorkOrders.Add(workOrder);
+					db.SaveChanges();
+				}
+
+				ContentDialog saveDialog = new ContentDialog
+				{
+					Title = "Succes",
+					Content = "Werkbon succesvol opgeslagen!",
+					CloseButtonText = "Ok",
+					XamlRoot = this.XamlRoot
+				};
+
+				await saveDialog.ShowAsync();
+
+				_parentWindow.NavigateToPlanningPage();
+				return;
+			}
 
 			foreach(var item in productsListView.Items)
 			{
@@ -161,11 +235,19 @@ namespace BarrocIntens.Onderhoud
 
 			if(!selectedProducts.Any())
 			{
-				await new MessageDialog("Selecteer minstens één product en vul een geldige hoeveelheid in.").ShowAsync();
+				ContentDialog errorDialog = new ContentDialog
+				{
+					Title = "Leeg veld",
+					Content = "Selecteer minstens één product met een aantal of vink 'Geen product nodig' aan.",
+					CloseButtonText = "Ok",
+					XamlRoot = this.XamlRoot
+				};
+
+				await errorDialog.ShowAsync();
 				return;
 			}
 
-			var workOrder = new WorkOrder
+			var workOrderWithProducts = new WorkOrder
 			{
 				AppointmentId = _appointmentId,
 				UserId = _currentUserId,
@@ -176,11 +258,21 @@ namespace BarrocIntens.Onderhoud
 
 			using(var db = new AppDbContext())
 			{
-				db.WorkOrders.Add(workOrder);
+				db.WorkOrders.Add(workOrderWithProducts);
 				db.SaveChanges();
 			}
 
-			await new MessageDialog("Werkbon succesvol opgeslagen!").ShowAsync();
+			ContentDialog dialog = new ContentDialog
+			{
+				Title = "Succes",
+				Content = "Werkbon succesvol opgeslagen!",
+				CloseButtonText = "Ok",
+				XamlRoot = this.XamlRoot
+			};
+
+			await dialog.ShowAsync();
+
+			_parentWindow.NavigateToPlanningPage();
 		}
 	}
 }
