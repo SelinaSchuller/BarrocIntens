@@ -26,7 +26,7 @@
                     <TextBlock Text="Dashboard" Foreground="#ffffff" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"/>
                 </StackPanel>
             </Border>
-            
+
             <StackPanel Grid.Column="2" VerticalAlignment="bottom" HorizontalAlignment="Left" Margin="10">
                 <Button x:Name="BackButton" Click="BackButton_Click" Content="Terug" 
                         Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
@@ -42,7 +42,7 @@
                 <StackPanel Grid.Row="0" Background="#FDD716">
                     <TextBlock Text="Klant aanmaken" FontSize="24" Margin="10" Foreground="Black" FontWeight="Bold" Grid.Column="0" TextAlignment="Center"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Row="1" BorderBrush="#FDD716" BorderThickness="4">
                     <StackPanel Orientation="Vertical" Margin="25" Spacing="15">
                         <StackPanel Orientation="Horizontal" Spacing="10">
@@ -67,10 +67,18 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="10">
-                            <TextBlock Text="Telfoonnummer:" VerticalAlignment="Center" FontSize="25"/>
-                            <StackPanel>
+                            <TextBlock Text="Telefoonnummer:" VerticalAlignment="Center" FontSize="25"/>
+                            <StackPanel Grid.Row="3" Padding="20" Orientation="Vertical">
                                 <TextBlock x:Name="TelError" Text="Voer een geldige telefoon nummer in" Foreground="red" FontSize="15" Visibility="Collapsed"/>
-                                <TextBox x:Name="TelInput" Width="300"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox x:Name="CountryCodeComboBox" Width="100" Height="30" Margin="0,10,0,10">
+                                        <ComboBoxItem Content="+1" />
+                                        <ComboBoxItem Content="+31" />
+                                        <ComboBoxItem Content="+44" />
+                                        <ComboBoxItem Content="+49" />
+                                    </ComboBox>
+                                    <TextBox x:Name="PhoneNumberTextBox" Width="200" Height="30" PlaceholderText="Enter phone number" InputScope="Number" MaxLength="8" TextChanged="PhoneNumberTextBox_TextChanged" />
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="10">
