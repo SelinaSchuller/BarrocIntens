@@ -112,6 +112,32 @@ namespace BarrocIntens.Sales
 				titleErrorDialog.ShowAsync();
 				return;
 			}
+			else if(titleTextBox.Text.Count() > 50)
+			{
+				ContentDialog titleErrorDialog = new ContentDialog
+				{
+					Title = "Te veel karakters in Titel veld",
+					Content = "Je mag maximaal 50 karakters in het Titel veld.",
+					CloseButtonText = "Ok",
+					XamlRoot = this.XamlRoot
+				};
+				titleErrorDialog.ShowAsync();
+				return;
+
+			}
+			else if(newTypeTextBox.Text.Count() > 30)
+			{
+				ContentDialog titleErrorDialog = new ContentDialog
+				{
+					Title = "Te veel karakters in Type veld",
+					Content = "Je mag maximaal 30 karakters in het Type veld.",
+					CloseButtonText = "Ok",
+					XamlRoot = this.XamlRoot
+				};
+				titleErrorDialog.ShowAsync();
+				return;
+
+			}
 			else
 			{
 				using(var db = new AppDbContext())

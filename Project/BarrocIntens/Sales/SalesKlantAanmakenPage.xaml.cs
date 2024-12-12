@@ -42,21 +42,45 @@ namespace BarrocIntens.Sales
             Frame.Navigate(typeof(SalesMainPage));
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+		private void PhoneNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			var textBox = sender as TextBox;
+
+			string filteredText = new string(textBox.Text.Where(char.IsDigit).ToArray());
+			if(textBox.Text != filteredText)
+			{
+				int cursorPosition = textBox.SelectionStart - (textBox.Text.Length - filteredText.Length);
+				textBox.Text = filteredText;
+				textBox.SelectionStart = Math.Max(cursorPosition, 0);
+			}
+
+			if(textBox.Text.Length > 10)
+			{
+				textBox.Text = textBox.Text.Substring(0, 10);
+				textBox.SelectionStart = 10;
+			}
+		}
+
+
+		private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             int validationErrors = 0;
             
             validationErrors = ValidateInputs(validationErrors);
             if (validationErrors == 0)
             {
-                using (var db = new AppDbContext())
+				var selectedCountryCode = (CountryCodeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "";
+				var phoneNumberInput = selectedCountryCode + PhoneNumberTextBox.Text;
+				System.Diagnostics.Debug.WriteLine($"Phonenumberinput: {phoneNumberInput}");
+
+				using(var db = new AppDbContext())
                 {
                     db.Customers.Add(new Customer
                     {
                         Name = NameInput.Text,
                         Address = AdressInput.Text,
                         Email = EmailInput.Text,
-                        PhoneNumber = TelInput.Text,
+                        PhoneNumber = phoneNumberInput,
                         CompanyId = (int)CompanyComboBox.SelectedValue
                         
                     });
@@ -74,8 +98,12 @@ namespace BarrocIntens.Sales
         }
 
         public int ValidateInputs(int validationErrors)
-        {            
-            NameError.Visibility = Visibility.Collapsed;
+        {
+			var selectedCountryCode = (CountryCodeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "";
+			var phoneNumberInput = selectedCountryCode + PhoneNumberTextBox.Text;
+			System.Diagnostics.Debug.WriteLine($"Phonenumberinput: {phoneNumberInput} Count: {phoneNumberInput.Count()}");
+
+			NameError.Visibility = Visibility.Collapsed;
             AdressError.Visibility = Visibility.Collapsed;
             EmailError.Visibility = Visibility.Collapsed;
             TelError.Visibility = Visibility.Collapsed;
@@ -99,11 +127,16 @@ namespace BarrocIntens.Sales
                 validationErrors++;
             }
 
-            if (!IsValidPhoneNumber(TelInput.Text))
+            if (!IsValidPhoneNumber(phoneNumberInput))
             {
                 TelError.Visibility = Visibility.Visible;
                 validationErrors++;
             }
+            else if(string.IsNullOrWhiteSpace(selectedCountryCode) || string.IsNullOrEmpty(PhoneNumberTextBox.Text) || PhoneNumberTextBox.Text.Count() != 8)
+            {
+				TelError.Visibility = Visibility.Visible;
+				validationErrors++;
+			}
 
             if (CompanyComboBox.SelectedValue == null)
             {

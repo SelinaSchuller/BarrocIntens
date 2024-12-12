@@ -30,6 +30,8 @@ namespace BarrocIntens.Sales
 	{
 		public int employeeId { get; set; }
 		public int noteId { get; set; }
+		public int OfferteId { get; set; }
+
 		public SalesDashboardWindow(int? employeeId)
         {
             this.InitializeComponent();
@@ -55,6 +57,7 @@ namespace BarrocIntens.Sales
 			OffertePageButton.Visibility = Visibility.Visible;
 			ContactPageButton.Visibility = Visibility.Visible;
 			NotePageButton.Visibility = Visibility.Visible;
+			CreateServiceRequestPageButton.Visibility = Visibility.Visible;
 
 			if(MainFrame.SourcePageType == typeof(SalesMainPage))
 			{
@@ -76,6 +79,10 @@ namespace BarrocIntens.Sales
 			{
 				NotePageButton.Visibility = Visibility.Collapsed;
 				NotePageButton.Content = "Notities";
+			}
+			else if(MainFrame.SourcePageType == typeof(SalesStoringAanvraagCreatePage))
+			{
+				CreateServiceRequestPageButton.Visibility = Visibility.Collapsed;
 			}
 			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
@@ -99,8 +106,9 @@ namespace BarrocIntens.Sales
 
 		private void OffertePageButton_Click(object sender, RoutedEventArgs e)
 		{
-            MainFrame.Navigate(typeof(OfferteAanmakenPage));
-            SetButtonVisibility();
+
+			MainFrame.Navigate(typeof(SalesOffertesPage), this);
+			SetButtonVisibility();
         }
 
 		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
@@ -111,6 +119,12 @@ namespace BarrocIntens.Sales
 		private void NotePageButton_Click(object sender, RoutedEventArgs e)
 		{
 			MainFrame.Navigate(typeof(SalesNotesPage), this);
+			SetButtonVisibility();
+		}
+		
+		private void CreateServiceRequestPageButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainFrame.Navigate(typeof(SalesStoringAanvraagCreatePage), this);
 			SetButtonVisibility();
 		}
 
@@ -137,6 +151,23 @@ namespace BarrocIntens.Sales
 			MainFrame.Navigate(typeof(SalesNotesPage), this);
 			SetButtonVisibility();
 		}
+		public void NavigateToMainPage()
+		{
+			System.Diagnostics.Debug.WriteLine("Navigating to SalesMainPage after saving storing.");
+			MainFrame.Navigate(typeof(SalesMainPage), this);
+			SetButtonVisibility();
+		}
 
+		public void NavigateToOfferteAanmakenPage()
+		{
+			MainFrame.Navigate(typeof(OfferteAanmakenPage));
+			SetButtonVisibility();
+		}
+		public void NavigateToOfferteBewerkenPage(int OfferteId)
+		{
+			this.OfferteId = OfferteId;
+            MainFrame.Navigate(typeof(SalesOfferteEditPage), this);
+            SetButtonVisibility();
+		}
 	}
 }
