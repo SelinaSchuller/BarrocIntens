@@ -81,6 +81,11 @@ namespace BarrocIntens.Sales
         {
             Frame.Navigate(typeof(SalesProductPage));
         }
+
+        private void ExtraKlantInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 }

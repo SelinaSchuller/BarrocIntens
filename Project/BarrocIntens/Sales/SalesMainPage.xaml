@@ -104,6 +104,12 @@
                                                 <TextBlock Text="Bedrijf:" FontSize="15"/>
                                                 <TextBlock Text="{x:Bind Company.Name, FallbackValue='Geen Bedrijf'}" FontSize="15"/>
                                             </StackPanel>
+                                            <Button x:Name="ExtraKlantInfoButton" Click="ExtraKlantInfoButton_Click" Content="Extra Klant Info"
+                                                    Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold"
+                                                    BorderBrush="Black" BorderThickness="4" Width="150" Height="40"/>
+                                            <StackPanel Visibility="Visible">
+                                                <TextBlock></TextBlock>
+                                            </StackPanel>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
