@@ -154,15 +154,18 @@ namespace BarrocIntens.Inkoop
 								}
 							}
 
-							var relatedWorkOrders = db.WorkOrders
-								.AsNoTracking()
-								.Where(wo => wo.ProductId == product.Id)
+							var relatedWorkOrders = db.WorkOrders.Include(wo => wo.WorkOrderProducts)
+								.Where(wo => wo.WorkOrderProducts.Any(wop => wop.ProductId == product.Id))
 								.ToList();
 
 							foreach(var workOrder in relatedWorkOrders)
 							{
-								workOrder.ProductId = null;
-								db.Entry(workOrder).State = EntityState.Modified;
+								var productLinks = db.WorkOrderProducts
+									.Where(wop => wop.WorkOrderId == workOrder.Id && wop.ProductId == product.Id)
+									.ToList();
+
+								// Remove the links to the product in the bridge table
+								db.WorkOrderProducts.RemoveRange(productLinks);
 							}
 
 							await db.SaveChangesAsync();

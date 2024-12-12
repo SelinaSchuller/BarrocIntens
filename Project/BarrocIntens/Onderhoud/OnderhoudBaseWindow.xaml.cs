@@ -172,6 +172,15 @@ namespace BarrocIntens.Onderhoud
 			SetButtonVisibility();
 		}
 
+		private void WorkOrderCreateButton_Click(object sender, RoutedEventArgs e)
+		{
+			Random random = new Random();
+			int randomAppointmentId = random.Next(1, 11);
+
+			MainFrame.Navigate(typeof(OnderhoudWorkOrderCreatePage), randomAppointmentId);
+			SetButtonVisibility();
+		}
+
 		public void NavigateToPlanningPage()
 		{
 			MainFrame.Navigate(typeof(OnderhoudMainPage));

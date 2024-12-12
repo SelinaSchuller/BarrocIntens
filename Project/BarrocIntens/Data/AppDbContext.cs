@@ -28,6 +28,7 @@ namespace BarrocIntens.Data
 		public DbSet<ServiceRequest> ServiceRequests { get; set; }
 		public DbSet<ProductInventory> ProductInventories { get; set; }
 		public DbSet<WorkOrder> WorkOrders { get; set; }
+		public DbSet<WorkOrderProduct> WorkOrderProducts { get; set; }
 		public DbSet<Sales> Sales { get; set; }
 		public DbSet<ProductCategory> ProductCategories { get; set; }
 
@@ -226,6 +227,20 @@ namespace BarrocIntens.Data
 
 			);
 
+			//Relation workorder en workorderProduct:
+			modelBuilder.Entity<WorkOrderProduct>()
+				.HasKey(wop => new { wop.WorkOrderId, wop.ProductId });
+
+			modelBuilder.Entity<WorkOrderProduct>()
+				.HasOne(wop => wop.WorkOrder)
+				.WithMany(wo => wo.WorkOrderProducts)
+				.HasForeignKey(wop => wop.WorkOrderId);
+
+			modelBuilder.Entity<WorkOrderProduct>()
+				.HasOne(wop => wop.Product)
+				.WithMany()
+				.HasForeignKey(wop => wop.ProductId);
+
 			// Work Orders
 			modelBuilder.Entity<WorkOrder>().HasData(
 				new WorkOrder
@@ -234,16 +249,15 @@ namespace BarrocIntens.Data
 					Description = "Installatie van nieuwe machine op locatie.",
 					UserId = 1,
 					Date_Created = DateTime.Today.AddDays(-5),
-					ProductId = 1,
 					AppointmentId = 1,
 					RequestId = null
-				}, new WorkOrder
+				},
+				new WorkOrder
 				{
 					Id = 2,
 					Description = "Onderhoud uitvoeren volgens jaarlijks schema.",
 					UserId = 2,
 					Date_Created = DateTime.Today.AddDays(-10),
-					ProductId = 2,
 					AppointmentId = 2,
 					RequestId = 3
 				},
@@ -253,7 +267,6 @@ namespace BarrocIntens.Data
 					Description = "Vervanging van beschadigde onderdelen.",
 					UserId = 3,
 					Date_Created = DateTime.Today.AddDays(-2),
-					ProductId = 4,
 					AppointmentId = 3,
 					RequestId = 2
 				},
@@ -263,7 +276,6 @@ namespace BarrocIntens.Data
 					Description = "Kalibratie van het apparaat na grote reparatie.",
 					UserId = 4,
 					Date_Created = DateTime.Today,
-					ProductId = 3,
 					AppointmentId = 4,
 					RequestId = null
 				},
@@ -273,7 +285,6 @@ namespace BarrocIntens.Data
 					Description = "Software-update en controle van connectiviteit.",
 					UserId = 5,
 					Date_Created = DateTime.Today.AddDays(-15),
-					ProductId = 1,
 					AppointmentId = 5,
 					RequestId = 1
 				},
@@ -283,11 +294,11 @@ namespace BarrocIntens.Data
 					Description = "Diagnose uitvoeren vanwege herhaaldelijke storingen.",
 					UserId = 6,
 					Date_Created = DateTime.Today.AddDays(-3),
-					ProductId = 2,
 					AppointmentId = 6,
 					RequestId = 4
 				}
 			);
+
 
 
 			//        var workOrders = new Faker<WorkOrder>()
@@ -311,6 +322,47 @@ namespace BarrocIntens.Data
 
 			//        modelBuilder.Entity<WorkOrder>().HasData(routineWorkOrders);
 			//        modelBuilder.Entity<WorkOrder>().HasData(emergencyWorkOrders);
+
+			//WorkOrderProducts:
+			modelBuilder.Entity<WorkOrderProduct>().HasData(
+				new WorkOrderProduct
+				{
+					WorkOrderId = 1,
+					ProductId = 1,
+					Quantity = 5
+				},
+				new WorkOrderProduct
+				{
+					WorkOrderId = 2,
+					ProductId = 2,
+					Quantity = 3
+				},
+				new WorkOrderProduct
+				{
+					WorkOrderId = 3,
+					ProductId = 4,
+					Quantity = 2
+				},
+				new WorkOrderProduct
+				{
+					WorkOrderId = 4,
+					ProductId = 3,
+					Quantity = 1
+				},
+				new WorkOrderProduct
+				{
+					WorkOrderId = 5,
+					ProductId = 1,
+					Quantity = 10
+				},
+				new WorkOrderProduct
+				{
+					WorkOrderId = 6,
+					ProductId = 2,
+					Quantity = 6
+				}
+			);
+
 
 			// Appointments
 			var appointments = new Faker<Appointment>()

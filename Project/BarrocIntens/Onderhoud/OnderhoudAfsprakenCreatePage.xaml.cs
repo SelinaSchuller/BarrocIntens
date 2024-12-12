@@ -107,7 +107,7 @@ namespace BarrocIntens.Onderhoud
 					{
 						Description = appointment.Description,
 						UserId = appointment.UserId,
-						ProductId = null,
+						WorkOrderProducts = null,
 						AppointmentId = appointment.Id,
 						RequestId = (int)ServiceRequestComboBox.SelectedValue
 					};
