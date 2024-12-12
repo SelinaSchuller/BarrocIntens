@@ -2,31 +2,16 @@ using BarrocIntens.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens.Sales
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class SalesProductPage : Page
     {
         private List<Product> ProductList { get; set; } = new List<Product>();
+        private List<ProductCategory> CategoryList { get; set; } = new List<ProductCategory>();
 
         public SalesProductPage()
         {
@@ -35,10 +20,19 @@ namespace BarrocIntens.Sales
             using (var db = new AppDbContext())
             {
                 ProductList = db.Products.Include(p => p.Category)
-                                         .Where(p => p.VisibleForCustomers)
+                                         .Where(p => p.VisibleForCustomers && p.Category.Id != 1)
                                          .OrderBy(p => p.Id)
                                          .ToList();
                 ProductListView.ItemsSource = ProductList;
+
+                CategoryList = db.ProductCategories
+                                 .Where(c => c.Id != 1)
+                                 .OrderBy(c => c.Name)
+                                 .ToList();
+
+                CategoryList.Insert(0, new ProductCategory { Id = 0, Name = "Geen categorie" });
+                CategoryDropdown.ItemsSource = CategoryList;
+                CategoryDropdown.SelectedIndex = 0;
             }
         }
 
@@ -78,6 +72,29 @@ namespace BarrocIntens.Sales
                     ProductInfoListView.ItemsSource = productDetails;
                 }
             }
+        }
+
+        private void CategoryDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CategoryDropdown.SelectedItem is ProductCategory selectedCategory)
+            {
+                if (selectedCategory.Id == 0)
+                {
+                    ProductListView.ItemsSource = ProductList;
+                }
+                else
+                {
+                    ProductListView.ItemsSource = ProductList
+                        .Where(p => p.Category.Id == selectedCategory.Id)
+                        .ToList();
+                }
+            }
+        }
+
+        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            CategoryDropdown.SelectedIndex = 0;
+            ProductListView.ItemsSource = ProductList;
         }
     }
 }
