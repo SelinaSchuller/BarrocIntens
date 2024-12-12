@@ -149,6 +149,8 @@ namespace BarrocIntens.Sales
             TextBox AantalTextBox = sender as TextBox;
             if (AantalTextBox == null) return;
             else if (AantalTextBox.Text == "") return;
+            else if (AantalTextBox.Text.Length > 1 && AantalTextBox.Text[0] == '0') AantalTextBox.Text = AantalTextBox.Text.Remove(0, 1);
+            else if (AantalTextBox.Text.Length > 1 && AantalTextBox.Text[0] == '-') AantalTextBox.Text = AantalTextBox.Text.Remove(0, 1);
 
             ListViewItem listViewItem = FindParent<ListViewItem>(AantalTextBox);
             if (listViewItem != null)
