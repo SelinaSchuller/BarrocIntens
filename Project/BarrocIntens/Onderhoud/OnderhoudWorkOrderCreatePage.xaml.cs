@@ -1,10 +1,12 @@
 using BarrocIntens.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace BarrocIntens.Onderhoud
@@ -14,76 +16,121 @@ namespace BarrocIntens.Onderhoud
 		private int _appointmentId;
 		private int _currentUserId;
 		private List<Product> _availableProducts;
-
+		private int _currentPage = 0;
+		private const int PageSize = 10;
+		private bool _isLoading = false;
 		public OnderhoudWorkOrderCreatePage()
 		{
 			this.InitializeComponent();
 			_currentUserId = User.LoggedInUser.Id;
-
-			InitializePage();
 		}
 
-		private void InitializePage()
+		private async Task InitializePageAsync()
 		{
 			using(var db = new AppDbContext())
 			{
-				var workOrder = db.WorkOrders.FirstOrDefault(wo => wo.AppointmentId == _appointmentId);
+				var workOrder = await db.WorkOrders.FirstOrDefaultAsync(wo => wo.AppointmentId == _appointmentId);
 
 				if(workOrder != null)
 				{
 					descriptionTextBox.Text = workOrder.Description;
 				}
 			}
-
-			LoadProducts();
 		}
 
-		protected override void OnNavigatedTo(NavigationEventArgs e)
+		private async Task LoadProductsAsync()
+		{
+			if(_isLoading)
+				return;
+			_isLoading = true;
+
+			loadingTextBlock.Text = $"Loading more products... ({_availableProducts?.Count ?? 0} loaded)";
+			loadingTextBlock.Visibility = Visibility.Visible;
+
+			using(var db = new AppDbContext())
+			{
+				var products = await db.Products
+					.Where(p => p.IsStock)
+					.OrderBy(p => p.Id)
+					.Skip(_currentPage * PageSize)
+					.Take(PageSize)
+					.ToListAsync();
+
+				if(products.Any())
+				{
+					if(_availableProducts == null)
+					{
+						_availableProducts = new List<Product>();
+					}
+
+					_availableProducts.AddRange(products);
+					productsListView.ItemsSource = null;
+					productsListView.ItemsSource = _availableProducts;
+
+					_currentPage++;
+				}
+				else
+				{
+					loadingTextBlock.Text = "All products are loaded.";
+				}
+			}
+
+			loadingTextBlock.Visibility = Visibility.Collapsed;
+			_isLoading = false;
+		}
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
 
 			if(e.Parameter is int appointmentId)
 			{
 				_appointmentId = appointmentId;
-				InitializePage();
+				await InitializePageAsync();
+				await LoadProductsAsync();
 			}
 		}
 
 
-		private void LoadProducts()
+		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
 		{
-			using(var db = new AppDbContext())
+			if(sender is CheckBox checkBox)
 			{
-				_availableProducts = db.Products.Where(p => p.IsStock).ToList();
+				var parentPanel = checkBox.Parent as StackPanel;
+				if(parentPanel != null)
+				{
+					var quantityBox = parentPanel.Children.OfType<TextBox>().FirstOrDefault();
+					if(quantityBox != null)
+					{
+						quantityBox.IsEnabled = false;
+						quantityBox.Text = string.Empty;
+					}
+				}
 			}
-
-			foreach(var product in _availableProducts)
+		}
+		private void CheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			if(sender is CheckBox checkBox)
 			{
-				var row = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10 };
-
-				var checkBox = new CheckBox
+				var parentPanel = checkBox.Parent as StackPanel;
+				if(parentPanel != null)
 				{
-					Content = product.Name,
-					Tag = product
-				};
-				row.Children.Add(checkBox);
+					var quantityBox = parentPanel.Children.OfType<TextBox>().FirstOrDefault();
+					if(quantityBox != null)
+					{
+						quantityBox.IsEnabled = true;
+					}
+				}
+			}
+		}
 
-				var quantityBox = new TextBox
-				{
-					PlaceholderText = "Aantal",
-					Width = 50,
-					IsEnabled = false
-				};
+		private void OnScrollViewerViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		{
+			var scrollViewer = sender as ScrollViewer;
 
-				checkBox.Checked += (s, e) => quantityBox.IsEnabled = true;
-				checkBox.Unchecked += (s, e) =>
-				{
-					quantityBox.IsEnabled = false;
-					quantityBox.Text = "";
-				};
-				row.Children.Add(quantityBox);
-
-				productsPanel.Children.Add(row);
+			if(scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+			{
+				_ = LoadProductsAsync();
 			}
 		}
 
@@ -91,10 +138,12 @@ namespace BarrocIntens.Onderhoud
 		{
 			var selectedProducts = new List<WorkOrderProduct>();
 
-			foreach(var child in productsPanel.Children)
+			foreach(var item in productsListView.Items)
 			{
-				if(child is StackPanel panel)
+				var container = productsListView.ContainerFromItem(item) as ListViewItem;
+				if(container != null)
 				{
+					var panel = container.ContentTemplateRoot as StackPanel;
 					var checkBox = panel.Children[0] as CheckBox;
 					var quantityBox = panel.Children[1] as TextBox;
 

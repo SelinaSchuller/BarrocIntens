@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BarrocIntens.Onderhoud"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:localData="using:BarrocIntens.Data"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -18,8 +19,19 @@
                          TextWrapping="Wrap" AcceptsReturn="True" Height="100" Margin="0,0,0,10"/>
 
                 <TextBlock Text="Gebruikte Producten" FontSize="16" FontWeight="Bold" Foreground="White"/>
-                <ScrollViewer Height="200" VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="productsPanel" Spacing="10">
+                <ScrollViewer Height="200" VerticalScrollBarVisibility="Auto" ViewChanged="OnScrollViewerViewChanged">
+                    <StackPanel>
+                        <ListView x:Name="productsListView">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="localData:Product">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <CheckBox x:Name="ProductCheckBox" Content="{Binding Name}" Tag="{Binding}" />
+                                        <TextBox PlaceholderText="Aantal" Width="50" IsEnabled="{Binding IsChecked, ElementName=ProductCheckBox}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <TextBlock x:Name="loadingTextBlock" Text="Products are still loading..." FontSize="14" Foreground="White" HorizontalAlignment="Center" Visibility="Collapsed" />
                     </StackPanel>
                 </ScrollViewer>
 
