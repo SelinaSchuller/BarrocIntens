@@ -364,14 +364,14 @@ namespace BarrocIntens.Data
 			);
 
 
-			// Appointments
-			var appointments = new Faker<Appointment>()
-				.RuleFor(a => a.Id, f => f.IndexFaker + 1)
-				.RuleFor(a => a.Date, f => f.Date.Future(1))
-				.RuleFor(a => a.UserId, f => f.Random.Int(1, 4))
-				.RuleFor(a => a.CustomerId, f => f.Random.Int(1, 150))
-				.RuleFor(a => a.Description, f => f.Lorem.Sentence())
-				.Generate(75);
+            // Appointments
+            var appointments = new Faker<Appointment>()
+                .RuleFor(a => a.Id, f => f.IndexFaker + 1)
+                .RuleFor(a => a.Date, f => f.Date.Between(DateTime.Now.AddDays(-14), DateTime.Now.AddDays(14)))
+                .RuleFor(a => a.UserId, f => f.Random.Int(1, 4))
+                .RuleFor(a => a.CustomerId, f => f.Random.Int(1, 150))
+                .RuleFor(a => a.Description, f => f.Lorem.Sentence())
+                .Generate(75);
 
 			modelBuilder.Entity<Appointment>().HasData(appointments);
 
