@@ -65,8 +65,9 @@ namespace BarrocIntens
                     int departmentId = user.DepartmentId;
                     int userId = user.Id;
                     _userId = userId;
+					Data.User.LoggedInUser = user;
 
-                    switch (departmentId)
+					switch(departmentId)
                     {
                         case 1:
                             var salesDashboard = new Sales.SalesDashboardWindow(userId);

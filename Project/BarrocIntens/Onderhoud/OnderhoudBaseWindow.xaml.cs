@@ -21,6 +21,8 @@ namespace BarrocIntens.Onderhoud
 		private List<ServiceRequest> _storingenLijst { get; set; }
 		public int userId { get; set; }
 		private User _loggedInUser { get; set; }
+		//Deze var is voor workOrderCreate:
+		public int appointmentId { get; set; }
 		public OnderhoudBaseWindow(int? employeeId)
 		{
 			this.InitializeComponent();
@@ -169,6 +171,15 @@ namespace BarrocIntens.Onderhoud
 		private void WorkOrdersButton_Click(object sender, RoutedEventArgs e)
 		{
 			MainFrame.Navigate(typeof(OnderhoudWorkOrdersPage), this);
+			SetButtonVisibility();
+		}
+
+		private void WorkOrderCreateButton_Click(object sender, RoutedEventArgs e)
+		{
+			Random random = new Random();
+			int randomAppointmentId = random.Next(1, 11);
+			appointmentId = randomAppointmentId;
+			MainFrame.Navigate(typeof(OnderhoudWorkOrderCreatePage), this);
 			SetButtonVisibility();
 		}
 

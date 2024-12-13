@@ -29,6 +29,7 @@
     <None Remove="generic.xaml" />
     <None Remove="Onderhoud\OnderhoudBaseWindow.xaml" />
     <None Remove="Onderhoud\OnderhoudIngekomenStoringen.xaml" />
+    <None Remove="Onderhoud\OnderhoudWorkOrderCreatePage.xaml" />
     <None Remove="Onderhoud\OnderhoudWorkOrdersPage.xaml" />
     <None Remove="ResourceDictionary1.xaml" />
     <None Remove="Inkoop\ProductBewerkenPage.xaml" />
@@ -142,6 +143,12 @@
 
   <ItemGroup>
     <PRIResource Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Onderhoud\OnderhoudWorkOrderCreatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

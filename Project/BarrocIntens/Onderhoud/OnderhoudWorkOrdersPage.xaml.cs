@@ -43,7 +43,7 @@ namespace BarrocIntens.Onderhoud
 					.Include (w => w.Request)
 					.ThenInclude(r => r.Product)
 					.Include(w => w.User)
-					.Include(w => w.Product)
+					.Include(w => w.WorkOrderProducts)
 					.ToList();
 				workOrdersListView.ItemsSource = _workOrders;
 
