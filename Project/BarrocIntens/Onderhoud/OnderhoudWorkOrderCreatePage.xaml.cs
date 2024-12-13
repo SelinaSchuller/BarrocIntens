@@ -7,6 +7,8 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using WinRT.Interop;
@@ -22,6 +24,8 @@ namespace BarrocIntens.Onderhoud
 		private const int PageSize = 10;
 		private bool _isLoading = false;
 		private OnderhoudBaseWindow _parentWindow;
+		private Appointment appointment { get; set; }
+		private Customer customer { get; set; }
 		public OnderhoudWorkOrderCreatePage()
 		{
 			this.InitializeComponent();
@@ -180,6 +184,7 @@ namespace BarrocIntens.Onderhoud
 		private async void SaveWorkOrderButton_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedProducts = new List<WorkOrderProduct>();
+			string emailBody = "";
 
 			if(noProductCheckBox.IsChecked == true)
 			{
@@ -196,7 +201,33 @@ namespace BarrocIntens.Onderhoud
 				{
 					db.WorkOrders.Add(workOrder);
 					db.SaveChanges();
+
+					var workOrderTemp = db.WorkOrders
+						.Include(wo => wo.Appointment)
+						.ThenInclude(a => a.Customer)
+						.FirstOrDefault(wo => wo.AppointmentId == _appointmentId);
+
+					if(workOrderTemp != null)
+					{
+						appointment = workOrderTemp.Appointment;
+						customer = appointment.Customer;
+					}
+					else
+					{
+						System.Diagnostics.Debug.WriteLine("WorkOrder or related Appointment/Customer not found.");
+					}
 				}
+
+				emailBody = $"Beste Hoofd Maintenance,\n\n" +
+							$"Er is een nieuwe werkbon aangemaakt.\n" +
+							$"Afspraak: {appointment.Description}\n" +
+							$"Afspraak datum: {appointment.Date.ToString()}\n" +
+							$"Klant: {customer.Name}\n\n" +
+							$"Omschrijving: {descriptionTextBox.Text}\n\n" +
+							$"Geen producten nodig voor deze reparatie.\n\n" +
+							$"Met vriendelijke groet,\n{User.LoggedInUser.Name} van Onderhoud";
+
+				SendEmailToMaintenanceHead("Nieuwe Werkbon Aangemaakt", emailBody);
 
 				ContentDialog saveDialog = new ContentDialog
 				{
@@ -260,7 +291,41 @@ namespace BarrocIntens.Onderhoud
 			{
 				db.WorkOrders.Add(workOrderWithProducts);
 				db.SaveChanges();
+
+				var workOrderTemp = db.WorkOrders
+						.Include(wo => wo.Appointment)
+						.ThenInclude(a => a.Customer)
+						.FirstOrDefault(wo => wo.AppointmentId == _appointmentId);
+
+				if(workOrderTemp != null)
+				{
+					appointment = workOrderTemp.Appointment;
+					customer = appointment.Customer;
+				}
+				else
+				{
+					System.Diagnostics.Debug.WriteLine("WorkOrder or related Appointment/Customer not found.");
+				}
 			}
+
+			emailBody = $"Beste Hoofd Maintenance,\n\n" +
+						$"Er is een nieuwe werkbon aangemaakt.\n" +
+						$"Afspraak: {appointment.Description}\n" +
+						$"Afspraak datum: {appointment.Date.ToString()}\n" +
+						$"Klant: {customer.Name}\n\n" +
+						$"Omschrijving: {descriptionTextBox.Text}\n\n" +
+						$"Producten voor deze werkbon:\n";
+
+			foreach(var product in selectedProducts)
+			{
+				var productDetails = _availableProducts.FirstOrDefault(p => p.Id == product.ProductId);
+				emailBody += $"- {productDetails?.Name}: {product.Quantity}\n";
+			}
+
+			emailBody += $"\nMet vriendelijke groet,\n{User.LoggedInUser.Name} van Onderhoud";
+
+			// Send email
+			SendEmailToMaintenanceHead("Nieuwe Werkbon Aangemaakt", emailBody);
 
 			ContentDialog dialog = new ContentDialog
 			{
@@ -273,6 +338,38 @@ namespace BarrocIntens.Onderhoud
 			await dialog.ShowAsync();
 
 			_parentWindow.NavigateToPlanningPage();
+		}
+
+		private void SendEmailToMaintenanceHead(string subject, string body)
+		{
+			var smtpClient = new SmtpClient("sandbox.smtp.mailtrap.io")
+			{
+				Port = 587,
+				Credentials = new NetworkCredential("9557a28d5f84d0", "8e0fed3dd4aab8"),
+				EnableSsl = true,
+			};
+
+			var mailMessage = new MailMessage
+			{
+				From = new MailAddress("onderhoud@barrocintens.nl"),
+				Subject = subject,
+				Body = body,
+				IsBodyHtml = false,
+			};
+
+			// Email address of the head of maintenance
+			string maintenanceHeadEmail = "hoofdmaintenance@barrocintens.nl";
+			mailMessage.To.Add(maintenanceHeadEmail);
+
+			try
+			{
+				smtpClient.Send(mailMessage);
+				System.Diagnostics.Debug.WriteLine("E-mail succesvol verzonden naar hoofd maintenance.");
+			}
+			catch(Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine($"Fout bij het verzenden van e-mail: {ex.Message}");
+			}
 		}
 	}
 }
