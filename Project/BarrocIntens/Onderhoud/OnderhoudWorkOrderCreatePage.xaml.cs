@@ -212,10 +212,6 @@ namespace BarrocIntens.Onderhoud
 						appointment = workOrderTemp.Appointment;
 						customer = appointment.Customer;
 					}
-					else
-					{
-						System.Diagnostics.Debug.WriteLine("WorkOrder or related Appointment/Customer not found.");
-					}
 				}
 
 				emailBody = $"Beste Hoofd Maintenance,\n\n" +
@@ -243,68 +239,86 @@ namespace BarrocIntens.Onderhoud
 				return;
 			}
 
-			foreach(var item in productsListView.Items)
-			{
-				var container = productsListView.ContainerFromItem(item) as ListViewItem;
-				if(container != null)
-				{
-					var panel = container.ContentTemplateRoot as StackPanel;
-					var checkBox = panel.Children[0] as CheckBox;
-					var quantityBox = panel.Children[1] as TextBox;
-
-					if(checkBox.IsChecked == true && int.TryParse(quantityBox.Text, out int quantity) && quantity > 0)
-					{
-						var product = checkBox.Tag as Product;
-						selectedProducts.Add(new WorkOrderProduct
-						{
-							ProductId = product.Id,
-							Quantity = quantity
-						});
-					}
-				}
-			}
-
-			if(!selectedProducts.Any())
-			{
-				ContentDialog errorDialog = new ContentDialog
-				{
-					Title = "Leeg veld",
-					Content = "Selecteer minstens één product met een aantal of vink 'Geen product nodig' aan.",
-					CloseButtonText = "Ok",
-					XamlRoot = this.XamlRoot
-				};
-
-				await errorDialog.ShowAsync();
-				return;
-			}
-
-			var workOrderWithProducts = new WorkOrder
-			{
-				AppointmentId = _appointmentId,
-				UserId = _currentUserId,
-				Date_Created = DateTime.Now,
-				Description = descriptionTextBox.Text,
-				WorkOrderProducts = selectedProducts
-			};
-
 			using(var db = new AppDbContext())
 			{
+				foreach(var item in productsListView.Items)
+				{
+					var container = productsListView.ContainerFromItem(item) as ListViewItem;
+					if(container != null)
+					{
+						var panel = container.ContentTemplateRoot as StackPanel;
+						var checkBox = panel.Children[0] as CheckBox;
+						var quantityBox = panel.Children[1] as TextBox;
+
+						if(checkBox.IsChecked == true && int.TryParse(quantityBox.Text, out int quantity) && quantity > 0)
+						{
+							var product = checkBox.Tag as Product;
+
+							var inventory = db.ProductInventories.FirstOrDefault(pi => pi.ProductId == product.Id);
+							if(inventory != null)
+							{
+								if(inventory.InStock >= quantity)
+								{
+									inventory.InStock -= quantity;
+									selectedProducts.Add(new WorkOrderProduct
+									{
+										ProductId = product.Id,
+										Quantity = quantity
+									});
+								}
+								else
+								{
+									ContentDialog stockDialog = new ContentDialog
+									{
+										Title = "Onvoldoende voorraad",
+										Content = $"Product '{product.Name}' heeft onvoldoende voorraad. Beschikbaar: {inventory.InStock}, gevraagd: {quantity}.",
+										CloseButtonText = "Ok",
+										XamlRoot = this.XamlRoot
+									};
+
+									await stockDialog.ShowAsync();
+									return;
+								}
+							}
+						}
+					}
+				}
+
+				if(!selectedProducts.Any())
+				{
+					ContentDialog errorDialog = new ContentDialog
+					{
+						Title = "Leeg veld",
+						Content = "Selecteer minstens één product met een aantal of vink 'Geen product nodig' aan.",
+						CloseButtonText = "Ok",
+						XamlRoot = this.XamlRoot
+					};
+
+					await errorDialog.ShowAsync();
+					return;
+				}
+
+				var workOrderWithProducts = new WorkOrder
+				{
+					AppointmentId = _appointmentId,
+					UserId = _currentUserId,
+					Date_Created = DateTime.Now,
+					Description = descriptionTextBox.Text,
+					WorkOrderProducts = selectedProducts
+				};
+
 				db.WorkOrders.Add(workOrderWithProducts);
 				db.SaveChanges();
 
 				var workOrderTemp = db.WorkOrders
-						.Include(wo => wo.Appointment)
-						.ThenInclude(a => a.Customer)
-						.FirstOrDefault(wo => wo.AppointmentId == _appointmentId);
+					.Include(wo => wo.Appointment)
+					.ThenInclude(a => a.Customer)
+					.FirstOrDefault(wo => wo.AppointmentId == _appointmentId);
 
 				if(workOrderTemp != null)
 				{
 					appointment = workOrderTemp.Appointment;
 					customer = appointment.Customer;
-				}
-				else
-				{
-					System.Diagnostics.Debug.WriteLine("WorkOrder or related Appointment/Customer not found.");
 				}
 			}
 
@@ -324,7 +338,6 @@ namespace BarrocIntens.Onderhoud
 
 			emailBody += $"\nMet vriendelijke groet,\n{User.LoggedInUser.Name} van Onderhoud";
 
-			// Send email
 			SendEmailToMaintenanceHead("Nieuwe Werkbon Aangemaakt", emailBody);
 
 			ContentDialog dialog = new ContentDialog
@@ -357,7 +370,6 @@ namespace BarrocIntens.Onderhoud
 				IsBodyHtml = false,
 			};
 
-			// Email address of the head of maintenance
 			string maintenanceHeadEmail = "hoofdmaintenance@barrocintens.nl";
 			mailMessage.To.Add(maintenanceHeadEmail);
 
