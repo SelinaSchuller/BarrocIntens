@@ -141,7 +141,19 @@ namespace BarrocIntens.Sales
                 invoice.TotalPrice = decimal.Parse(totalPrices);
                 db.SaveChanges();
             }
-            Frame.GoBack();
+            var dialog = new ContentDialog
+            {
+                Title = "Bevestiging",
+                Content = "Offerte succesvol aangepast!",
+                PrimaryButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+            dialog.ShowAsync();
+            dialog.PrimaryButtonClick += (s, args) =>
+            {
+                Frame.GoBack();
+            };
+
         }
 
         private void AantalProducten_TextChanged(object sender, TextChangedEventArgs e)
@@ -151,6 +163,12 @@ namespace BarrocIntens.Sales
             else if (AantalTextBox.Text == "") return;
             else if (AantalTextBox.Text.Length > 1 && AantalTextBox.Text[0] == '0') AantalTextBox.Text = AantalTextBox.Text.Remove(0, 1);
             else if (AantalTextBox.Text.Length > 1 && AantalTextBox.Text[0] == '-') AantalTextBox.Text = AantalTextBox.Text.Remove(0, 1);
+            else if (AantalTextBox.Text.Length > 1 && !int.TryParse(AantalTextBox.Text, out int result)) AantalTextBox.Text = AantalTextBox.Text.Remove(AantalTextBox.Text.Length - 1);
+            else if (AantalTextBox.Text.Length == 1 && !int.TryParse(AantalTextBox.Text, out int result2)) AantalTextBox.Text = "";
+            else if (AantalTextBox.Text.Length > 9) AantalTextBox.Text = AantalTextBox.Text.Remove(AantalTextBox.Text.Length - 1);
+            else if (AantalTextBox.Text.Length > 1 && int.Parse(AantalTextBox.Text) > 999999999) AantalTextBox.Text = AantalTextBox.Text.Remove(AantalTextBox.Text.Length - 1);
+
+
 
             ListViewItem listViewItem = FindParent<ListViewItem>(AantalTextBox);
             if (listViewItem != null)

@@ -34,7 +34,7 @@
                                             <TextBlock Text="{Binding Product.Name}" FontSize="20" Foreground="#ffd700"/>
                                             <TextBlock x:Name="ProductPrijs"  Text="{Binding Product.Price}" FontSize="20" Foreground="#ffd700"/>
                                             <TextBlock Text="Aantal:" FontSize="20" Foreground="#ffd700"></TextBlock>
-                                            <TextBox x:Name="AantalTextBox" Header="Aantal" FontSize="20" Foreground="#ffd700" TextChanged="AantalProducten_TextChanged"/>
+                                            <TextBox x:Name="AantalTextBox" Header="Aantal" FontSize="20" Foreground="#ffd700" Text="{Binding Amount}" TextChanged="AantalProducten_TextChanged"/>
                                             <TextBlock x:Name="ProductId" Text="{Binding Product.Id}" Visibility="Collapsed"/>
                                             <Button Content="Verwijder Product" Click="DeleteProductButton_Click" HorizontalAlignment="Right" Foreground="Red"/>
                                         </StackPanel>

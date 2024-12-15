@@ -94,23 +94,6 @@ namespace BarrocIntens.Sales
             TotaalPriceTextBlock.Text = currentInvoice.TotalPrice.ToString("€ 0.00");
         }
 
-        private async Task OfferteOpslaanMelding(object sender, RoutedEventArgs e)
-        {
-            var dialog = new ContentDialog
-            {
-                Title = "Bevestiging",
-                Content = "Offerte succesvol aangemaakt!",
-                PrimaryButtonText = "OK",
-                XamlRoot = this.XamlRoot
-            };
-            dialog.PrimaryButtonClick += (s, args) =>
-            {
-                parentWindow.NavigateToMainPage();
-            };
-
-            await dialog.ShowAsync();
-        }
-
         private void AantalProducten_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox AantalTextBox = sender as TextBox;
@@ -118,6 +101,10 @@ namespace BarrocIntens.Sales
             else if (AantalTextBox.Text == "") return;
             else if (AantalTextBox.Text.Length > 1 && AantalTextBox.Text[0] == '0') AantalTextBox.Text = AantalTextBox.Text.Remove(0, 1);
             else if (AantalTextBox.Text.Length > 1 && AantalTextBox.Text[0] == '-') AantalTextBox.Text = AantalTextBox.Text.Remove(0, 1);
+            else if (AantalTextBox.Text.Length > 1 && !int.TryParse(AantalTextBox.Text, out int result)) AantalTextBox.Text = AantalTextBox.Text.Remove(AantalTextBox.Text.Length - 1);
+            else if (AantalTextBox.Text.Length == 1 && !int.TryParse(AantalTextBox.Text, out int result2)) AantalTextBox.Text = "";
+            else if (AantalTextBox.Text.Length > 9) AantalTextBox.Text = AantalTextBox.Text.Remove(AantalTextBox.Text.Length - 1);
+            else if (AantalTextBox.Text.Length > 1 && int.Parse(AantalTextBox.Text) > 999999999) AantalTextBox.Text = AantalTextBox.Text.Remove(AantalTextBox.Text.Length - 1);
 
             ListViewItem listViewItem = FindParent<ListViewItem>(AantalTextBox);
             if (listViewItem != null)
@@ -238,7 +225,18 @@ namespace BarrocIntens.Sales
                     db.SaveChanges();
                 }
             }
-            OfferteOpslaanMelding(sender, e);
+            var dialog = new ContentDialog
+            {
+                Title = "Bevestiging",
+                Content = "Offerte succesvol aangemaakt!",
+                PrimaryButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+            dialog.ShowAsync();
+            dialog.PrimaryButtonClick += (s, args) =>
+            {
+                Frame.GoBack();
+            };
         }
     }
 }
