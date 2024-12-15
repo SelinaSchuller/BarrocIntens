@@ -31,11 +31,14 @@ namespace BarrocIntens.Onderhoud
 	/// </summary>
 	public sealed partial class OnderhoudMainPage : Page
 	{
-        List<Appointment> appointments2 = new List<Appointment>();
+		private int _appointmentId;
+		private OnderhoudBaseWindow _parentWindow;
+
+		List<Appointment> appointments2 = new List<Appointment>();
         public OnderhoudMainPage()
 		{
 			this.InitializeComponent();
-            
+
 			using (var db = new AppDbContext())
             {
                 List<CalenderInfo> calenderInfos1 = new List<CalenderInfo>();
@@ -502,5 +505,43 @@ namespace BarrocIntens.Onderhoud
             weekCalander.Visibility = Visibility.Visible;
             dayCalander.Visibility = Visibility.Collapsed;
         }
-    }
+
+		private void CreateWorkOrder_Click(object sender, RoutedEventArgs e)
+		{
+			var button = sender as Button;
+
+			if(button != null)
+			{
+				var appointment = button.DataContext as Appointment;
+
+				if(appointment != null)
+				{
+					int appointmentId = appointment.Id;
+                    _parentWindow.NavigateToCreateWorkOrderPage(appointmentId);
+
+					System.Diagnostics.Debug.WriteLine($"Appointment ID: {appointmentId}");
+				}
+				else
+				{
+					System.Diagnostics.Debug.WriteLine("No Appointment found in DataContext.");
+				}
+			}
+		}
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+
+			if(e.Parameter is OnderhoudBaseWindow parentWindow)
+			{
+				_parentWindow = parentWindow;
+
+				_appointmentId = _parentWindow.appointmentId;
+			}
+			else
+			{
+				System.Diagnostics.Debug.WriteLine("OnderhoudWorkOrderCreatePage: No valid OnderhoudBaseWindow received.");
+			}
+		}
+	}
 }

@@ -13,6 +13,7 @@ using BarrocIntens.Services;
 using BarrocIntens.Data;
 using System.Linq;
 using BarrocIntens.Sales;
+using Windows.ApplicationModel.Appointments;
 
 namespace BarrocIntens.Onderhoud
 {
@@ -58,7 +59,7 @@ namespace BarrocIntens.Onderhoud
 				StoringIcon.Visibility = Visibility.Collapsed;
 			}
 
-			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			MainFrame.Navigate(typeof(OnderhoudMainPage), this);
 
 			SetButtonVisibility();
 		}
@@ -158,7 +159,7 @@ namespace BarrocIntens.Onderhoud
 
 		private void PlanningButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			MainFrame.Navigate(typeof(OnderhoudMainPage), this);
 			SetButtonVisibility();
 		}
 
@@ -174,18 +175,25 @@ namespace BarrocIntens.Onderhoud
 			SetButtonVisibility();
 		}
 
-		private void WorkOrderCreateButton_Click(object sender, RoutedEventArgs e)
-		{
-			Random random = new Random();
-			int randomAppointmentId = random.Next(1, 11);
-			appointmentId = randomAppointmentId;
-			MainFrame.Navigate(typeof(OnderhoudWorkOrderCreatePage), this);
-			SetButtonVisibility();
-		}
+		//private void WorkOrderCreateButton_Click(object sender, RoutedEventArgs e)
+		//{
+		//	Random random = new Random();
+		//	int randomAppointmentId = random.Next(1, 11);
+		//	appointmentId = randomAppointmentId;
+		//	MainFrame.Navigate(typeof(OnderhoudWorkOrderCreatePage), this);
+		//	SetButtonVisibility();
+		//}
 
 		public void NavigateToPlanningPage()
 		{
-			MainFrame.Navigate(typeof(OnderhoudMainPage));
+			MainFrame.Navigate(typeof(OnderhoudMainPage), this);
+			SetButtonVisibility();
+		}
+		
+		public void NavigateToCreateWorkOrderPage(int appointmentIdParameter)
+		{
+			appointmentId = appointmentIdParameter;
+			MainFrame.Navigate(typeof(OnderhoudWorkOrderCreatePage), this);
 			SetButtonVisibility();
 		}
 	}
