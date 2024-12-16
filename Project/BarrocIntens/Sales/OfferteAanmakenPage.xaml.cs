@@ -216,14 +216,18 @@ namespace BarrocIntens.Sales
 
         private void OfferteOpslaanButton_Click(object sender, RoutedEventArgs e)
         {
+            var total = TotaalPriceTextBlock.Text;
+            var totalPrice = decimal.Parse(total.Substring(2));
             using (var db = new AppDbContext())
             {
                 var invoice = db.Invoices.FirstOrDefault(i => i.Id == currentInvoice.Id);
+                invoice.TotalPrice = totalPrice;
                 if (invoice != null)
                 {
                     invoice.Paid = false;
                     db.SaveChanges();
                 }
+                db.SaveChanges();
             }
             var dialog = new ContentDialog
             {
@@ -237,6 +241,7 @@ namespace BarrocIntens.Sales
             {
                 Frame.GoBack();
             };
+            
         }
     }
 }

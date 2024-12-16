@@ -28,7 +28,7 @@ namespace BarrocIntens.Sales
             using (var db = new AppDbContext())
             {
                 OffertesLijst = await db.Invoices
-                    .OrderBy(n => n.DateCreated)
+                    .OrderByDescending(n => n.DateCreated)
                     .ToListAsync();
 
                 offerteListView.ItemsSource = OffertesLijst;
