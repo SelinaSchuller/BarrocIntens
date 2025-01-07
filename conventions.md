@@ -28,7 +28,7 @@ Voeg commentaar toe bij alle klassen en methoden om uit te leggen wat ze doen, w
 ## 2. Naamgeving
 Klassen: Schrijf in PascalCase (bijv. KlantServiceHandler, InventarisManager).
 Functies en methoden: Gebruik PascalCase (bijv. MaakNieuweOrder, StuurHerinnering).
-Variabelen: Gebruik snake_case voor interne variabelen en camelCase voor publieke variabelen (bijv. is_actief, huidigeKlant).
+Variabelen: Gebruik snake_case voor interne variabelen en PascalCase voor publieke variabelen (bijv. is_actief, HuidigeKlant).
 Contexten voor naamgeving:
 
 ```
