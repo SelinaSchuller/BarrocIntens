@@ -34,7 +34,8 @@ namespace BarrocIntens
 		public App()
 		{
 			this.InitializeComponent();
-		}
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzY1OTY0NkAzMjM4MmUzMDJlMzBJUHhMZmZHTmw1RDJnYXZBdTZUT2dWZXNjWEZkMzJFUHBnZkNPZlcxNVRZPQ==");
+        }
 
 		/// <summary>
 		/// Invoked when the application is launched.

@@ -72,6 +72,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
     <PackageReference Include="Soenneker.AutoFaker.Overrides.IdNamePair" Version="2.1.350" />
+    <PackageReference Include="Syncfusion.Scheduler.WinUI" Version="28.1.38" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Json" Version="4.7.1" />
     <Manifest Include="$(ApplicationManifest)" />
