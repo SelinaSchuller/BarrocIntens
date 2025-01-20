@@ -20,7 +20,7 @@
             </StackPanel>
         </Border>
 
-
+        <Button Margin="0,10,0,0" Grid.Row="1" Click="CreateWorkOrder_Click" Content="Werkbron aanmaken"/>
         <!-- Hoofdcontent -->
         <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0 200 0 0">
             <!-- Planning komt hier -->
@@ -33,7 +33,6 @@
                     <Border Grid.Row="0" Background="#FDD716" CornerRadius="10,10,0,0" Padding="10">
                         <TextBlock Text="Planning" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                     </Border>
-<<<<<<< Updated upstream
                     <Rectangle Grid.Row="1" Fill="Black" />
                     <Grid Visibility="Collapsed" x:Name="dayCalander" Grid.Row="2">
                         <Grid.RowDefinitions>
@@ -42,9 +41,6 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
                             <StackPanel>
-                                <Button Click="ButtonBack_Click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Terug" />
-                                </Button>
                             </StackPanel>
                         </Border>
                         <ListView Grid.Row="1" x:Name="DayData">
@@ -70,20 +66,21 @@
                                                     <RowDefinition Height="2*"/>
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Grid.Row="0" Text="{x:Bind User.Name}" />
-                                                <Button Margin="0,10,0,0" Grid.Row="1" Click="CreateWorkOrder_Click" Content="Werkbron aanmaken"/>
+                                                
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-=======
+                       
+                    </Grid>
+                    
                     <Grid Grid.Row="1">
                         <Grid.DataContext>
                             <localdata:AppDbContext/>
                         </Grid.DataContext>
-                        <scheduler:SfScheduler x:Name="Schedule" Language="nl-NL" ItemsSource="{Binding Appointments}" ViewType="Week" FirstDayOfWeek="Monday"/>
->>>>>>> Stashed changes
+                        <scheduler:SfScheduler x:Name="Schedule" Language="nl-NL" AppointmentEditFlag="None" AppointmentEditorOpening="Schedule_AppointmentEditorOpening" ItemsSource="{Binding Appointments}" ViewType="Week" FirstDayOfWeek="Monday"/>
                     </Grid>
                 </Grid>
             </Border>
