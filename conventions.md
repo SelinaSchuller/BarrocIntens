@@ -27,15 +27,11 @@ Voeg commentaar toe bij alle klassen en methoden om uit te leggen wat ze doen, w
 
 ## 2. Naamgeving
 Klassen: Schrijf in PascalCase (bijv. KlantServiceHandler, InventarisManager).
-Functies en methoden: Gebruik camelCase (bijv. maakNieuweOrder, stuurHerinnering).
-Variabelen: Gebruik snake_case voor interne variabelen en camelCase voor publieke variabelen (bijv. is_actief, huidigeKlant).
-Constanten: Gebruik hoofdletters met underscores (bijv. STANDAARD_TIMEOUT, MAXIMAAL_POGINGEN).
+Functies en methoden: Gebruik PascalCase (bijv. MaakNieuweOrder, StuurHerinnering).
+Variabelen: Gebruik voor interne variabelen en PascalCase voor publieke variabelen (bijv.HuidigeKlant).
 Contexten voor naamgeving:
 
-Klant: Opslaan van klantinformatie (bijv. KlantData, KlantService).
 ```
-Inventaris: Productvoorraad opslaan en beheren.
-Sales: Verkoopactiviteiten, klantcontact, en planning beheren.
 3. Mappenstructuur
 Maak de volgende mappen aan in de hoofdmap van het project:
 ```
@@ -44,15 +40,13 @@ bash
 Copy code
 project_root/
 │
-├── klant/               # Voor klantdata, contracten en herinneringen
-├── inventaris/          # Voor voorraadbeheer en inkoop
+├── inkoop/          # Voor voorraadbeheer en inkoop
 ├── sales/               # Voor verkoopprocessen, klantcontact en planning
 ├── onderhoud/           # Voor onderhoudsplanning en voortgangsupdates
-├── management/          # Voor rapportages, overzichten, en datatoegang
-├── notificaties/        # Voor notificatietemplates en meldingenbeheer
-└── planning/            # Voor planningsoverzichten en takenbeheer
+├── hoofdonderhoud/          # Voor rapportages, overzichten, en datatoegang
+├── ...storingen/        # Voor notificatietemplates en meldingenbeheer
 ```
-## 3. Gegevensbeheer
+## 3. Gegevensbeheer/Database
 Klantgegevens: Bewaar klantinformatie (naam, contact, adres, betalingsgeschiedenis) in een database, zodat elke afdeling deze data kan bekijken.
 Inventarisgegevens: Houd het aantal producten, lage voorraadniveaus, en herbevoorrading bij.
 Salesgegevens: Sla openstaande orders, klantverzoeken en afspraken op.
@@ -64,17 +58,17 @@ Klantservice:
 Toegang voor Sales en Klantenservice; beheert klantinformatie en houdt communicatiegeschiedenis bij.
 Kolommen voor betalingsstatus, herinneringen, en klantcommunicatie.
 
-## Inventaris:
+## Inkoop:
 ```
 Meldingen bij lage voorraad en automatische herbestelling.
 Inkoop en Sales hebben toegang om voorraad te bekijken en bestellingen te plaatsen.
 ```
 
-## Planning:
+## HoofdOnderhoud:
 ```
 Interface voor Onderhoud en Sales om klanten op de hoogte te houden van onderhoud.
 ```
-## Notificatiesysteem:
+## Storingen systeem:
 ```
 Automatische meldingen voor lage voorraad, openstaande betalingen en contractverlengingen.
 Ongelezen berichten bijhouden en herinneringen sturen als nodig.
@@ -83,10 +77,6 @@ Ongelezen berichten bijhouden en herinneringen sturen als nodig.
 ```
 Beheer van openstaande onderhoudstaken.
 Interface voor planning en updates voor klanten.
-```
-## Management:
-```
-Alleen-lezen toegang tot klant-, inventaris-, en salesgegevens voor rapportages.
 ```
 ## 5. Notificaties en Meldingen
 Klantherinneringen: Herinner klanten aan openstaande betalingen en informeer over gepland onderhoud.
@@ -98,7 +88,6 @@ Stuur meldingen naar teamleden bij contractondertekening en naderende contractve
 ```
 ## 6. UI/UX Ontwerp
 Thema: Huisstijl van het bedrijf – vooral zwart met gele accenten.
-Mobiele Compatibiliteit: Optimale weergave op tablets; aanbevolen voor werk in het veld.
 Toegangsrechten: Rolgebaseerde weergaven; afdelingen zien enkel de data die voor hen relevant is.
 
 ## 7. Rechten en Rollen
