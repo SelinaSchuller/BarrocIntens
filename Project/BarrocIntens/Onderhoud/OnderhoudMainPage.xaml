@@ -80,7 +80,7 @@
                         <Grid.DataContext>
                             <localdata:AppDbContext/>
                         </Grid.DataContext>
-                        <scheduler:SfScheduler x:Name="Schedule" Language="nl-NL" AppointmentEditFlag="None" AppointmentEditorOpening="Schedule_AppointmentEditorOpening" ItemsSource="{Binding Appointments}" ViewType="Week" FirstDayOfWeek="Monday"/>
+                        <scheduler:SfScheduler x:Name="Schedule" Language="nl-NL" AppointmentEditFlag="Edit" AppointmentEditorOpening="Schedule_AppointmentEditorOpening" ItemsSource="{Binding Appointments}" ViewType="Week" FirstDayOfWeek="Monday"/>
                     </Grid>
                 </Grid>
             </Border>

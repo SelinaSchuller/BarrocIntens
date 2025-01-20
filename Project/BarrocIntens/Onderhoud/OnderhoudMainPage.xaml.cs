@@ -42,7 +42,9 @@ namespace BarrocIntens.Onderhoud
 
 			using (var db = new AppDbContext())
 			{
-                Schedule.DaysViewSettings.TimeRulerFormat = "hh:mm";
+                Schedule.DaysViewSettings.TimeRulerFormat = "HH:mm";
+				Schedule.TimelineViewSettings.EndHour = 24;
+
                 var scheduleAppointmentCollection = new ScheduleAppointmentCollection();
 				
 				foreach(var appointment in db.Appointments)
@@ -100,7 +102,7 @@ namespace BarrocIntens.Onderhoud
 
         private void Schedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
         {
-            e.Cancel = true;
+            e.Cancel = false;
         }
     }
 }
