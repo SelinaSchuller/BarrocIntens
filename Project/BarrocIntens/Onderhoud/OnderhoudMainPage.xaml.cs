@@ -20,7 +20,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-
+using BarrocIntens.Services;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,54 +34,34 @@ namespace BarrocIntens.Onderhoud
 	{
 		private int _appointmentId;
 		private OnderhoudBaseWindow _parentWindow;
+		private ContentDialog _currentDialog;
+		private Button _workOrderButton;
 
-		List<Appointment> appointments2 = new List<Appointment>();
 		public OnderhoudMainPage()
 		{
 			this.InitializeComponent();
 
-			using (var db = new AppDbContext())
+			using(var db = new AppDbContext())
 			{
-                Schedule.DaysViewSettings.TimeRulerFormat = "HH:mm";
+				Schedule.DaysViewSettings.TimeRulerFormat = "HH:mm";
 				Schedule.TimelineViewSettings.EndHour = 24;
 
-                var scheduleAppointmentCollection = new ScheduleAppointmentCollection();
-				
+				var scheduleAppointmentCollection = new ScheduleAppointmentCollection();
+
 				foreach(var appointment in db.Appointments)
 				{
-                    scheduleAppointmentCollection.Add(new ScheduleAppointment
-                    {
-                        StartTime = appointment.Date,
-                        EndTime = appointment.Date.AddHours(1),
-                        Subject = appointment.Description
-                    });
-                }
-
-                this.Schedule.ItemsSource = scheduleAppointmentCollection;
-            }
-            Schedule.AppointmentEditorOpening += Schedule_AppointmentEditorOpening;
-        }
-
-		private void CreateWorkOrder_Click(object sender, RoutedEventArgs e)
-		{
-			var button = sender as Button;
-
-			if(button != null)
-			{
-				var appointment = button.DataContext as Appointment;
-
-				if(appointment != null)
-				{
-					int appointmentId = appointment.Id;
-                    _parentWindow.NavigateToCreateWorkOrderPage(appointmentId);
-
-					System.Diagnostics.Debug.WriteLine($"Appointment ID: {appointmentId}");
+					scheduleAppointmentCollection.Add(new ScheduleAppointment
+					{
+						StartTime = appointment.Date,
+						EndTime = appointment.Date.AddHours(1),
+						Subject = appointment.Description,
+						Id = appointment.Id
+					});
 				}
-				else
-				{
-					System.Diagnostics.Debug.WriteLine("No Appointment found in DataContext.");
-				}
+
+				this.Schedule.ItemsSource = scheduleAppointmentCollection;
 			}
+			Schedule.AppointmentEditorOpening += Schedule_AppointmentEditorOpening;
 		}
 
 		protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -100,9 +80,49 @@ namespace BarrocIntens.Onderhoud
 			}
 		}
 
-        private void Schedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
-        {
-            e.Cancel = false;
-        }
-    }
+		private void Schedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
+		{
+			e.Cancel = false;
+
+			if(_workOrderButton != null)
+			{
+				(this.Content as Grid)?.Children.Remove(_workOrderButton);
+			}
+
+			var appointment = e.Appointment as ScheduleAppointment;
+			if(appointment == null)
+				return;
+
+			_workOrderButton = new Button
+			{
+				Content = "Werkbron aanmaken",
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Margin = new Thickness(300, 0, 0, 250),
+				Width = 200,
+				Height = 40
+			};
+
+			_workOrderButton.Click += (s, args) => CreateWorkOrder(appointment);
+
+			if(this.Content is Grid mainGrid)
+			{
+				mainGrid.Children.Add(_workOrderButton);
+				Canvas.SetZIndex(_workOrderButton, 99);
+			}
+		}
+
+		private void CreateWorkOrder(ScheduleAppointment appointment)
+		{
+			if(appointment?.Id != null && int.TryParse(appointment.Id.ToString(), out int appointmentId))
+			{
+				_parentWindow?.NavigateToCreateWorkOrderPage(appointmentId);
+				System.Diagnostics.Debug.WriteLine($"Navigated to create work order for Appointment ID: {appointmentId}");
+			}
+			else
+			{
+				System.Diagnostics.Debug.WriteLine("Invalid Appointment ID.");
+			}
+		}
+	}
 }
