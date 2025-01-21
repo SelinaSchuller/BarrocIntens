@@ -14,14 +14,8 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using BarrocIntens.Data;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace BarrocIntens.Inkoop
 {
-    /// <summary>
-    /// An esmpty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class ProductBewerkenPage : Page
     {
         private int _productId;

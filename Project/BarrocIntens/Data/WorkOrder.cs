@@ -17,8 +17,6 @@ namespace BarrocIntens.Data
 		public User User { get; set; }
 		public Appointment Appointment { get; set; }
 		public ServiceRequest? Request { get; set; }
-
-		// Nieuwe eigenschap voor meerdere producten
 		public ICollection<WorkOrderProduct>? WorkOrderProducts { get; set; }
 
 		public string FormattedDateReported => Date_Created.ToString("dd/MM/yyyy");

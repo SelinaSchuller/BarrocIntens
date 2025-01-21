@@ -19,14 +19,8 @@ using System.Net;
 using BarrocIntens.Data;
 using Microsoft.EntityFrameworkCore;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace BarrocIntens
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class FactuurPage : Page
     {
 
@@ -92,7 +86,7 @@ namespace BarrocIntens
 
             if (trimmedEmail.EndsWith("."))
             {
-                return false; // suggested by @TK-421
+                return false;
             }
             try
             {

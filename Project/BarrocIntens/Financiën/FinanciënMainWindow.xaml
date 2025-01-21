@@ -49,7 +49,7 @@
                             <TextBlock Text="Contracten" Foreground="Black" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
                         </Border>
 
-                        <!-- Kolom headers -->
+                        <!-- Column headers -->
                         <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,10" Padding="10,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
