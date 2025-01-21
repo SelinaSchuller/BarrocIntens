@@ -12,7 +12,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-                        <TextBlock Text="{Binding Price}" Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding Price, Converter={StaticResource PriceDecimalConverter}}" Margin="10,0,0,0"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

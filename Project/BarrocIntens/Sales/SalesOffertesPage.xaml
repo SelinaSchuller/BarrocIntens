@@ -79,7 +79,6 @@
                 </StackPanel>
             </Border>
 
-            <!-- New Offerte Button -->
             <Button Content="Nieuwe Offerte Aanmaken" Background="#3e3e3e" BorderBrush="#FDD716" BorderThickness ="2" 
                 Foreground="#FDD716" Margin="0,10,0,0" HorizontalAlignment="Left" Padding="10" Click="CreateOfferteButton_Click"/>
         </StackPanel>

@@ -17,14 +17,8 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace BarrocIntens.Inkoop
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class ProductenPage : Page
 	{
 		private bool isDeleted { get; set; }
@@ -72,10 +66,10 @@ namespace BarrocIntens.Inkoop
 
 		private void FilterButton_Click(object sender, RoutedEventArgs e)
 		{
+            // TODO: Implement filter functionality
+        }
 
-		}
-
-		private void NieuwProductButton_Click(object sender, RoutedEventArgs e)
+        private void NieuwProductButton_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(ProductAanmaakPage));
 		}

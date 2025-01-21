@@ -28,14 +28,13 @@ namespace BarrocIntens.Sales
                     Id = p.Id,
                     Name = p.Name,
                     Price = (decimal)p.Price,
-                    IsSelected = false // Initialize selection state
+                    IsSelected = false
                 }).ToList();
             }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // Clear previous selections
             SelectedProductIds.Clear();
 
             foreach (var item in ProductListView.Items)
@@ -43,13 +42,12 @@ namespace BarrocIntens.Sales
                 var productViewModel = item as ProductViewModel;
                 if (productViewModel != null && productViewModel.IsSelected)
                 {
-                    SelectedProductIds.Add(productViewModel.Id); // Store only the ID
+                    SelectedProductIds.Add(productViewModel.Id);
                 }
             }
 
-            // Close the dialog
-            var parentDialog = this.Parent as ContentDialog; // Assuming this UserControl is in a ContentDialog
-            parentDialog?.Hide(); // Close the dialog
+            var parentDialog = this.Parent as ContentDialog;
+            parentDialog?.Hide();
         }
     }
 
@@ -58,6 +56,6 @@ namespace BarrocIntens.Sales
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public bool IsSelected { get; set; } // Property to track selection state
+        public bool IsSelected { get; set; }
     }
 }

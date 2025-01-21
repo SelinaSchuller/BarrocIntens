@@ -107,7 +107,7 @@
                                             <StackPanel>
                                                 <TextBlock>
                                                         <Run Text="€"/>
-                                                        <Run Text="{x:Bind Price}"/>
+                                                        <Run Text="{x:Bind Price, Converter={StaticResource PriceDecimalConverter}}"/>
                                                 </TextBlock>
                                             </StackPanel>
                                             <StackPanel>

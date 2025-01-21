@@ -17,7 +17,6 @@ namespace BarrocIntens.Data
         public Customer Customer { get; set; }
         public Product? Product { get; set; }
       
-      //Dit is zodat je zo de Date kan ophalen zonder de tijd erbij:
       public string FormattedDateReported => Date_Reported.ToString("dd/MM/yyyy");
 
 	}

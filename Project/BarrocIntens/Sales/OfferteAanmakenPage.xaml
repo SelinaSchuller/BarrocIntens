@@ -32,7 +32,7 @@
                                     <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">
                                         <StackPanel Orientation="Vertical" Margin="0,0,10,0" Grid.Row="0" Spacing="10">
                                             <TextBlock Text="{Binding Product.Name}" FontSize="20" Foreground="#ffd700"/>
-                                            <TextBlock x:Name="ProductPrijs"  Text="{Binding Product.Price}" FontSize="20" Foreground="#ffd700"/>
+                                            <TextBlock x:Name="ProductPrijs"  Text="{Binding Product.Price,  Converter={StaticResource PriceDecimalConverter}}" FontSize="20" Foreground="#ffd700"/>
                                             <TextBlock Text="Aantal:" FontSize="20" Foreground="#ffd700"></TextBlock>
                                             <TextBox x:Name="AantalTextBox" Header="Aantal" FontSize="20" Foreground="#ffd700" Text="{Binding Amount}" TextChanged="AantalProducten_TextChanged"/>
                                             <TextBlock x:Name="ProductId" Text="{Binding Product.Id}" Visibility="Collapsed"/>
