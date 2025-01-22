@@ -64,7 +64,7 @@ namespace BarrocIntens.Onderhoud
 
 		private async void SaveAppointmentButton_Click(object sender, RoutedEventArgs e)
 		{
-			if(string.IsNullOrWhiteSpace(DescriptionTextBox.Text) || DatePicker.SelectedDate == null ||
+			if(string.IsNullOrWhiteSpace(DescriptionTextBox.Text) || DatePicker.SelectedDate == null || TimePicker.SelectedTime == null ||
 				UserComboBox.SelectedValue == null || CustomerComboBox.SelectedValue == null)
 			{
 				ContentDialog errorDialog = new ContentDialog
@@ -83,7 +83,7 @@ namespace BarrocIntens.Onderhoud
 				var appointment = new Appointment
 				{
 					Description = DescriptionTextBox.Text.Trim(),
-					Date = DatePicker.SelectedDate.Value.DateTime,
+					Date = DatePicker.SelectedDate.Value.DateTime.Date.Add(TimePicker.SelectedTime.Value),
 					UserId = (int)UserComboBox.SelectedValue,
 					CustomerId = (int)CustomerComboBox.SelectedValue
 				};
@@ -140,9 +140,11 @@ namespace BarrocIntens.Onderhoud
 		{
 			DescriptionTextBox.Text = string.Empty;
 			DatePicker.SelectedDate = null;
+			TimePicker.SelectedTime = null;
 			UserComboBox.SelectedIndex = -1;
 			CustomerComboBox.SelectedIndex = -1;
 			ServiceRequestComboBox.SelectedIndex = -1;
+			LoadData();
 		}
 
 	}
