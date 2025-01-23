@@ -9,46 +9,99 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BarrocIntens.Sales
 {
     public sealed partial class SalesOffertesPage : Page
     {
-        private SalesDashboardWindow _parentWindow;
-        private List<Invoice> OffertesLijst { get; set; }
+		private SalesDashboardWindow _parentWindow;
+		private List<Invoice> _offertesLijst;
+		private int _currentPage = 0;
+		private const int PageSize = 10;
+		private bool _isLoading = false;
 
-        public SalesOffertesPage()
+		public SalesOffertesPage()
         {
             this.InitializeComponent();
+            _offertesLijst = new List<Invoice>();
+		}
 
-        }
+		//private async void LoadOffertes()
+		//      {
+		//          using (var db = new AppDbContext())
+		//          {
+		//              OffertesLijst = await db.Invoices
+		//                  .OrderByDescending(n => n.DateCreated)
+		//                  .ToListAsync();
 
-        private async void LoadOffertes()
-        {
-            using (var db = new AppDbContext())
-            {
-                OffertesLijst = await db.Invoices
-                    .OrderByDescending(n => n.DateCreated)
-                    .ToListAsync();
+		//              offerteListView.ItemsSource = OffertesLijst;
+		//              InfoMessageTextBlock.Visibility = Visibility.Collapsed;
+		//          }
+		//      }
 
-                offerteListView.ItemsSource = OffertesLijst;
-                InfoMessageTextBlock.Visibility = Visibility.Collapsed;
-            }
-        }
+		private async Task LoadOffertesAsync()
+		{
+			if(_isLoading)
+				return;
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            _parentWindow = e.Parameter as SalesDashboardWindow;
-            LoadOffertes();
-        }
+			_isLoading = true;
+			InfoMessageTextBlockLoading.Text = $"Offertes aan het laden... ({_offertesLijst?.Count ?? 0} geladen)";
+			InfoMessageTextBlockLoading.Visibility = Visibility.Visible;
 
-        public void CreateOfferteButton_Click(object sender, RoutedEventArgs e)
+			using(var db = new AppDbContext())
+			{
+				var offertes = await db.Invoices
+					.OrderByDescending(n => n.DateCreated)
+					.Skip(_currentPage * PageSize)
+					.Take(PageSize)
+					.ToListAsync();
+
+				if(offertes.Any())
+				{
+					_offertesLijst.AddRange(offertes);
+					offerteListView.ItemsSource = null;
+					offerteListView.ItemsSource = _offertesLijst;
+
+					_currentPage++;
+				}
+				else
+				{
+					InfoMessageTextBlockLoading.Text = "Alle offertes zijn geladen.";
+				}
+			}
+
+			InfoMessageTextBlockLoading.Visibility = Visibility.Collapsed;
+			_isLoading = false;
+		}
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			_parentWindow = e.Parameter as SalesDashboardWindow;
+
+			_currentPage = 0; // Reset pagination
+			_offertesLijst.Clear(); // Clear the list
+			await LoadOffertesAsync(); // Load the first batch
+		}
+
+		public void CreateOfferteButton_Click(object sender, RoutedEventArgs e)
         {
             _parentWindow?.NavigateToOfferteAanmakenPage();
         }
 
-        private void EditOfferteButton_Click(object sender, RoutedEventArgs e)
+		private async void OnScrollViewerViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		{
+			var scrollViewer = sender as ScrollViewer;
+
+			// Check if near the bottom of the scrollable area
+			if(scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+			{
+				await LoadOffertesAsync();
+			}
+		}
+
+		private void EditOfferteButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var stackPanel = FindParent<StackPanel>(button);
@@ -101,7 +154,7 @@ namespace BarrocIntens.Sales
                         }
 
                     }
-                    LoadOffertes();
+                    LoadOffertesAsync();
                 }
             };
         }

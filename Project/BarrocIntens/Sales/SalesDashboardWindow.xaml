@@ -42,7 +42,7 @@
                 <Button Grid.Row="2" x:Name="ContactPageButton" Click="ContactPageButton_Click" Content="Contact" 
                 Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
                 BorderBrush="Black" BorderThickness="4" Width="150" Height="45" HorizontalAlignment="Center"/>
-                <Button Grid.Row="3" x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offerte" 
+                <Button Grid.Row="3" x:Name="OffertePageButton" Click="OffertePageButton_Click" Content="Offertes" 
                 Background="#FDD716" Foreground="Black" FontSize="16" FontWeight="Bold" 
                 BorderBrush="Black" BorderThickness="4" Width="150" Height="45" HorizontalAlignment="Center"/>
                 <Button Grid.Row="4" x:Name="NotePageButton" Click="NotePageButton_Click" Content="Notities" 
