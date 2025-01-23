@@ -92,7 +92,7 @@ namespace BarrocIntens.Sales
             }
         }
 
-        private async Task LoadProductsAsync()
+        private async Task LoadProductsAsync(int? categoryId = null)
         {
             if (_isLoading)
                 return;
@@ -105,12 +105,20 @@ namespace BarrocIntens.Sales
 
             using (var db = new AppDbContext())
             {
-                var newProducts = await db.Products
-                                          .Where(p => p.VisibleForCustomers && p.Category.Id != 1)
-                                          .OrderBy(p => p.Id)
-                                          .Skip(_currentPage * PageSize)
-                                          .Take(PageSize)
-                                          .ToListAsync();
+                IQueryable<Product> query = db.Products.Where(p => p.VisibleForCustomers && p.Category.Id != 1);
+
+                // Apply category filter if provided
+                if (categoryId.HasValue && categoryId.Value != 0)
+                {
+                    query = query.Where(p => p.Category.Id == categoryId.Value);
+                }
+
+                // Fetch the products based on current page and filter
+                var newProducts = await query
+                    .OrderBy(p => p.Id)
+                    .Skip(_currentPage * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
 
                 if (newProducts.Any())
                 {
@@ -131,8 +139,6 @@ namespace BarrocIntens.Sales
 
             _isLoading = false;
         }
-
-
 
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -181,22 +187,18 @@ namespace BarrocIntens.Sales
             }
         }
 
-        private void CategoryDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void CategoryDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CategoryDropdown.SelectedItem is ProductCategory selectedCategory)
             {
-                if (selectedCategory.Id == 0)
-                {
-                    ProductListView.ItemsSource = ProductList;
-                }
-                else
-                {
-                    ProductListView.ItemsSource = ProductList
-                        .Where(p => p.Category.Id == selectedCategory.Id)
-                        .ToList();
-                }
+                _currentPage = 0; // Reset page number for new category filtering
+                ProductList.Clear(); // Clear the existing list for fresh loading
+
+                // Load products based on the selected category
+                await LoadProductsAsync(selectedCategory.Id); // Pass selected category Id to filter
             }
         }
+
 
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
