@@ -2,9 +2,11 @@ using BarrocIntens.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BarrocIntens.Sales
 {
@@ -13,22 +15,72 @@ namespace BarrocIntens.Sales
         private List<Product> ProductList { get; set; } = new List<Product>();
         private List<ProductCategory> CategoryList { get; set; } = new List<ProductCategory>();
 
+        private int _currentPage = 0;
+        private const int PageSize = 10;
+        private bool _isLoading = false;
+
         public SalesProductPage()
         {
             this.InitializeComponent();
-            LoadProductsAsync();
+            ProductListView.Loaded += ProductListView_Loaded;
+            InitializePageAsync();
         }
 
-        private async void LoadProductsAsync()
+        private async void InitializePageAsync()
+        {
+            await LoadCategoriesAsync();
+            await LoadProductsAsync();
+        }
+
+        private void ProductListView_Loaded(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer scrollViewer = GetScrollViewer(ProductListView);
+            if (scrollViewer != null)
+            {
+                scrollViewer.ViewChanged += ScrollViewer_ViewChanged;
+            }
+        }
+
+        private ScrollViewer GetScrollViewer(DependencyObject root)
+        {
+            int childCount = VisualTreeHelper.GetChildrenCount(root);
+
+            for (int i = 0; i < childCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(root, i);
+
+                if (child is ScrollViewer viewer)
+                {
+                    return viewer;
+                }
+
+                var descendant = GetScrollViewer(child);
+                if (descendant != null)
+                {
+                    return descendant;
+                }
+            }
+
+            return null;
+        }
+
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+
+            System.Diagnostics.Debug.WriteLine($"VerticalOffset: {scrollViewer.VerticalOffset}, ScrollableHeight: {scrollViewer.ScrollableHeight}");
+
+            if (scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+            {
+                _ = LoadProductsAsync();
+            }
+        }
+
+
+        private async Task LoadCategoriesAsync()
         {
             using (var db = new AppDbContext())
             {
-                ProductList = db.Products.Include(p => p.Category)
-                                         .Where(p => p.VisibleForCustomers && p.Category.Id != 1)
-                                         .OrderBy(p => p.Id)
-                                         .ToList();
-                ProductListView.ItemsSource = ProductList;
-
                 CategoryList = db.ProductCategories
                                  .Where(c => c.Id != 1)
                                  .OrderBy(c => c.Name)
@@ -38,8 +90,64 @@ namespace BarrocIntens.Sales
                 CategoryDropdown.ItemsSource = CategoryList;
                 CategoryDropdown.SelectedIndex = 0;
             }
+        }
 
+        private async Task LoadProductsAsync()
+        {
+            if (_isLoading)
+                return;
+
+            _isLoading = true;
+
+            // Get ScrollViewer from ListView
+            ScrollViewer scrollViewer = GetScrollViewer(ProductListView);
+            double? currentVerticalOffset = scrollViewer?.VerticalOffset;
+
+            using (var db = new AppDbContext())
+            {
+                var newProducts = await db.Products
+                                          .Where(p => p.VisibleForCustomers && p.Category.Id != 1)
+                                          .OrderBy(p => p.Id)
+                                          .Skip(_currentPage * PageSize)
+                                          .Take(PageSize)
+                                          .ToListAsync();
+
+                if (newProducts.Any())
+                {
+                    ProductList.AddRange(newProducts);
+                    _currentPage++;
+                }
+            }
+
+            // Temporarily set ItemsSource to null, then update
+            ProductListView.ItemsSource = null;
             ProductListView.ItemsSource = ProductList;
+
+            // Restore scroll position
+            if (scrollViewer != null && currentVerticalOffset.HasValue)
+            {
+                scrollViewer.ChangeView(null, currentVerticalOffset.Value, null, true);
+            }
+
+            _isLoading = false;
+        }
+
+
+
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SalesMainPage));
+        }
+
+        private void ProductListView_ScrollChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+
+            if (scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+            {
+                _ = LoadProductsAsync();
+            }
         }
 
         private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -58,11 +166,6 @@ namespace BarrocIntens.Sales
             }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SalesMainPage));
-        }
-
         private async void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ProductListView.SelectedItem is Product selectedProduct)
@@ -70,13 +173,11 @@ namespace BarrocIntens.Sales
                 using (var db = new AppDbContext())
                 {
                     var productDetails = await db.Products
-                                                    .Include(c => c.Category)
-                                                    .Where(c => c.Id == selectedProduct.Id)
-                                                    .OrderBy(c => c.Id)
-                                                    .ToListAsync();
-
-                    ProductInfoListView.ItemsSource = productDetails;
-                }             
+                                                  .Include(c => c.Category)
+                                                  .Where(c => c.Id == selectedProduct.Id)
+                                                  .FirstOrDefaultAsync();
+                    ProductInfoListView.ItemsSource = new List<Product> { productDetails };
+                }
             }
         }
 
