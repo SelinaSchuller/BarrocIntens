@@ -154,8 +154,14 @@ namespace BarrocIntens.Sales
                         }
 
                     }
-                    LoadOffertesAsync();
-                }
+					var deletedOfferte = _offertesLijst.FirstOrDefault(o => o.Id == offerteId);
+					if(deletedOfferte != null)
+					{
+						_offertesLijst.Remove(deletedOfferte);
+						offerteListView.ItemsSource = null;
+						offerteListView.ItemsSource = _offertesLijst;
+					}
+				}
             };
         }
 
