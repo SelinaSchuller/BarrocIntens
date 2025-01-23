@@ -67,9 +67,9 @@ namespace BarrocIntens.Sales
 			base.OnNavigatedTo(e);
 			_parentWindow = e.Parameter as SalesDashboardWindow;
 
-			_currentPage = 0; // Reset pagination
-			_offertesLijst.Clear(); // Clear the list
-			await LoadOffertesAsync(); // Load the first batch
+			_currentPage = 0;
+			_offertesLijst.Clear();
+			await LoadOffertesAsync();
 		}
 
 		public void CreateOfferteButton_Click(object sender, RoutedEventArgs e)
@@ -81,7 +81,6 @@ namespace BarrocIntens.Sales
 		{
 			var scrollViewer = sender as ScrollViewer;
 
-			// Check if near the bottom of the scrollable area
 			if(scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
 			{
 				await LoadOffertesAsync();
