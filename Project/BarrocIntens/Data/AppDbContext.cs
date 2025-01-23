@@ -137,10 +137,47 @@ namespace BarrocIntens.Data
 			var invoices = new Faker<Invoice>()
 				.RuleFor(i => i.Id, f => f.IndexFaker + 1)
 				.RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
-				.RuleFor(i => i.DateCreated, f => f.Date.Recent())
+				.RuleFor(i => i.DateCreated, f => f.Date.Between(DateTime.Now.AddDays(-30), DateTime.Now.AddDays(0)))
 				.RuleFor(i => i.TotalPrice, (decimal)0)
 				.RuleFor(i => i.Paid, f => f.Random.Bool()) // 120 invoices with payment delay
 				.Generate(500);
+
+			// InvoiceItems
+			var invoiceItems = new Faker<InvoiceItem>()
+				.RuleFor(i => i.Id, f => f.IndexFaker + 1)
+				.RuleFor(i => i.Amount, f => f.Random.Int(1, 5))
+				.RuleFor(i => i.InvoiceId, f => f.IndexFaker + 1)
+				.RuleFor(i => i.ProductId, f => f.Random.Int(1, 500))
+				.Generate(500);
+
+			modelBuilder.Entity<InvoiceItem>().HasData(invoiceItems);
+
+			//Update Invoice TotalPrice
+			var invoicePrices = invoiceItems
+				.GroupBy(ii => ii.InvoiceId)
+				.Select(group =>
+				{
+					var invoiceId = group.Key;
+					var totalPrice = group
+						.Sum(ii =>
+						{
+							var product = products.FirstOrDefault(p => p.Id == ii.ProductId);
+							return product != null ? product.Price * ii.Amount : 0;
+						});
+
+					return new Invoice
+					{
+						Id = invoiceId,
+						TotalPrice = totalPrice // Calculate total price for the invoice
+					};
+				})
+				.ToList();
+
+			foreach(var invoice in invoicePrices)
+			{
+				var existingInvoice = invoices.First(i => i.Id == invoice.Id);
+				existingInvoice.TotalPrice = invoice.TotalPrice; // Update the total price
+			}
 
 			modelBuilder.Entity<Invoice>().HasData(invoices);
 

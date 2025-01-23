@@ -9,46 +9,85 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BarrocIntens.Sales
 {
     public sealed partial class SalesOffertesPage : Page
     {
-        private SalesDashboardWindow _parentWindow;
-        private List<Invoice> OffertesLijst { get; set; }
+		private SalesDashboardWindow _parentWindow;
+		private List<Invoice> _offertesLijst;
+		private int _currentPage = 0;
+		private const int PageSize = 50;
+		private bool _isLoading = false;
 
-        public SalesOffertesPage()
+		public SalesOffertesPage()
         {
             this.InitializeComponent();
+            _offertesLijst = new List<Invoice>();
+		}
 
-        }
+		private async Task LoadOffertesAsync()
+		{
+			if(_isLoading)
+				return;
 
-        private async void LoadOffertes()
-        {
-            using (var db = new AppDbContext())
-            {
-                OffertesLijst = await db.Invoices
-                    .OrderByDescending(n => n.DateCreated)
-                    .ToListAsync();
+			_isLoading = true;
+			InfoMessageTextBlockLoading.Text = $"Offertes aan het laden... ({_offertesLijst?.Count ?? 0} geladen)";
+			InfoMessageTextBlockLoading.Visibility = Visibility.Visible;
 
-                offerteListView.ItemsSource = OffertesLijst;
-                InfoMessageTextBlock.Visibility = Visibility.Collapsed;
-            }
-        }
+			using(var db = new AppDbContext())
+			{
+				var offertes = await db.Invoices
+					.OrderByDescending(n => n.DateCreated)
+					.Skip(_currentPage * PageSize)
+					.Take(PageSize)
+					.ToListAsync();
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            _parentWindow = e.Parameter as SalesDashboardWindow;
-            LoadOffertes();
-        }
+				if(offertes.Any())
+				{
+					_offertesLijst.AddRange(offertes);
+					offerteListView.ItemsSource = null;
+					offerteListView.ItemsSource = _offertesLijst;
 
-        public void CreateOfferteButton_Click(object sender, RoutedEventArgs e)
+					_currentPage++;
+				}
+				else
+				{
+					InfoMessageTextBlockLoading.Text = "Alle offertes zijn geladen.";
+				}
+			}
+
+			InfoMessageTextBlockLoading.Visibility = Visibility.Collapsed;
+			_isLoading = false;
+		}
+
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			_parentWindow = e.Parameter as SalesDashboardWindow;
+
+			_currentPage = 0;
+			_offertesLijst.Clear();
+			await LoadOffertesAsync();
+		}
+
+		public void CreateOfferteButton_Click(object sender, RoutedEventArgs e)
         {
             _parentWindow?.NavigateToOfferteAanmakenPage();
         }
 
-        private void EditOfferteButton_Click(object sender, RoutedEventArgs e)
+		private async void OnScrollViewerViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		{
+			var scrollViewer = sender as ScrollViewer;
+
+			if(scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 50)
+			{
+				await LoadOffertesAsync();
+			}
+		}
+
+		private void EditOfferteButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var stackPanel = FindParent<StackPanel>(button);
@@ -101,8 +140,14 @@ namespace BarrocIntens.Sales
                         }
 
                     }
-                    LoadOffertes();
-                }
+					var deletedOfferte = _offertesLijst.FirstOrDefault(o => o.Id == offerteId);
+					if(deletedOfferte != null)
+					{
+						_offertesLijst.Remove(deletedOfferte);
+						offerteListView.ItemsSource = null;
+						offerteListView.ItemsSource = _offertesLijst;
+					}
+				}
             };
         }
 
