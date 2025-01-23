@@ -18,7 +18,7 @@ namespace BarrocIntens.Sales
 		private SalesDashboardWindow _parentWindow;
 		private List<Invoice> _offertesLijst;
 		private int _currentPage = 0;
-		private const int PageSize = 10;
+		private const int PageSize = 50;
 		private bool _isLoading = false;
 
 		public SalesOffertesPage()
@@ -26,19 +26,6 @@ namespace BarrocIntens.Sales
             this.InitializeComponent();
             _offertesLijst = new List<Invoice>();
 		}
-
-		//private async void LoadOffertes()
-		//      {
-		//          using (var db = new AppDbContext())
-		//          {
-		//              OffertesLijst = await db.Invoices
-		//                  .OrderByDescending(n => n.DateCreated)
-		//                  .ToListAsync();
-
-		//              offerteListView.ItemsSource = OffertesLijst;
-		//              InfoMessageTextBlock.Visibility = Visibility.Collapsed;
-		//          }
-		//      }
 
 		private async Task LoadOffertesAsync()
 		{

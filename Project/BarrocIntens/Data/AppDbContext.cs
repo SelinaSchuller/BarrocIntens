@@ -137,7 +137,7 @@ namespace BarrocIntens.Data
 			var invoices = new Faker<Invoice>()
 				.RuleFor(i => i.Id, f => f.IndexFaker + 1)
 				.RuleFor(i => i.ContractId, f => f.Random.Int(1, 150))
-				.RuleFor(i => i.DateCreated, f => f.Date.Recent())
+				.RuleFor(i => i.DateCreated, f => f.Date.Between(DateTime.Now.AddDays(-30), DateTime.Now.AddDays(0)))
 				.RuleFor(i => i.TotalPrice, (decimal)0)
 				.RuleFor(i => i.Paid, f => f.Random.Bool()) // 120 invoices with payment delay
 				.Generate(500);
