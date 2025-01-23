@@ -136,7 +136,16 @@ namespace BarrocIntens.Data
 
 			modelBuilder.Entity<Invoice>().HasData(invoices);
 
-			var leaseContracts = new Faker<LeaseContract>()
+			var invoiceItems = new Faker<InvoiceItem>()
+					.RuleFor(i => i.Id, f => f.IndexFaker + 1)
+					.RuleFor(i => i.Amount, f => f.Random.Int(1, 10))
+					.RuleFor(i => i.InvoiceId, f => f.Random.Int(1, 500))
+					.RuleFor(i => i.ProductId, f => f.Random.Int(1, 500))
+                    .Generate(500);
+		modelBuilder.Entity<InvoiceItem>().HasData(invoiceItems);
+
+
+            var leaseContracts = new Faker<LeaseContract>()
 				.RuleFor(l => l.Id, f => f.IndexFaker + 1)
 				.RuleFor(l => l.CompanyId, f => f.Random.Int(1, 150))
 				.RuleFor(l => l.Start_Date, f => f.Date.Past(1))
@@ -363,7 +372,6 @@ namespace BarrocIntens.Data
 				.Generate(500);
 
 			modelBuilder.Entity<ProductInventory>().HasData(productInventories);
-
 
 		}
 	}
