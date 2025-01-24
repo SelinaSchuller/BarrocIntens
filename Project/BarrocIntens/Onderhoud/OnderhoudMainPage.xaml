@@ -8,7 +8,52 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:scheduler="using:Syncfusion.UI.Xaml.Scheduler"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    x:Name="PageRoot">
+
+    <Page.Resources>
+        <DataTemplate x:Key="CustomEditorDataTemplate" x:DataType="scheduler:ScheduleAppointment">
+            <Grid Width="600" Background="#333333" Padding="20" CornerRadius="10">
+                <StackPanel Spacing="15">
+                    <!-- Header -->
+                    <TextBlock Text="Bewerk afspraak" FontSize="20" FontWeight="Bold" Foreground="White" />
+
+                    <!-- Title -->
+                    <TextBlock Text="Titel" Foreground="White" FontSize="14" />
+                    <TextBox Text="{Binding Subject, Mode=TwoWay}" PlaceholderText="Titel invoeren" />
+
+                    <!-- Location -->
+                    <TextBlock Text="Locatie" Foreground="White" FontSize="14" />
+                    <TextBox Text="{Binding Location, Mode=TwoWay}" PlaceholderText="Locatie invoeren" />
+
+                    <!-- Start and End Time -->
+                    <Grid ColumnDefinitions="1*,1*" ColumnSpacing="10">
+                        <StackPanel>
+                            <TextBlock Text="Starttijd" Foreground="White" FontSize="14" />
+                            <DatePicker Date="{Binding StartTime, Mode=TwoWay}" />
+                            <TimePicker Time="{Binding StartTime, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Eindtijd" Foreground="White" FontSize="14" />
+                            <DatePicker Date="{Binding EndTime, Mode=TwoWay}" />
+                            <TimePicker Time="{Binding EndTime, Mode=TwoWay}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Description -->
+                    <TextBlock Text="Beschrijving" Foreground="White" FontSize="14" />
+                    <TextBox Text="{Binding Notes, Mode=TwoWay}" PlaceholderText="Beschrijving invoeren" AcceptsReturn="True" TextWrapping="Wrap" />
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                        <Button Content="Opslaan" Background="#00FF00" Foreground="White" Width="100" Command="{Binding SaveCommand}" />
+                        <Button Content="Annuleren" Background="#555555" Foreground="White" Width="100" Command="{Binding CancelCommand}" />
+                        <Button Content="Verwijderen" Background="#FF0000" Foreground="White" Width="100" Command="{Binding DeleteCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
 
 
@@ -34,15 +79,8 @@
                     </Border>
                     <Rectangle Grid.Row="1" Fill="Black" />
                     <Grid Visibility="Collapsed" x:Name="dayCalander" Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="12*" />
-                        </Grid.RowDefinitions>
-                        <Border Grid.Row="0" BorderBrush="Gray" VerticalAlignment="Stretch" BorderThickness="0 1 0 1">
-                            <StackPanel>
-                            </StackPanel>
-                        </Border>
-                        <ListView Grid.Row="1" x:Name="DayData">
+
+                        <ListView x:Name="DayData">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="localdata:Appointment">
                                     <StackPanel Grid.Row="2" HorizontalAlignment="Stretch" BorderBrush="Gray" BorderThickness="0 0 1 0"  Grid.Column="1">
@@ -65,24 +103,74 @@
                                                     <RowDefinition Height="2*"/>
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Grid.Row="0" Text="{x:Bind User.Name}" />
-                                                
+
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                       
+
                     </Grid>
-                    
+
                     <Grid Grid.Row="1">
                         <Grid.DataContext>
                             <localdata:AppDbContext/>
                         </Grid.DataContext>
-                        <scheduler:SfScheduler x:Name="Schedule" Language="nl-NL" AppointmentEditFlag="Edit" AppointmentEditorOpening="Schedule_AppointmentEditorOpening" ItemsSource="{Binding Appointments}" ViewType="Week" FirstDayOfWeek="Monday"/>
+                        <scheduler:SfScheduler x:Name="Schedule" Language="nl-NL" AppointmentEditorOpening="Schedule_AppointmentEditorOpening" HeaderHeight="50" ItemsSource="{Binding Appointments}" ViewType="Week" FirstDayOfWeek="Monday" />
                     </Grid>
                 </Grid>
             </Border>
         </Grid>
+
+        <ContentDialog
+    x:Name="AppointmentDetailsDialog"
+    Title="Afspraakdetails"
+    CloseButtonText="Sluiten"
+    DefaultButton="Close"
+    XamlRoot="{x:Bind PageRoot.XamlRoot}">
+            <Grid Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Appointment Details -->
+                <StackPanel x:Name="AppointmentViewModePanel" Grid.Row="0">
+                    <TextBlock Text="Afspraak Beschrijving:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="AppointmentDescriptionTextBlock" Foreground="White" Margin="0,0,0,10" />
+                    <TextBlock Text="Datum:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="AppointmentDateTextBlock" Foreground="White" Margin="0,0,0,10" />
+                    <TextBlock Text="Starttijd:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="AppointmentStartTimeTextBlock" Foreground="White" Margin="0,0,0,10" />
+                    <TextBlock Text="Klant Naam:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="CustomerNameTextBlock" Foreground="White" Margin="0,0,0,10" />
+                    <TextBlock Text="Klant Adres:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="CustomerAddressTextBlock" Foreground="White" Margin="0,0,0,10" />
+                    <TextBlock Text="Bedrijf:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="CustomerCompanyTextBlock" Foreground="White" Margin="0,0,0,10" />
+
+                    <!-- Service Request -->
+                    <StackPanel x:Name="ServiceRequestStackPanel" Visibility="Collapsed">
+                        <TextBlock Text="Serviceaanvraag Beschrijving:" FontWeight="Bold" Foreground="White" />
+                        <TextBlock x:Name="ServiceRequestDescriptionTextBlock" Foreground="White" Margin="0,0,0,10" />
+                        <TextBlock Text="Datum Gerapporteerd:" FontWeight="Bold" Foreground="White" />
+                        <TextBlock x:Name="ServiceRequestDateReportedTextBlock" Foreground="White" Margin="0,0,0,10" />
+                        <TextBlock Text="Product:" FontWeight="Bold" Foreground="White" />
+                        <TextBlock x:Name="ServiceRequestProductTextBlock" Foreground="White" Margin="0,0,0,10" />
+                    </StackPanel>
+
+                    <TextBlock Text="Gebruiker:" FontWeight="Bold" Foreground="White" />
+                    <TextBlock x:Name="UserNameTextBlock" Foreground="White" Margin="0,0,0,10" />
+                </StackPanel>
+
+                <!-- Create Work Order Button -->
+                <Button
+            Content="Maak werkorder"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Right"
+            Click="CreateWorkOrderButton_Click" />
+            </Grid>
+        </ContentDialog>
     </Grid>
 </Page>

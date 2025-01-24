@@ -1,41 +1,19 @@
 using BarrocIntens.Data;
-using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using Syncfusion.UI.Xaml.Scheduler;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using BarrocIntens.Services;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BarrocIntens.Onderhoud
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class OnderhoudMainPage : Page
 	{
-		private int _appointmentId;
 		private OnderhoudBaseWindow _parentWindow;
 		private ContentDialog _currentDialog;
-		private Button _workOrderButton;
+		private ScheduleAppointmentCollection _scheduleAppointments;
 
 		public OnderhoudMainPage()
 		{
@@ -45,70 +23,121 @@ namespace BarrocIntens.Onderhoud
 			{
 				Schedule.DaysViewSettings.TimeRulerFormat = "HH:mm";
 				Schedule.TimelineViewSettings.EndHour = 24;
+				Schedule.Language.Equals("nl-NL");
 
-				var scheduleAppointmentCollection = new ScheduleAppointmentCollection();
+				_scheduleAppointments = new ScheduleAppointmentCollection();
 
 				foreach(var appointment in db.Appointments)
 				{
-					scheduleAppointmentCollection.Add(new ScheduleAppointment
+					_scheduleAppointments.Add(new ScheduleAppointment
 					{
 						StartTime = appointment.Date,
 						EndTime = appointment.Date.AddHours(1),
 						Subject = appointment.Description,
-						Id = appointment.Id
+						Id = appointment.Id,
 					});
 				}
 
-				this.Schedule.ItemsSource = scheduleAppointmentCollection;
+				this.Schedule.ItemsSource = _scheduleAppointments;
 			}
 			Schedule.AppointmentEditorOpening += Schedule_AppointmentEditorOpening;
 		}
 
-		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
 
 			if(e.Parameter is OnderhoudBaseWindow parentWindow)
 			{
 				_parentWindow = parentWindow;
-
-				_appointmentId = _parentWindow.appointmentId;
 			}
 			else
 			{
-				System.Diagnostics.Debug.WriteLine("OnderhoudWorkOrderCreatePage: No valid OnderhoudBaseWindow received.");
+				System.Diagnostics.Debug.WriteLine("OnderhoudMainPage: No valid OnderhoudBaseWindow received.");
 			}
 		}
 
-		private void Schedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
+		private async void Schedule_AppointmentEditorOpening(object sender, AppointmentEditorOpeningEventArgs e)
 		{
-			e.Cancel = false;
+			e.Cancel = true;
 
-			if(_workOrderButton != null)
+			if(_currentDialog != null)
 			{
-				(this.Content as Grid)?.Children.Remove(_workOrderButton);
+				return;
 			}
 
-			var appointment = e.Appointment as ScheduleAppointment;
-			if(appointment == null)
-				return;
-
-			_workOrderButton = new Button
+			try
 			{
-				Content = "Werkbron aanmaken",
-				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Center,
-				Margin = new Thickness(300, 0, 0, 250),
-				Width = 200,
-				Height = 40
-			};
+				if(e.Appointment is ScheduleAppointment appointment)
+				{
+					using(var db = new AppDbContext())
+					{
+						var dbAppointment = db.Appointments
+							.Include(a => a.Customer)
+							.ThenInclude(c => c.Company)
+							.Include(a => a.User)
+							.FirstOrDefault(a => a.Id == (int)appointment.Id);
 
-			_workOrderButton.Click += (s, args) => CreateWorkOrder(appointment);
+						if(dbAppointment == null)
+						{
+							await new ContentDialog
+							{
+								Title = "Fout",
+								Content = "Afspraak niet gevonden in de database.",
+								CloseButtonText = "Sluiten",
+								XamlRoot = this.XamlRoot
+							}.ShowAsync();
+							return;
+						}
 
-			if(this.Content is Grid mainGrid)
+						var serviceRequest = db.ServiceRequests
+							.Include(sr => sr.Product)
+							.FirstOrDefault(sr => sr.CustomerId == dbAppointment.CustomerId);
+
+						AppointmentDescriptionTextBlock.Text = dbAppointment.Description;
+						AppointmentDateTextBlock.Text = dbAppointment.Date.ToString("dd/MM/yyyy");
+						AppointmentStartTimeTextBlock.Text = dbAppointment.Date.ToString("HH:mm");
+						CustomerNameTextBlock.Text = dbAppointment.Customer.Name;
+						CustomerAddressTextBlock.Text = dbAppointment.Customer.Address;
+						CustomerCompanyTextBlock.Text = dbAppointment.Customer.Company?.Name ?? "Geen bedrijf";
+
+						if(serviceRequest != null)
+						{
+							ServiceRequestStackPanel.Visibility = Visibility.Visible;
+							ServiceRequestDescriptionTextBlock.Text = serviceRequest.Description;
+							ServiceRequestDateReportedTextBlock.Text = serviceRequest.FormattedDateReported;
+							ServiceRequestProductTextBlock.Text = serviceRequest.Product?.Name ?? "Geen product";
+						}
+						else
+						{
+							ServiceRequestStackPanel.Visibility = Visibility.Collapsed;
+						}
+
+						UserNameTextBlock.Text = dbAppointment.User.Name;
+
+						AppointmentDetailsDialog.Tag = appointment;
+
+						_currentDialog = AppointmentDetailsDialog;
+						await AppointmentDetailsDialog.ShowAsync();
+					}
+				}
+			}
+			finally
 			{
-				mainGrid.Children.Add(_workOrderButton);
-				Canvas.SetZIndex(_workOrderButton, 99);
+				_currentDialog = null;
+			}
+		}
+
+		private void CreateWorkOrderButton_Click(object sender, RoutedEventArgs e)
+		{
+			if(_currentDialog != null && _currentDialog.Tag is ScheduleAppointment appointment)
+			{
+				_currentDialog.Hide();
+				CreateWorkOrder(appointment);
+			}
+			else
+			{
+				System.Diagnostics.Debug.WriteLine("No valid appointment selected for work order creation.");
 			}
 		}
 
