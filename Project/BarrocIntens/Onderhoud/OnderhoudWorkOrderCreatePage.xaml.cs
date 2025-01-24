@@ -51,7 +51,7 @@ namespace BarrocIntens.Onderhoud
 				return;
 			_isLoading = true;
 
-			loadingTextBlock.Text = $"Loading more products... ({_availableProducts?.Count ?? 0} loaded)";
+			loadingTextBlock.Text = $"Producten aan het laden... ({_availableProducts?.Count ?? 0} geladen)";
 			loadingTextBlock.Visibility = Visibility.Visible;
 
 			using(var db = new AppDbContext())
@@ -78,7 +78,7 @@ namespace BarrocIntens.Onderhoud
 				}
 				else
 				{
-					loadingTextBlock.Text = "All products are loaded.";
+					loadingTextBlock.Text = "Alle producten zijn geladen.";
 				}
 			}
 
@@ -215,7 +215,7 @@ namespace BarrocIntens.Onderhoud
 				}
 
 				emailBody = $"Beste Hoofd Maintenance,\n\n" +
-							$"Er is een nieuwe werkbon aangemaakt.\n" +
+							$"Er is een nieuwe werkbron aangemaakt.\n" +
 							$"Afspraak: {appointment.Description}\n" +
 							$"Afspraak datum: {appointment.Date.ToString()}\n" +
 							$"Klant: {customer.Name}\n\n" +
@@ -223,12 +223,12 @@ namespace BarrocIntens.Onderhoud
 							$"Geen producten nodig voor deze reparatie.\n\n" +
 							$"Met vriendelijke groet,\n{User.LoggedInUser.Name} van Onderhoud";
 
-				SendEmailToMaintenanceHead("Nieuwe Werkbon Aangemaakt", emailBody);
+				SendEmailToMaintenanceHead("Nieuwe Werkbron Aangemaakt", emailBody);
 
 				ContentDialog saveDialog = new ContentDialog
 				{
 					Title = "Succes",
-					Content = "Werkbon succesvol opgeslagen!",
+					Content = "Werkbron succesvol opgeslagen!",
 					CloseButtonText = "Ok",
 					XamlRoot = this.XamlRoot
 				};
@@ -323,12 +323,12 @@ namespace BarrocIntens.Onderhoud
 			}
 
 			emailBody = $"Beste Hoofd Maintenance,\n\n" +
-						$"Er is een nieuwe werkbon aangemaakt.\n" +
+						$"Er is een nieuwe werkbron aangemaakt.\n" +
 						$"Afspraak: {appointment.Description}\n" +
 						$"Afspraak datum: {appointment.Date.ToString()}\n" +
 						$"Klant: {customer.Name}\n\n" +
 						$"Omschrijving: {descriptionTextBox.Text}\n\n" +
-						$"Producten voor deze werkbon:\n";
+						$"Producten voor deze werkbron:\n";
 
 			foreach(var product in selectedProducts)
 			{
@@ -338,12 +338,12 @@ namespace BarrocIntens.Onderhoud
 
 			emailBody += $"\nMet vriendelijke groet,\n{User.LoggedInUser.Name} van Onderhoud";
 
-			SendEmailToMaintenanceHead("Nieuwe Werkbon Aangemaakt", emailBody);
+			SendEmailToMaintenanceHead("Nieuwe Werkbron Aangemaakt", emailBody);
 
 			ContentDialog dialog = new ContentDialog
 			{
 				Title = "Succes",
-				Content = "Werkbon succesvol opgeslagen!",
+				Content = "Werkbron succesvol opgeslagen!",
 				CloseButtonText = "Ok",
 				XamlRoot = this.XamlRoot
 			};

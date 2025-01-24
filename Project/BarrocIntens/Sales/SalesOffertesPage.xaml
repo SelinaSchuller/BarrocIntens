@@ -37,44 +37,46 @@
             <Border Background="Black" BorderBrush="#FDD716" BorderThickness="2" CornerRadius="0,0,20,20" Padding="10" Height="520" Width="1000">
                 <StackPanel>
                     <TextBlock Text="Offertes worden geladen, Heb even geduld a.u.b!" Visibility="Visible" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InfoMessageTextBlock"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                        <ListView x:Name="offerteListView" ItemsSource="{x:Bind OffertesLijst}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="localData:Invoice">
-                                    <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="130" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="220" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,50,0">
-                                                <TextBlock VerticalAlignment="Top" Foreground="White" Text="{x:Bind DateCreated, Converter={StaticResource DateConverter}}" FontWeight="Light" FontSize="14" TextAlignment="Left" Margin="0,0,0,10"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <TextBlock Foreground="White" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="450" ViewChanged="OnScrollViewerViewChanged">
+                        <StackPanel>
+                            <ListView x:Name="offerteListView" ItemsSource="{x:Bind _offertesLijst}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="localData:Invoice">
+                                        <StackPanel BorderBrush="#FDD716" BorderThickness="2" CornerRadius="10" Padding="10" Margin="5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="130" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="220" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,50,0">
+                                                    <TextBlock VerticalAlignment="Top" Foreground="White" Text="{x:Bind DateCreated, Converter={StaticResource DateConverter}}" FontWeight="Light" FontSize="14" TextAlignment="Left" Margin="0,0,0,10"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                    <TextBlock Foreground="White" FontSize="16" TextAlignment="Left" TextWrapping="Wrap" Margin="0">
                                                     <Run Text="Price: € " />
                                                     <Run Text="{x:Bind TotalPrice, Converter={StaticResource PriceDecimalConverter}}" />
-                                                </TextBlock>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
-                                                <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0">
+                                                    <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
                                                     <Run Text="Paid: " />
                                                     <Run Text="{Binding Paid, Converter={StaticResource BoolValueConverter}}" />
-                                                </TextBlock>
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="3" Orientation="Vertical">
-                                                <Button Content="Bewerken" Click="EditOfferteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                                <Button Content="Delete" Click="DeleteOfferteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/> 
-                                                <TextBlock x:Name="OfferteIdTextBlock" Text="{x:Bind Id}" Visibility="Collapsed"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="3" Orientation="Vertical">
+                                                    <Button Content="Bewerken" Click="EditOfferteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                    <Button Content="Delete" Click="DeleteOfferteButton_Click" Foreground="Black" Background="#FDD716" Width="150" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                    <TextBlock x:Name="OfferteIdTextBlock" Text="{x:Bind Id}" Visibility="Collapsed"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <TextBlock x:Name="InfoMessageTextBlockLoading" Text="Offertes worden geladen, Heb even geduld a.u.b!" Visibility="Collapsed" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
                     </ScrollViewer>
                 </StackPanel>
             </Border>

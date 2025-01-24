@@ -77,8 +77,8 @@
 
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
                         <TextBox x:Name="searchTextBox"  TextChanged="searchTextBox_TextChanged" BorderBrush="#FDD716" BorderThickness="2" Background="White" PlaceholderText="Search..." Margin="10"  />
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
-                            <ListView x:Name="ProductListView" SelectionChanged="ProductListView_SelectionChanged">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" IsTabStop="False">
+                            <ListView x:Name="ProductListView" Height="500" SelectionChanged="ProductListView_SelectionChanged" Loaded="ProductListView_Loaded" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="localData:Product">
                                         <StackPanel Orientation="Vertical" Padding="15">
