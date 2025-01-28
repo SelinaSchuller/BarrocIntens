@@ -101,6 +101,7 @@ namespace BarrocIntens.Sales
             int offerteId = int.Parse(offerteIdTextBlock.Text);
             _parentWindow?.NavigateToOfferteBewerkenPage(offerteId);
         }
+
         private void DeleteOfferteButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ContentDialog

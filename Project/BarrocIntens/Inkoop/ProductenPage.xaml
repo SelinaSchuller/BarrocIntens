@@ -24,7 +24,6 @@
                             <Button Click="ZoekButton_Click" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2">Zoek</Button>
                         </StackPanel>
                         <StackPanel MaxHeight="600" MaxWidth="900">
-                            <!-- Producten ListView -->
                             <ListView x:Name="ProductListView" Height="550" Width="850" Margin="0 10 0 0">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="localData:Product">

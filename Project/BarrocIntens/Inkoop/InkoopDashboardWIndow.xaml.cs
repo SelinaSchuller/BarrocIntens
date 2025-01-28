@@ -37,10 +37,5 @@ namespace BarrocIntens.Inkoop
         {
             contentFrame.Navigate(typeof(ProductenPage));
         }
-
-        private void BestelButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

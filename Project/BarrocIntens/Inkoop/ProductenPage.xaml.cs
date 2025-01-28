@@ -164,7 +164,6 @@ namespace BarrocIntens.Inkoop
 									.Where(wop => wop.WorkOrderId == workOrder.Id && wop.ProductId == product.Id)
 									.ToList();
 
-								// Remove the links to the product in the bridge table
 								db.WorkOrderProducts.RemoveRange(productLinks);
 							}
 
@@ -232,7 +231,6 @@ namespace BarrocIntens.Inkoop
 			}
 			catch(Microsoft.EntityFrameworkCore.DbUpdateException ex)
 			{
-				// Log inner exception for debugging
 				System.Diagnostics.Debug.WriteLine($"DbUpdateException: {ex.InnerException?.Message}");
 				return false;
 			}
