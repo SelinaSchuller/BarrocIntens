@@ -33,8 +33,8 @@ namespace BarrocIntens.Inkoop
 		{
 			this.InitializeComponent();
 
+			StockFilterComboBox.SelectedIndex = 0;
 			LoadProducts();
-
 		}
 
 		private void LoadProducts()
