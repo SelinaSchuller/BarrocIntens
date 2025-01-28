@@ -16,5 +16,7 @@ namespace BarrocIntens.Data
         public bool VisibleForCustomers { get; set; }
         public int CategoryId { get; set; }
         public ProductCategory Category { get; set; }
-    }
+
+		public string FormattedPrice => $"€{Price:0.00}";
+	}
 }

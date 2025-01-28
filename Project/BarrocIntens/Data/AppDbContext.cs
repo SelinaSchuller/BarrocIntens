@@ -114,9 +114,9 @@ namespace BarrocIntens.Data
 
 			// Products
 			modelBuilder.Entity<Product>()
-						.HasOne(p => p.Category)
-						.WithMany(c => c.Products)
-						.HasForeignKey(p => p.CategoryId);
+				.HasOne(p => p.Category)
+				.WithMany(c => c.Products)
+				.HasForeignKey(p => p.CategoryId);
 
 			base.OnModelCreating(modelBuilder);
 
@@ -434,17 +434,18 @@ namespace BarrocIntens.Data
 				new Note { Id = 15, Title = "Software Update", Type = "Overig", Description = "Installed latest software update for system.", Date_Created = new DateTime(2024, 3, 9), CustomerId = 15, EmployeeId = 4 }
 			);
 
-			// Productinventory
-			var productInventories = new Faker<ProductInventory>()
-				.RuleFor(p => p.Id, f => f.IndexFaker + 1)
-				.RuleFor(p => p.ProductId, f => f.IndexFaker + 1)
-				.RuleFor(p => p.InStock, f => f.Random.Int(1, 20))
-				.RuleFor(p => p.AmountOrdered, f => f.Random.Int(0, 50))
-				.Generate(500);
+			// ProductInventory
+			var productsWithStock = products.Where(p => p.IsStock).ToList();
+
+			var productInventories = productsWithStock.Select((product, index) => new ProductInventory
+			{
+				Id = index + 1,
+				ProductId = product.Id,
+				InStock = new Faker().Random.Int(1, 20),
+				AmountOrdered = new Faker().Random.Int(0, 50)
+			}).ToList();
 
 			modelBuilder.Entity<ProductInventory>().HasData(productInventories);
-
-
 		}
 	}
 }

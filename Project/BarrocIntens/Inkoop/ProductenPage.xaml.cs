@@ -33,8 +33,8 @@ namespace BarrocIntens.Inkoop
 		{
 			this.InitializeComponent();
 
+			StockFilterComboBox.SelectedIndex = 0;
 			LoadProducts();
-
 		}
 
 		private void LoadProducts()
@@ -72,7 +72,34 @@ namespace BarrocIntens.Inkoop
 
 		private void FilterButton_Click(object sender, RoutedEventArgs e)
 		{
+			var selectedItem = StockFilterComboBox.SelectedItem as ComboBoxItem;
 
+			if(selectedItem != null)
+			{
+				var selectedTag = selectedItem.Tag as string;
+				System.Diagnostics.Debug.WriteLine($"Selected Tag: {selectedTag}");
+
+				using(var db = new AppDbContext())
+				{
+					IQueryable<Product> query = db.Products.Include(p => p.Category).OrderBy(p => p.Id);
+
+					if(selectedTag == "inStock")
+					{
+						query = query.Where(p => p.IsStock == true);
+					}
+					else if(selectedTag == "notInStock")
+					{
+						query = query.Where(p => p.IsStock == false);
+					}
+
+					Products = new ObservableCollection<Product>(query.ToList());
+					ProductListView.ItemsSource = Products;
+				}
+			}
+			else
+			{
+				System.Diagnostics.Debug.WriteLine("No item selected in the ComboBox.");
+			}
 		}
 
 		private void NieuwProductButton_Click(object sender, RoutedEventArgs e)
