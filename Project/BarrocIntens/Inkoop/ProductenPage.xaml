@@ -31,6 +31,7 @@
                                             <StackPanel Margin="10 5 5 5">
                                                 <TextBlock FontSize="25" Foreground="#ffd700" Text="{x:Bind Name}" TextWrapping="Wrap" Margin="0 0 0 10"/>
                                                 <TextBlock FontSize="15" Foreground="#ffd700" Text="{x:Bind Description}" TextWrapping="Wrap"/>
+                                                <TextBlock FontSize="15" Foreground="#ffd700" Text="{x:Bind FormattedPrice}" TextWrapping="Wrap"/>
                                                 <TextBlock FontSize="15" Foreground="#ffd700" Text="{x:Bind Category.Name, FallbackValue='No Category'}" TextWrapping="Wrap" Margin="0 10 0 10"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Spacing="40" Margin="100 10 20 15">
