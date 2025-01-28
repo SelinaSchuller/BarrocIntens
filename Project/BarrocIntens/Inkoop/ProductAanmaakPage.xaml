@@ -40,6 +40,7 @@
                                 <TextBlock x:Name="ProductVoorraad" Text="Voorraad:" FontSize="20" Foreground="#ffd700"/>
                                 <CheckBox x:Name="VoorraadCheckBox" Foreground="#ffd700" Checked="VoorraadCheckBox_Checked" Unchecked="VoorraadCheckBox_Unchecked"/>
                                 <TextBox x:Name="VoorraadInput" Background="#363534" Width="150" Visibility="Collapsed" PlaceholderText="Aantal in voorraad"/>
+                                <TextBlock x:Name="VoorrraadError" Text="Voer een aantal voorraad in (aantal moet hoger dan 0 zijn)" Foreground="Red" FontSize="15" Visibility="Collapsed" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock x:Name="ProductZichtbaarheid" Text="Zichtbaar voor klanten:" FontSize="20" Foreground="#ffd700"/>

@@ -47,6 +47,7 @@ namespace BarrocIntens.Inkoop
 			NaamError.Visibility = Visibility.Collapsed;
 			DescError.Visibility = Visibility.Collapsed;
 			PrijsError.Visibility = Visibility.Collapsed;
+			VoorrraadError.Visibility = Visibility.Collapsed;
 
 			int validatieErrors = 0;
 
@@ -66,6 +67,15 @@ namespace BarrocIntens.Inkoop
 			{
 				PrijsError.Visibility = Visibility.Visible;
 				validatieErrors += 1;
+			}
+
+			if(VoorraadCheckBox.IsChecked == true)
+			{
+				if(!int.TryParse(VoorraadInput.Text, out int inStock) || inStock <= 0)
+				{
+					VoorrraadError.Visibility = Visibility.Visible;
+					validatieErrors += 1;
+				}
 			}
 
 			if(validatieErrors == 0)
@@ -91,29 +101,16 @@ namespace BarrocIntens.Inkoop
 						{
 							ProductId = newProduct.Id,
 							InStock = inStock,
-							AmountOrdered = 0 
+							AmountOrdered = 0
 						};
 
 						db.ProductInventories.Add(inventory);
 						db.SaveChanges();
 					}
-					else
-					{
-						var inventory = new ProductInventory
-						{
-							ProductId = newProduct.Id,
-							InStock = 0,
-							AmountOrdered = 0
-						};
-					}
 
 					Frame.Navigate(typeof(ProductenPage));
 					return;
 				}
-			}
-			else
-			{
-				return;
 			}
 		}
 
