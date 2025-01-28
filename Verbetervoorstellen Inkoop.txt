@@ -1,0 +1,11 @@
+Verbetervoorstellen Inkoop
+
+Uiterlijk/Klant:
+- Leverbaarheid filter, namen aanpassen naar "op vooraad" en zorgen dat je niet "leverbaarheid:" kan aanklikken
+- Zorgen dat leverbaarheid filter werkt
+- Bij product aanmaken zorgen dat als "Voorraad" ja is dat je een getal kan toevoegen met aantal voorraad, die opgeslagen word in productinventories
+- Bij producten lijst prijs laten zien
+- Knop met bestellen weg halen
+
+Technische:
+- ProductAanmaak/BewerkPage Line 65 if (decimal.TryParse(PrijsInput.Text, out decimal prijsOutput)) is leeg. Bekijken of methode weg kan of iets moet worden toegevoegd
