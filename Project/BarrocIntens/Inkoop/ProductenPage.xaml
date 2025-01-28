@@ -54,11 +54,11 @@
                             <!--Plaats hier een dropdown dat de categorieen in de database heeft-->
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Center">
-                            <TextBlock Text="Leverbaarheid:" Foreground="#ffd700" Margin="0 0 0 5"/>
-                            <ComboBox BorderBrush="#ffd700" Foreground="#ffd700" BorderThickness="2" Width="250" FontSize="20" HorizontalAlignment="Center">
-                                <ComboBoxItem Content="Leverbaarheid:"/>
-                                <ComboBoxItem Content="Leverbaar"/>
-                                <ComboBoxItem Content="Niet Leverbaar"/>
+                            <TextBlock Text="Voorraad:" Foreground="#ffd700" Margin="0 0 0 5"/>
+                            <ComboBox x:Name="StockFilterComboBox" BorderBrush="#ffd700" Foreground="#ffd700" BorderThickness="2" Width="250" FontSize="20" HorizontalAlignment="Center">
+                                <ComboBoxItem Content="Alles" Tag="all"/>
+                                <ComboBoxItem Content="Op voorraad" Tag="inStock"/>
+                                <ComboBoxItem Content="Niet op voorraad" Tag="notInStock"/>
                             </ComboBox>
                         </StackPanel>
                         <Button Click="FilterButton_Click" Background="Black" Foreground="#ffd700" BorderBrush="#ffd700" BorderThickness="2" Width="200" FontSize="20" HorizontalAlignment="Center">Filteren</Button>

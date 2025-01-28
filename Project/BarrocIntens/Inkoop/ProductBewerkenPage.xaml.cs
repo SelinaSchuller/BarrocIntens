@@ -84,7 +84,6 @@ namespace BarrocIntens.Inkoop
                 validatieErrors += 1;
             }
 
-
             if (decimal.TryParse(PrijsInput.Text, out decimal prijsOutput))
             {
 
