@@ -55,38 +55,12 @@ namespace BarrocIntens.Sales
 			CustomerPageButton.Visibility = Visibility.Visible;
 			CompanyPageButton.Visibility = Visibility.Visible;
 			OffertePageButton.Visibility = Visibility.Visible;
-			ContactPageButton.Visibility = Visibility.Visible;
-			NotePageButton.Visibility = Visibility.Visible;
+            NotePageButton.Visibility = Visibility.Visible;
 			CreateServiceRequestPageButton.Visibility = Visibility.Visible;
+            NotePageButton.Content = "Notities";
 
-			if(MainFrame.SourcePageType == typeof(SalesMainPage))
+            if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
 			{
-				CustomerPageButton.Visibility = Visibility.Collapsed;
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesCompanyPage))
-			{
-				CompanyPageButton.Visibility = Visibility.Collapsed;
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
-			{
-				OffertePageButton.Visibility = Visibility.Collapsed;
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesMainPage))
-			{
-				ContactPageButton.Visibility = Visibility.Collapsed;
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesNotesPage))
-			{
-				NotePageButton.Visibility = Visibility.Collapsed;
-				NotePageButton.Content = "Notities";
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesStoringAanvraagCreatePage))
-			{
-				CreateServiceRequestPageButton.Visibility = Visibility.Collapsed;
-			}
-			else if(MainFrame.SourcePageType == typeof(SalesCreateNotePage) || MainFrame.SourcePageType == typeof(SalesEditNotePage))
-			{
-				NotePageButton.Visibility = Visibility.Visible;
 				NotePageButton.Content = "Terug";
 			}
 
@@ -110,11 +84,6 @@ namespace BarrocIntens.Sales
 			MainFrame.Navigate(typeof(SalesOffertesPage), this);
 			SetButtonVisibility();
         }
-
-		private void ContactPageButton_Click(object sender, RoutedEventArgs e)
-		{
-			SetButtonVisibility();
-		}
 
 		private void NotePageButton_Click(object sender, RoutedEventArgs e)
 		{

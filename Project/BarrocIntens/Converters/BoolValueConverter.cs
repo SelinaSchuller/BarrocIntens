@@ -11,9 +11,9 @@ namespace BarrocIntens.Converters
         {
             if (value is bool boolValue)
             {
-                return boolValue == true ? "Yes" : "No";
+                return boolValue == true ? "Ja" : "Nee";
             }
-            return "No";
+            return "Nee";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

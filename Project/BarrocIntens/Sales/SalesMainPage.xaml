@@ -39,7 +39,7 @@
                 
             </StackPanel>
 
-            <Grid Grid.Column="1" Grid.Row="1" Background="Black" x:Name="ContainerKlantenInfo" BorderBrush="black" BorderThickness="4" Margin="100,20,0,0">
+            <Grid Grid.Column="1" Grid.Row="1" x:Name="ContainerKlantenInfo" BorderThickness="4" Margin="100,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -49,7 +49,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Background="#FDD716" Grid.ColumnSpan="2">
+                <Grid Grid.Row="0" Background="#FDD716" Grid.ColumnSpan="2" CornerRadius="20,20,0,0" Padding="10" HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -64,7 +64,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
+                    <StackPanel CornerRadius="0,0,0,20" Grid.Column="0" Background="Black" Grid.ColumnSpan="1" BorderBrush="#FDD716" BorderThickness="4">
                         <TextBox x:Name="searchTextBox"  TextChanged="searchTextBox_TextChanged" BorderBrush="#FDD716" BorderThickness="2" Background="White" PlaceholderText="Search..." Margin="10"  />
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
                             <ListView x:Name="customersListView" SelectionChanged="customersListView_SelectionChanged">
@@ -81,7 +81,7 @@
                         </ScrollViewer>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1" BorderBrush="#FDD716" BorderThickness="4">
+                    <StackPanel CornerRadius="0,0,20,0" Grid.Column="1" Background="Black" BorderBrush="#FDD716" BorderThickness="4">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Height="500">
                             <ListView x:Name="customerInfoListView">
                                 <ListView.ItemTemplate>
