@@ -34,6 +34,7 @@ namespace BarrocIntens.Inkoop
 			this.InitializeComponent();
 
 			StockFilterComboBox.SelectedIndex = 0;
+			CategoryFilterComboBox.ItemsSource = new AppDbContext().ProductCategories.Select(p => p.Name);
 			LoadProducts();
 		}
 
@@ -90,6 +91,10 @@ namespace BarrocIntens.Inkoop
 					else if(selectedTag == "notInStock")
 					{
 						query = query.Where(p => p.IsStock == false);
+					}
+					if(CategoryFilterComboBox.SelectedIndex != -1)
+					{
+						query = query.Where(p => p.Category.Name == CategoryFilterComboBox.SelectedItem.ToString());
 					}
 
 					Products = new ObservableCollection<Product>(query.ToList());
